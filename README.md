@@ -8,8 +8,9 @@ reconstructs each settlement, verifies the corresponding cash and ledger
 movements, investigates ambiguous exceptions through a bounded AI agent, and
 reports whether the settlement close is ready or blocked.
 
-> **Project status:** Phase 1 backend foundation is complete; synthetic evidence
-> generation is next. All examples and evaluation data will be synthetic.
+> **Project status:** Phase 1 backend foundation is complete; canonical schemas
+> and financial value objects are next. All examples and evaluation data will be
+> synthetic.
 
 ## The problem
 

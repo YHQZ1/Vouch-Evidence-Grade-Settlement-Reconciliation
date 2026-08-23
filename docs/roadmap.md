@@ -3,9 +3,11 @@
 **Status:** Proposed execution sequence  
 **Last reviewed:** 2026-08-23
 
-The roadmap is the locked eight-phase execution sequence, numbered Phase 0
-through Phase 7. It is ordered by dependency and evaluation value; UI polish and
-AI are deliberately downstream of the deterministic data and control model.
+The roadmap is the locked eight-phase implementation sequence. Phase 0 is the
+completed product and repository contract and is not counted among the eight
+implementation prompts, which run from Phase 1 through Phase 8. The sequence is
+ordered by dependency and evaluation value; UI polish and AI are deliberately
+downstream of the deterministic data and control model.
 
 ## Phase 0 — Product and repository contract
 
@@ -37,12 +39,25 @@ health check for future phases.
 **Exit gate:** The backend imports and starts locally, its health contract and
 configuration behavior are tested, and no reconciliation behavior is present.
 
-## Phase 2 — Synthetic evidence and ground truth
+## Phase 2 — Canonical schemas and financial value objects
+
+**Outcome:** Runtime inputs and financial values have explicit, deterministic,
+framework-independent contracts.
+
+- [ ] Define canonical schema models for gateway, bank, and ledger records
+- [ ] Define integer currency-subunit value objects and signed arithmetic
+  contracts
+- [ ] Define canonical timestamp, identifier, and normalization contracts
+- [ ] Define schema-version and source-row lineage contracts
+
+**Exit gate:** Schema and value-object invariants pass independently, preserve raw
+evidence, and never represent money with floating-point values.
+
+## Phase 3 — Synthetic dataset and separate ground truth
 
 **Outcome:** A reproducible dataset generator creates realistic source files and a
 separate answer key.
 
-- [ ] Define canonical schema models
 - [ ] Define scenario and reason-code registry
 - [ ] Implement a deterministic seeded generator
 - [ ] Generate readable development fixtures
@@ -53,7 +68,7 @@ separate answer key.
 
 **Exit gate:** Dataset invariants pass without a reconciliation engine.
 
-## Phase 3 — Deterministic reconciliation core
+## Phase 4 — Deterministic reconciliation engine
 
 **Outcome:** Clear cases reconcile without AI and ambiguous cases become explicit
 exceptions.
@@ -70,7 +85,7 @@ exceptions.
 **Exit gate:** All deterministic development fixtures produce their expected
 states with no false auto-clears.
 
-## Phase 4 — Evaluation harness
+## Phase 5 — Evaluation harness
 
 **Outcome:** Every public metric is reproducible from stored results and isolated
 ground truth.
@@ -86,23 +101,36 @@ ground truth.
 **Exit gate:** The held-out deterministic run passes the release gates documented
 in `evaluation.md`.
 
-## Phase 5 — API and review interface
+## Phase 6 — FastAPI application layer
 
-**Outcome:** A reviewer can run a batch, inspect evidence, understand exceptions,
-and export the audit artifacts.
+**Outcome:** The deterministic workflow is available through explicit HTTP
+contracts without moving reconciliation policy into route handlers.
 
-- [ ] FastAPI batch lifecycle
-- [ ] Upload validation experience
+- [ ] FastAPI batch lifecycle and HTTP contracts
+- [ ] Upload validation and source-ingestion endpoints
+- [ ] Reconciliation-run and close-readiness endpoints
+- [ ] Reconciliation, exception, and audit export endpoints
+- [ ] API error, status, and integration contracts
+
+**Exit gate:** The complete deterministic demo can be run through the API with
+thin route handlers and explicit validation failures.
+
+## Phase 7 — React review interface
+
+**Outcome:** A reviewer can inspect evidence, understand exceptions, and review
+close readiness through an accessible interface backed by the API.
+
 - [ ] Close-readiness overview
 - [ ] Settlement evidence view
 - [ ] Materiality-ranked exception queue
 - [ ] Audit explanation drawer
 - [ ] Accessible status and error presentation
-- [ ] Reconciliation, exception, and audit exports
+- [ ] API integration, loading states, and safe failure states
 
-**Exit gate:** The complete deterministic demo can be performed through the UI.
+**Exit gate:** The complete deterministic demo can be performed through the
+review interface with every material exception and decision explanation visible.
 
-## Phase 6 — Bounded investigation agent
+## Phase 8 — Bounded AI investigation agent
 
 **Outcome:** The ambiguous tail receives useful investigation without expanding
 the model's financial authority.
@@ -118,7 +146,7 @@ the model's financial authority.
 **Exit gate:** The agent resolves at least one seeded ambiguous case through
 verified evidence and safely abstains or is rejected on another.
 
-## Phase 7 — Submission readiness
+## Submission readiness — final release checklist
 
 **Outcome:** A reviewer can understand, run, verify, and evaluate Vouch from a
 clean checkout.
