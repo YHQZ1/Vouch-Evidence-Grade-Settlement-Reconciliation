@@ -18,6 +18,7 @@ correctness, trust boundaries, data model, dependencies, or deployment shape.
 | [0002](0002-settlement-evidence-linkage.md) | Model settlement ID, UTR, bank, and ledger as distinct evidence | Accepted |
 | [0003](0003-bounded-provider-isolated-ai.md) | Keep AI bounded, local-first, and provider-isolated | Accepted |
 | [0004](0004-local-modular-architecture.md) | Use a local modular architecture with SQLite | Accepted |
+| [0005](0005-immutable-canonical-domain-contracts.md) | Use immutable canonical domain contracts and integer subunits | Accepted |
 
 ## Creating an ADR
 
@@ -32,4 +33,3 @@ Create a zero-padded Markdown file with:
 
 Do not rewrite the outcome of an accepted ADR. Supersede it with a new record so
 the project's reasoning remains auditable.
-

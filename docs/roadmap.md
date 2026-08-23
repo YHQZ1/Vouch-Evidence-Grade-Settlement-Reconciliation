@@ -44,11 +44,11 @@ configuration behavior are tested, and no reconciliation behavior is present.
 **Outcome:** Runtime inputs and financial values have explicit, deterministic,
 framework-independent contracts.
 
-- [ ] Define canonical schema models for gateway, bank, and ledger records
-- [ ] Define integer currency-subunit value objects and signed arithmetic
+- [x] Define canonical schema models for gateway, bank, and ledger records
+- [x] Define integer currency-subunit value objects and signed arithmetic
   contracts
-- [ ] Define canonical timestamp, identifier, and normalization contracts
-- [ ] Define schema-version and source-row lineage contracts
+- [x] Define canonical timestamp, identifier, and normalization contracts
+- [x] Define schema-version and source-row lineage contracts
 
 **Exit gate:** Schema and value-object invariants pass independently, preserve raw
 evidence, and never represent money with floating-point values.

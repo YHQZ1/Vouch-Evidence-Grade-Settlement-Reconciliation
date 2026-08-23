@@ -7,15 +7,15 @@
 ## Purpose
 
 This document defines the synthetic input contracts and canonical invariants used
-by Vouch. It is a design contract; actual schema models and fixtures will be added
-during implementation.
+by Vouch. Phase 2 implements the framework-independent contracts in
+`backend/app/domain`; ingestion and fixtures remain later-phase work.
 
 ## Global conventions
 
 - CSV is the initial input format.
 - UTF-8 and LF line endings are required.
 - Column names use `snake_case`.
-- Raw columns and raw values are preserved.
+- Raw columns and raw values are preserved exactly.
 - Each ingested row receives a stable `source_record_id` derived from the source
   fingerprint and row number.
 - Money uses integer currency subunits. INR values are represented in paise.
@@ -26,6 +26,27 @@ during implementation.
 - Empty values are null, never overloaded sentinel strings such as `NA` or `-`.
 - Identifiers remain strings and are never numerically coerced.
 - Ground-truth columns are prohibited in runtime input files.
+
+## Phase 2 implementation boundary
+
+- `Money` stores a signed integer `subunits` value and a supported ISO
+  `Currency`; arithmetic rejects cross-currency operations and accepts no
+  floating-point values. MVP records and policy are restricted to `INR`.
+- `CanonicalTimestamp` stores aware UTC `datetime` values. Naive timestamps and
+  non-integer Unix timestamps are rejected; source Unix seconds are interpreted
+  as UTC.
+- `SourceLineage` requires source kind, source name, SHA-256 fingerprint, row
+  number, and schema version. `source_record_id` is derived as
+  `src_<sha256(source_fingerprint + ':' + source_row_number)>` and a supplied
+  conflicting ID is rejected.
+- `RawEvidence` and every canonical record retain a copied, deterministically
+  ordered, immutable mapping of CSV-safe `str | None` raw values. Canonical
+  normalization never replaces that evidence.
+- `GatewayMovement`, `BankEntry`, and `LedgerLine` preserve source lineage and
+  expose signed derived movement without changing the unsigned source fields.
+- `ClosePolicy` is an immutable, versioned input contract. It carries period,
+  timezone, materiality, tolerance, SLA, balance-account, and configured ledger
+  role inputs; it does not itself make a close decision.
 
 ## Input A: Razorpay settlement reconciliation
 
@@ -99,9 +120,11 @@ source movement is already represented by `credit` and `debit`.
 
 ### Derived fields
 
-- `normalized_utr`: conservative extraction from `reference` or narration;
+- `normalized_utr`: optional normalization of an explicitly supplied UTR;
 - `normalized_narration`: comparison representation while preserving raw text;
 - `signed_amount`: positive for credit and negative for debit.
+
+The Phase 2 domain contract does not infer UTRs from source text.
 
 ### Bank invariants
 
@@ -118,7 +141,7 @@ source movement is already represented by `credit` and `debit`.
 
 | Field          | Type      | Rule                                 |
 | -------------- | --------- | ------------------------------------ |
-| `journal_id`   | string    | Groups balanced journal lines        |
+| `journal_id`   | string    | Source journal identifier             |
 | `line_id`      | string    | Unique ledger line identity          |
 | `posted_at`    | timestamp | Ledger posting time or date          |
 | `account_code` | string    | Merchant-specific account identifier |
@@ -145,35 +168,45 @@ source movement is already represented by `credit` and `debit`.
 The mapping from merchant account code to canonical role belongs to the batch
 configuration. Vouch does not infer a universal chart of accounts.
 
-### Ledger invariants
+### Ledger record invariants
 
-- Every journal must balance: `sum(debit) == sum(credit)`.
 - A line cannot contain both a positive debit and positive credit.
+- Zero-value lines are preserved; later controls may classify them explicitly.
+
+### Phase 4 journal and clearing controls (deferred)
+
+These requirements remain part of the accepted product contract, but are not
+implemented by the Phase 2 record-local `LedgerLine` contract:
+
+- Every journal must balance: total debit must equal total credit.
 - An unbalanced journal is a blocking exception.
-- References support linking but do not override amount or accounting conflicts.
+- Reference linking cannot override an accounting conflict.
 - Clearing-account residuals are calculated for the selected close scope.
+- The deterministic control engine includes journal-balance controls.
+- The bounded investigation agent may request deterministic journal-balance
+  validation; it cannot perform or override that validation itself.
 
 ## Batch policy contract
 
-The versioned close policy will define:
+The implemented `ClosePolicy` contract defines:
 
 | Field                           | Purpose                                     |
 | ------------------------------- | ------------------------------------------- |
 | `policy_version`                | Reproduce the decision rules used           |
-| `period_start` / `period_end`   | Scope the close period                      |
+| `period_start` / `period_end`   | Scope as timezone-aware UTC timestamps     |
 | `display_timezone`              | User-facing date interpretation             |
 | `currency`                      | `INR` for MVP                               |
 | `balance_account_ids`           | Optional permitted partitions               |
 | `amount_tolerance_subunits`     | Explicit rounding tolerance                 |
 | `materiality_absolute_subunits` | Absolute blocking threshold                 |
 | `materiality_relative_bps`      | Optional batch-relative threshold           |
-| `settlement_sla`                | Timing policy by supported settlement class |
-| `account_role_mapping`          | Ledger account code to canonical role       |
+| `settlement_sla`                | Explicit positive timing policy by class    |
+| `account_role_mapping`          | Explicit non-null mapping to one of the seven ledger roles |
 
 No threshold will be presented as universally correct. The demonstration policy
 will be clearly labeled synthetic.
 
-## Runtime outputs
+## Phase 4 runtime outputs (deferred)
 
 ### Settlement result
 

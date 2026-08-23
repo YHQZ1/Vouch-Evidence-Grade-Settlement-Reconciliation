@@ -1,9 +1,10 @@
 # Vouch backend
 
-This package contains the Phase 1 backend foundation for Vouch: application
-composition, configuration, logging, and a health endpoint. It does not yet
-implement reconciliation logic, financial calculations, data ingestion, or any
-AI integration.
+This package contains the Phase 1 backend foundation and Phase 2 canonical
+domain contracts for Vouch. The domain layer defines immutable source lineage,
+raw evidence, integer currency-subunit arithmetic, gateway/bank/ledger records,
+and versioned close-policy inputs. Reconciliation, persistence, data generation,
+and AI integration remain deferred to later phases.
 
 ## Requirements
 
@@ -68,5 +69,5 @@ python -m ruff check .
 python -m ruff format --check .
 ```
 
-Reconciliation, source-data generation, AI, and frontend work are deliberately
-deferred to later phases.
+Reconciliation, source-data generation, AI, persistence, and frontend work are
+deliberately deferred to later phases.

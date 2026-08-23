@@ -84,6 +84,12 @@ It does not perform matching.
 SQLite holds batch metadata, immutable source records, canonical projections,
 evidence links, decisions, exceptions, and audit events. Source files remain the
 origin of truth; canonical records are versioned interpretations of that evidence.
+The Phase 2 domain boundary is framework-independent and currently provides
+`SourceLineage`, `RawEvidence`, `Money`, `GatewayMovement`, `BankEntry`,
+`LedgerLine`, and `ClosePolicy`. Each projection retains scalar raw values and
+source identity. It does not aggregate journals, calculate journal residuals,
+link records, or make decisions; persistence adapters and those controls are
+deferred to later phases.
 
 ### Evidence graph builder
 
@@ -94,7 +100,7 @@ The graph is a logical domain structure, not a graph database. It connects:
 - transaction and settlement references to ledger journals; and
 - every proposed relationship to the evidence that supports or contradicts it.
 
-### Deterministic control engine
+### Deterministic control engine (planned after Phase 2)
 
 Controls run from strongest evidence to weakest:
 
@@ -102,7 +108,7 @@ Controls run from strongest evidence to weakest:
 2. settlement aggregation;
 3. exact UTR and identifier matches;
 4. amount, direction, date, currency, and uniqueness verification;
-5. ledger journal-balance and account-role controls;
+5. journal-balance controls and configured ledger account-role controls;
 6. clearing-account residual control; and
 7. candidate generation for unresolved cases.
 
@@ -114,14 +120,15 @@ An exception is a first-class record containing its current state, materiality,
 age, candidate links, failed controls, evidence package, investigation history,
 and recommended next action.
 
-### Investigation agent
+### Investigation agent (planned after Phase 2)
 
 The agent operates under a fixed step budget with read-only tools such as:
 
 - retrieve a cited source record;
 - list candidate bank or ledger records;
 - calculate a settlement aggregate;
-- validate a journal balance;
+- inspect configured ledger evidence;
+- request deterministic journal-balance validation;
 - check the configured settlement window; and
 - submit a structured hypothesis or abstain.
 
