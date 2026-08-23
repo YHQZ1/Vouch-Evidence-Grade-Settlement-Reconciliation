@@ -109,14 +109,16 @@ to Phase 8.
 **Outcome:** The deterministic workflow is available through explicit HTTP
 contracts without moving reconciliation policy into route handlers.
 
-- [ ] FastAPI batch lifecycle and HTTP contracts
-- [ ] Upload validation and source-ingestion endpoints
-- [ ] Reconciliation-run and close-readiness endpoints
-- [ ] Reconciliation, exception, and audit export endpoints
-- [ ] API error, status, and integration contracts
+- [x] FastAPI batch lifecycle and HTTP contracts
+- [x] Upload validation and source-ingestion endpoints
+- [x] Reconciliation-run and close-readiness endpoints
+- [x] Reconciliation, exception, and audit export endpoints
+- [x] API error, status, and integration contracts
 
-**Exit gate:** The complete deterministic demo can be run through the API with
-thin route handlers and explicit validation failures.
+**Exit gate:** Satisfied. The complete deterministic demo runs through the API
+with thin route handlers, explicit validation failures, immutable in-memory
+source storage, and deterministic result/export contracts. Durable persistence,
+authentication, and asynchronous execution remain outside this phase.
 
 ## Phase 7 — React review interface
 

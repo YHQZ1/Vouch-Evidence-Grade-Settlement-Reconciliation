@@ -255,21 +255,19 @@ evidence are retained in their own link or candidate events.
 
 ## API boundary
 
-The planned minimal API surface is:
+Phase 6 exposes the versioned synchronous surface documented in
+`docs/api-contract.md`: batch creation, four immutable source uploads,
+reconciliation runs, batch/result/settlement/exception/close/audit reads, and
+canonical result, exception, and audit exports. Route handlers validate HTTP
+input, invoke the injected `BatchWorkflowService`, map safe errors, and
+serialize immutable Pydantic contracts. They contain no reconciliation,
+matching, accounting, materiality, or close-readiness policy.
 
-```text
-POST /batches
-POST /batches/{batch_id}/sources
-POST /batches/{batch_id}/reconcile
-GET  /batches/{batch_id}
-GET  /batches/{batch_id}/settlements
-GET  /batches/{batch_id}/exceptions
-POST /exceptions/{case_id}/investigate
-GET  /batches/{batch_id}/exports/{artifact}
-```
-
-Route handlers orchestrate use cases and serialize contracts. They must not
-contain reconciliation or accounting logic.
+The current repository is a concurrency-safe in-memory implementation. It
+preserves raw upload bytes and metadata and stores one immutable `BatchResult`,
+but all state is lost on process restart. It uses generated internal workspace
+filenames and never treats client filenames as paths. Reconciliation is
+synchronous and always receives the batch's explicit evaluation clock.
 
 ## Failure behavior
 
@@ -287,13 +285,9 @@ contain reconciliation or accounting logic.
 
 ## Deployment shape
 
-The initial product runs locally:
-
-- React and TypeScript interface;
-- FastAPI application;
-- SQLite database;
-- optional local Ollama-compatible model endpoint.
-
-No networked queue, cache, graph database, or external model is required. Docker
-may be added for reproducibility, but the local model remains an optional adapter
-so the core workflow cannot be held hostage by model availability.
+Phase 6 runs locally as a FastAPI application with an in-memory batch repository.
+The React interface, durable SQLite adapter, and optional local
+Ollama-compatible model endpoint remain later-phase components. No networked
+queue, cache, graph database, or external model is required. A future SQLite
+adapter remains compatible with the repository boundary recorded in ADR 0004
+and ADR 0008.

@@ -8,7 +8,7 @@ reconstructs each settlement, verifies the corresponding cash and ledger
 movements, investigates ambiguous exceptions through a bounded AI agent, and
 reports whether the settlement close is ready or blocked.
 
-> **Project status:** Phase 5 deterministic evaluation is complete. Phase 4
+> **Project status:** Phase 6 FastAPI application contracts are complete. Phase 4
 > reconciliation and Phase 5 reports remain separate from the runtime engine;
 > AI-specific gates remain deferred to Phase 8. All examples and evaluation
 > data are synthetic.
@@ -115,6 +115,28 @@ cd backend
 python -m app.cli reconcile --help
 ```
 
+The complete frozen demonstration can also be run through the local API. Start
+the server, create a batch with an explicit clock, upload the four raw inputs,
+run reconciliation, and fetch the result:
+
+```bash
+cd backend
+python -m uvicorn app.main:app
+BASE=http://127.0.0.1:8000
+BATCH=$(curl -sS -X POST "$BASE/api/v1/batches" \
+  -H 'content-type: application/json' \
+  -d '{"evaluation_clock":"2026-08-31T18:30:00Z"}' | python -c 'import json,sys; print(json.load(sys.stdin)["batch_id"])')
+curl -sS -X PUT "$BASE/api/v1/batches/$BATCH/sources/gateway" -H 'content-type: text/csv' -H 'X-Source-Filename: razorpay_recon.csv' --data-binary @../data/demonstration/inputs/razorpay_recon.csv
+curl -sS -X PUT "$BASE/api/v1/batches/$BATCH/sources/bank" -H 'content-type: text/csv' -H 'X-Source-Filename: bank_statement.csv' --data-binary @../data/demonstration/inputs/bank_statement.csv
+curl -sS -X PUT "$BASE/api/v1/batches/$BATCH/sources/ledger" -H 'content-type: text/csv' -H 'X-Source-Filename: general_ledger.csv' --data-binary @../data/demonstration/inputs/general_ledger.csv
+curl -sS -X PUT "$BASE/api/v1/batches/$BATCH/sources/policy" -H 'content-type: application/json' -H 'X-Source-Filename: batch_policy.json' --data-binary @../data/demonstration/inputs/batch_policy.json
+curl -sS -X POST "$BASE/api/v1/batches/$BATCH/reconciliation-runs"
+curl -sS "$BASE/api/v1/batches/$BATCH/result"
+```
+
+See the [Phase 6 API contract](docs/api-contract.md) for lifecycle, upload
+limits, errors, pagination, exports, and current local-only limitations.
+
 The result is deterministic JSON containing source fingerprints, immutable
 lineage, candidates, evidence links, accounting controls, decisions, exceptions,
 value buckets, and close readiness. Similarity and narration can produce
@@ -165,6 +187,7 @@ vouch/
 - [System architecture](docs/architecture.md)
 - [Canonical data contract](docs/data-contract.md)
 - [Evaluation protocol](docs/evaluation.md)
+- [HTTP API contract](docs/api-contract.md)
 - [Safety and trust model](docs/safety-and-trust.md)
 - [Delivery roadmap](docs/roadmap.md)
 - [Source references and verified assumptions](docs/references.md)

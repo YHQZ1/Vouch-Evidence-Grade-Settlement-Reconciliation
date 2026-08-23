@@ -52,6 +52,18 @@ by Vouch. Phase 2 implements the framework-independent contracts in
   timezone, materiality, tolerance, SLA, balance-account, and configured ledger
   role inputs; it does not itself make a close decision.
 
+## Phase 6 HTTP source boundary
+
+The API accepts raw UTF-8 CSV bytes for `gateway`, `bank`, and `ledger`, and raw
+UTF-8 JSON bytes for `policy`. Each upload retains the exact bytes, client
+filename metadata, declared content type, byte count, and SHA-256 fingerprint.
+The default per-source limit is 10 MiB. Client filenames are never filesystem
+paths; the workflow writes bytes to generated source-kind workspace names before
+calling the existing ingestion adapters. Fatal format errors fail the upload.
+The Phase 4 engine may intentionally preserve row-level malformed records as
+rejected evidence and blocking exceptions, as required by its demonstration
+contract.
+
 ## Input A: Razorpay settlement reconciliation
 
 The synthetic source mirrors the documented Razorpay Settlement Recon response.

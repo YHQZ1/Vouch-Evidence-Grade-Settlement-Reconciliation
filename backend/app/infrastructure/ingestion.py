@@ -109,7 +109,9 @@ class IngestedPolicy:
     policy: ClosePolicy
 
 
-def _fingerprint(path: Path, kind: SourceKind) -> tuple[bytes, SourceFingerprint]:
+def _fingerprint(
+    path: Path, kind: SourceKind, source_name: str | None = None
+) -> tuple[bytes, SourceFingerprint]:
     try:
         payload = path.read_bytes()
     except OSError as error:
@@ -119,7 +121,7 @@ def _fingerprint(path: Path, kind: SourceKind) -> tuple[bytes, SourceFingerprint
     digest = hashlib.sha256(payload).hexdigest()
     return payload, SourceFingerprint(
         source_kind=kind,
-        source_name=path.name,
+        source_name=source_name or path.name,
         sha256=digest,
         byte_count=len(payload),
     )
@@ -201,22 +203,29 @@ def _read_csv[T: (GatewayMovement, BankEntry, LedgerLine)](
     model: type[T],
     values_parser: Any,
     business_identifier: str,
+    source_name: str | None = None,
 ) -> IngestedSource:
-    payload, fingerprint = _fingerprint(path, kind)
-    text = _decode(payload, path)
+    effective_source_name = source_name or path.name
+    payload, fingerprint = _fingerprint(path, kind, effective_source_name)
+    text = _decode(payload, Path(effective_source_name))
     try:
         reader = csv.reader(io.StringIO(text, newline=""), strict=True)
         header = next(reader)
     except (csv.Error, StopIteration) as error:
-        raise FatalSourceError(f"{path.name} has no supported CSV header") from error
+        raise FatalSourceError(
+            f"{effective_source_name} has no supported CSV header"
+        ) from error
     if tuple(header) != columns:
         raise FatalSourceError(
-            f"{path.name} has unsupported columns; expected {','.join(columns)}"
+            f"{effective_source_name} has unsupported columns; expected "
+            f"{','.join(columns)}"
         )
     try:
         rows = list(reader)
     except csv.Error as error:
-        raise FatalSourceError(f"{path.name} has malformed CSV quoting") from error
+        raise FatalSourceError(
+            f"{effective_source_name} has malformed CSV quoting"
+        ) from error
     parsed_records: list[
         tuple[int, dict[str, str | None], Any, str, SourceLineage]
     ] = []
@@ -229,7 +238,7 @@ def _read_csv[T: (GatewayMovement, BankEntry, LedgerLine)](
         raw = _raw_row(columns, values)
         lineage = SourceLineage(
             source_kind=kind,
-            source_name=path.name,
+            source_name=effective_source_name,
             source_fingerprint=fingerprint.sha256,
             source_row_number=physical_rows,
         )
@@ -268,7 +277,7 @@ def _read_csv[T: (GatewayMovement, BankEntry, LedgerLine)](
         identifier = str(getattr(record, business_identifier))
         parsed_records.append((physical_rows, raw, record, identifier, lineage))
     if physical_rows == 0:
-        raise FatalSourceError(f"{path.name} contains no data rows")
+        raise FatalSourceError(f"{effective_source_name} contains no data rows")
     rows_by_identifier: dict[
         str, list[tuple[int, dict[str, str | None], Any, SourceLineage]]
     ] = {}
@@ -336,7 +345,7 @@ def _read_csv[T: (GatewayMovement, BankEntry, LedgerLine)](
             )
     return IngestedSource(
         source_kind=kind,
-        source_name=path.name,
+        source_name=effective_source_name,
         fingerprint=fingerprint,
         records=tuple(sorted(records, key=lambda item: item.source_record_id)),
         duplicate_records=tuple(
@@ -349,7 +358,9 @@ def _read_csv[T: (GatewayMovement, BankEntry, LedgerLine)](
     )
 
 
-def ingest_gateway(path: str | Path) -> IngestedSource:
+def ingest_gateway(
+    path: str | Path, *, source_name: str | None = None
+) -> IngestedSource:
     return _read_csv(
         Path(path),
         kind=SourceKind.GATEWAY,
@@ -357,10 +368,11 @@ def ingest_gateway(path: str | Path) -> IngestedSource:
         model=GatewayMovement,
         values_parser=_gateway_values,
         business_identifier="entity_id",
+        source_name=source_name,
     )
 
 
-def ingest_bank(path: str | Path) -> IngestedSource:
+def ingest_bank(path: str | Path, *, source_name: str | None = None) -> IngestedSource:
     return _read_csv(
         Path(path),
         kind=SourceKind.BANK,
@@ -368,10 +380,13 @@ def ingest_bank(path: str | Path) -> IngestedSource:
         model=BankEntry,
         values_parser=_bank_values,
         business_identifier="bank_row_id",
+        source_name=source_name,
     )
 
 
-def ingest_ledger(path: str | Path) -> IngestedSource:
+def ingest_ledger(
+    path: str | Path, *, source_name: str | None = None
+) -> IngestedSource:
     return _read_csv(
         Path(path),
         kind=SourceKind.LEDGER,
@@ -379,27 +394,33 @@ def ingest_ledger(path: str | Path) -> IngestedSource:
         model=LedgerLine,
         values_parser=_ledger_values,
         business_identifier="line_id",
+        source_name=source_name,
     )
 
 
-def ingest_policy(path: str | Path) -> IngestedPolicy:
+def ingest_policy(
+    path: str | Path, *, source_name: str | None = None
+) -> IngestedPolicy:
     file_path = Path(path)
-    payload, fingerprint = _fingerprint(file_path, SourceKind.POLICY)
-    text = _decode(payload, file_path)
+    effective_source_name = source_name or file_path.name
+    payload, fingerprint = _fingerprint(
+        file_path, SourceKind.POLICY, effective_source_name
+    )
+    text = _decode(payload, Path(effective_source_name))
     try:
         value = json.loads(text)
     except json.JSONDecodeError as error:
         raise FatalSourceError(
-            f"{file_path.name} is not valid JSON: {error}"
+            f"{effective_source_name} is not valid JSON: {error}"
         ) from error
     try:
         policy = ClosePolicy.model_validate(value)
     except ValidationError as error:
         raise FatalSourceError(
-            f"{file_path.name} violates the close-policy schema: {error}"
+            f"{effective_source_name} violates the close-policy schema: {error}"
         ) from error
     return IngestedPolicy(
-        source_name=file_path.name, fingerprint=fingerprint, policy=policy
+        source_name=effective_source_name, fingerprint=fingerprint, policy=policy
     )
 
 

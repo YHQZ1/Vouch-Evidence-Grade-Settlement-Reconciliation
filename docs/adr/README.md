@@ -21,6 +21,7 @@ correctness, trust boundaries, data model, dependencies, or deployment shape.
 | [0005](0005-immutable-canonical-domain-contracts.md) | Use immutable canonical domain contracts and integer subunits | Accepted |
 | [0006](0006-phase4-deterministic-reconciliation.md) | Use conservative deterministic evidence precedence and policy close readiness | Accepted |
 | [0007](0007-phase5-evaluation-isolation-and-deterministic-reports.md) | Isolate evaluation and publish deterministic reports | Accepted |
+| [0008](0008-fastapi-batch-boundary.md) | Expose deterministic reconciliation through a synchronous batch API | Accepted |
 
 ## Creating an ADR
 

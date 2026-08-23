@@ -119,6 +119,20 @@ default without a new accepted ADR.
 | Conflicting source evidence   | Create critical exception                                     |
 | Export failure                | Preserve stored decisions and allow retry                     |
 
+## Phase 6 API boundary
+
+The HTTP layer is an evidence-preserving transport boundary, not a second
+reconciliation engine. It requires an explicit evaluation clock, caps source
+uploads at 10 MiB by default, preserves raw bytes and SHA-256 fingerprints, and
+rejects unsupported content types, invalid UTF-8, and fatal source-format
+errors. Identical uploads are idempotent; replacements conflict; sources become
+immutable when a run starts. Failed runs retain only safe failure metadata and
+never expose partial results.
+
+The Phase 6 repository is process-local and has no authentication,
+authorization, tenancy, rate limiting, durable retention, or restart recovery.
+It must not be exposed as a production financial control endpoint.
+
 ## Human review
 
 Human review is not a mechanism for silently overriding evidence. A future manual

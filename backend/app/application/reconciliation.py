@@ -151,11 +151,13 @@ class ReconciliationService:
         ledger_path: str | Path,
         policy_path: str | Path,
         evaluation_clock: datetime | str,
+        source_names: dict[str, str] | None = None,
     ) -> BatchResult:
-        gateway = ingest_gateway(gateway_path)
-        bank = ingest_bank(bank_path)
-        ledger = ingest_ledger(ledger_path)
-        policy_input = ingest_policy(policy_path)
+        names = source_names or {}
+        gateway = ingest_gateway(gateway_path, source_name=names.get("gateway"))
+        bank = ingest_bank(bank_path, source_name=names.get("bank"))
+        ledger = ingest_ledger(ledger_path, source_name=names.get("ledger"))
+        policy_input = ingest_policy(policy_path, source_name=names.get("policy"))
         clock = _parse_clock(evaluation_clock)
         source_fingerprints = (
             gateway.fingerprint,

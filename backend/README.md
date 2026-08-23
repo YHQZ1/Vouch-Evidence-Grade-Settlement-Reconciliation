@@ -37,7 +37,12 @@ python -m pip install -e ".[dev]" -c constraints.txt
 python -m uvicorn app.main:app --reload
 ```
 
-The health endpoint is available at <http://127.0.0.1:8000/healthz>.
+The health endpoint is available at <http://127.0.0.1:8000/healthz>. Phase 6
+also exposes the versioned deterministic batch API under `/api/v1`; batches are
+process-local and do not survive restart.
+
+Run the complete demonstration through HTTP by following the curl walkthrough
+in `../README.md` or `../docs/api-contract.md`.
 
 ## Configuration
 
@@ -51,6 +56,8 @@ credentials or data-path settings in this phase.
 | `VOUCH_API_VERSION`  | `v1`            | Health response API version   |
 | `VOUCH_ENVIRONMENT`  | `development`   | Application environment label |
 | `VOUCH_LOG_LEVEL`    | `INFO`          | Application logging level     |
+| `VOUCH_MAX_UPLOAD_BYTES` | `10485760`  | Maximum bytes per source upload |
+| `VOUCH_MAX_PAGE_SIZE` | `100`           | Maximum list page size         |
 
 For example:
 
@@ -73,8 +80,8 @@ python -m ruff check .
 python -m ruff format --check .
 ```
 
-AI, persistence, API reconciliation endpoints, and frontend work remain deferred
-to later phases. The Phase 4 runtime CLI is:
+Authentication, durable persistence, queues, AI, and frontend work remain
+deferred to later phases. The Phase 4 runtime CLI is:
 
 ```bash
 python -m app.cli reconcile --help
@@ -110,5 +117,5 @@ python -m evaluation evaluate --dataset held-out --output-dir ../reports/evaluat
 The harness saves `runtime-result.json` before loading labels and emits
 `metrics.json`, `summary.md`, and `operational.json`. Demonstration evaluation
 is supported for development; held-out output is the only accuracy-claim
-dataset. Phase 6 APIs, persistence, frontend work, AI, and production
-integrations remain excluded.
+dataset. Phase 6 APIs are available under `/api/v1`; durable persistence,
+frontend work, AI, and production integrations remain excluded.
