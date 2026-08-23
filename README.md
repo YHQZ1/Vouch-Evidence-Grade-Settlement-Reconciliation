@@ -8,9 +8,8 @@ reconstructs each settlement, verifies the corresponding cash and ledger
 movements, investigates ambiguous exceptions through a bounded AI agent, and
 reports whether the settlement close is ready or blocked.
 
-> **Project status:** documentation and system design are established; product
-> implementation has not started. All examples and evaluation data will be
-> synthetic.
+> **Project status:** Phase 1 backend foundation is complete; synthetic evidence
+> generation is next. All examples and evaluation data will be synthetic.
 
 ## The problem
 
@@ -109,7 +108,7 @@ until it is reproduced by the evaluation harness.
 
 ```text
 vouch/
-├── backend/                  # Future reconciliation engine and API
+├── backend/                  # Phase 1 backend foundation; future reconciliation engine and API
 ├── frontend/                 # Future review and close-readiness interface
 ├── data/                     # Synthetic-data policy and future fixtures
 ├── docs/

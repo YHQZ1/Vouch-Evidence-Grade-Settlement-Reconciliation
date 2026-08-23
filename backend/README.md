@@ -1,41 +1,72 @@
-# Backend boundary
+# Vouch backend
 
-This directory will contain Vouch's reconciliation domain, application services,
-persistence adapters, evaluation entry points, and FastAPI delivery layer.
+This package contains the Phase 1 backend foundation for Vouch: application
+composition, configuration, logging, and a health endpoint. It does not yet
+implement reconciliation logic, financial calculations, data ingestion, or any
+AI integration.
 
-No backend implementation exists yet.
+## Requirements
 
-## Planned boundaries
+- Python 3.12 or newer (Python 3.13 is supported)
+- `pip`
 
-```text
-backend/
-├── app/
-│   ├── api/              # HTTP contracts and route orchestration
-│   ├── application/      # Batch and investigation use cases
-│   ├── domain/           # Financial entities, policies, and pure controls
-│   ├── infrastructure/   # SQLite, files, hashing, and model adapters
-│   └── main.py           # Future application composition root
-├── tests/
-│   ├── unit/
-│   ├── integration/
-│   ├── property/
-│   └── contract/
-└── pyproject.toml
+## Setup
+
+From this `backend` directory, create and activate a virtual environment:
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
 ```
 
-The exact package tree will be created with the first implementation slice rather
-than committed as empty directories.
+Install the application and development dependencies:
 
-## Dependency direction
-
-```text
-api → application → domain
-infrastructure → application/domain interfaces
-domain → standard library and explicit value contracts only
+```bash
+python -m pip install --upgrade pip
+python -m pip install -e ".[dev]" -c constraints.txt
 ```
 
-API routes and SQLAlchemy models must not contain reconciliation logic. The domain
-must remain runnable in tests without FastAPI, SQLite, or an AI model.
+## Run the API
 
-See the [system architecture](../docs/architecture.md) and
-[data contract](../docs/data-contract.md) before adding code.
+```bash
+python -m uvicorn app.main:app --reload
+```
+
+The health endpoint is available at <http://127.0.0.1:8000/healthz>.
+
+## Configuration
+
+Settings are read from environment variables prefixed with `VOUCH_`. Safe local
+defaults are used when no variables are supplied; the application has no
+credentials or data-path settings in this phase.
+
+| Variable | Default | Purpose |
+| --- | --- | --- |
+| `VOUCH_SERVICE_NAME` | `vouch-backend` | Health response service name |
+| `VOUCH_API_VERSION` | `v1` | Health response API version |
+| `VOUCH_ENVIRONMENT` | `development` | Application environment label |
+| `VOUCH_LOG_LEVEL` | `INFO` | Application logging level |
+
+For example:
+
+```bash
+VOUCH_LOG_LEVEL=DEBUG python -m uvicorn app.main:app --reload
+```
+
+## Quality checks
+
+Run tests:
+
+```bash
+python -m pytest
+```
+
+Run Ruff linting and formatting checks:
+
+```bash
+python -m ruff check .
+python -m ruff format --check .
+```
+
+Reconciliation, source-data generation, AI, and frontend work are deliberately
+deferred to later phases.

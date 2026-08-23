@@ -3,8 +3,9 @@
 **Status:** Proposed execution sequence  
 **Last reviewed:** 2026-08-23
 
-The roadmap is ordered by dependency and evaluation value. UI polish and AI are
-deliberately downstream of the deterministic data and control model.
+The roadmap is the locked eight-phase execution sequence, numbered Phase 0
+through Phase 7. It is ordered by dependency and evaluation value; UI polish and
+AI are deliberately downstream of the deterministic data and control model.
 
 ## Phase 0 — Product and repository contract
 
@@ -20,7 +21,23 @@ and architecture decisions are reviewable before implementation.
 - [x] Initial architecture decisions
 - [x] Contribution and repository guidance
 
-## Phase 1 — Synthetic evidence and ground truth
+## Phase 1 — Backend foundation
+
+**Outcome:** A production-quality local Python backend foundation provides an
+explicit application boundary, typed configuration, basic logging, and a stable
+health check for future phases.
+
+- [x] FastAPI application factory and entry point
+- [x] Stable `GET /healthz` endpoint
+- [x] Environment-backed typed settings with safe development defaults
+- [x] Basic application logging configuration
+- [x] Dependency, pytest, and Ruff configuration
+- [x] Backend setup and verification documentation
+
+**Exit gate:** The backend imports and starts locally, its health contract and
+configuration behavior are tested, and no reconciliation behavior is present.
+
+## Phase 2 — Synthetic evidence and ground truth
 
 **Outcome:** A reproducible dataset generator creates realistic source files and a
 separate answer key.
@@ -36,7 +53,7 @@ separate answer key.
 
 **Exit gate:** Dataset invariants pass without a reconciliation engine.
 
-## Phase 2 — Deterministic reconciliation core
+## Phase 3 — Deterministic reconciliation core
 
 **Outcome:** Clear cases reconcile without AI and ambiguous cases become explicit
 exceptions.
@@ -53,7 +70,7 @@ exceptions.
 **Exit gate:** All deterministic development fixtures produce their expected
 states with no false auto-clears.
 
-## Phase 3 — Evaluation harness
+## Phase 4 — Evaluation harness
 
 **Outcome:** Every public metric is reproducible from stored results and isolated
 ground truth.
@@ -69,7 +86,7 @@ ground truth.
 **Exit gate:** The held-out deterministic run passes the release gates documented
 in `evaluation.md`.
 
-## Phase 4 — API and review interface
+## Phase 5 — API and review interface
 
 **Outcome:** A reviewer can run a batch, inspect evidence, understand exceptions,
 and export the audit artifacts.
@@ -85,7 +102,7 @@ and export the audit artifacts.
 
 **Exit gate:** The complete deterministic demo can be performed through the UI.
 
-## Phase 5 — Bounded investigation agent
+## Phase 6 — Bounded investigation agent
 
 **Outcome:** The ambiguous tail receives useful investigation without expanding
 the model's financial authority.
@@ -101,7 +118,7 @@ the model's financial authority.
 **Exit gate:** The agent resolves at least one seeded ambiguous case through
 verified evidence and safely abstains or is rejected on another.
 
-## Phase 6 — Submission readiness
+## Phase 7 — Submission readiness
 
 **Outcome:** A reviewer can understand, run, verify, and evaluate Vouch from a
 clean checkout.
