@@ -74,17 +74,18 @@ checked-in batches are byte-for-byte reproducible from seeds `3102` and `3103`.
 **Outcome:** Clear cases reconcile without AI and ambiguous cases become explicit
 exceptions.
 
-- [ ] Strict ingestion and row-level validation
-- [ ] Raw evidence preservation and file fingerprinting
-- [ ] Settlement and balance-account aggregation
-- [ ] UTR-based bank matching and independent verification
-- [ ] Ledger journal and clearing-account controls
-- [ ] Candidate generation for unresolved records
-- [ ] Append-only decision and audit model
-- [ ] Versioned close-readiness policy
+- [x] Strict ingestion and row-level validation
+- [x] Raw evidence preservation and file fingerprinting
+- [x] Settlement and balance-account aggregation
+- [x] UTR-based bank matching and independent verification
+- [x] Ledger journal and clearing-account controls
+- [x] Candidate generation for unresolved records
+- [x] Append-only decision and audit model
+- [x] Versioned close-readiness policy
 
-**Exit gate:** All deterministic development fixtures produce their expected
-states with no false auto-clears.
+**Exit gate:** The deterministic development fixtures produce their expected
+states, the demonstration scenarios are reconciled without runtime labels, and
+the engine has no false auto-clears in the Phase 4 test cases.
 
 ## Phase 5 — Evaluation harness
 

@@ -177,7 +177,7 @@ configuration. Vouch does not infer a universal chart of accounts.
 - A line cannot contain both a positive debit and positive credit.
 - Zero-value lines are preserved; later controls may classify them explicitly.
 
-### Phase 4 journal and clearing controls (deferred)
+### Phase 4 journal and clearing controls
 
 These requirements remain part of the accepted product contract, but are not
 implemented by the Phase 2 record-local `LedgerLine` contract:
@@ -210,7 +210,7 @@ The implemented `ClosePolicy` contract defines:
 No threshold will be presented as universally correct. The demonstration policy
 will be clearly labeled synthetic.
 
-## Phase 4 runtime outputs (deferred)
+## Phase 4 runtime outputs
 
 ### Settlement result
 
@@ -220,12 +220,21 @@ Each result contains:
 - constituent source-record IDs;
 - calculated gross activity and signed net;
 - candidate and verified bank links;
-- candidate and verified ledger links;
+- candidate and verified movement-level ledger links (one gateway source record
+  and its exact same-journal ledger assignment per link);
+- separate settlement-level bank/clearing posting links;
 - clearing-account residual;
 - resolution state and reason codes;
 - exception severity and material value;
 - resolver type; and
 - complete decision lineage.
+
+The runtime service returns an immutable `BatchResult` containing source
+fingerprints, ingestion summaries and rejected rows, settlement aggregates,
+accepted links, rejected candidates with signals and rejection reasons, excluded
+records, accounting controls, exceptions, value buckets, close assessment,
+decisions, and append-only audit events. The CLI serializes this contract as
+canonical JSON. Runtime code does not read ground-truth data.
 
 ### Audit event
 
@@ -241,6 +250,26 @@ Each event contains:
 - calculated values used by the decision;
 - resolver type; and
 - UTC timestamp.
+
+The Phase 4 in-memory audit stream is ordered by deterministic sequence number
+and includes source-ingestion, policy-validation, bank-candidate,
+evidence-link, ledger-control, settlement-resolution, and final close-assessment
+events in that causal order. Accepted and rejected bank candidates carry their
+acceptance flag, score, signals, and machine-readable reasons. Duplicate source
+identifiers are rejected for every occurrence; malformed ledger identifiers do
+not prove out-of-scope status, while independently validated bank/gateway
+balance-account attributes may. Fee and tax totals prefer authoritative
+adjustment movements when the export also carries descriptive payment fields,
+avoiding double counting; descriptive-only values require independently
+verified configured ledger postings before `fee_tax_netted` can be emitted.
+Every accepted or proposed movement-level ledger assignment has its own
+evidence-link event and cites exactly one gateway source record plus its
+assigned ledger source records. Ledger source records are never bundled across
+movements. Settlement bank/clearing evidence is represented separately by a
+settlement-level link with its journal ID. A proposed or rejected assignment or
+link must contain at least one reason code. A verified movement assignment
+requires one unique unused same-journal pair with the configured account role,
+amount, identifiers, settlement scope, and debit/credit direction.
 
 ## Ground-truth contract
 

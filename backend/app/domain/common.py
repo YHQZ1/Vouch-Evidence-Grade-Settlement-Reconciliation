@@ -81,6 +81,7 @@ class SourceKind(StrEnum):
     GATEWAY = "gateway"
     BANK = "bank"
     LEDGER = "ledger"
+    POLICY = "policy"
 
 
 class TransactionType(StrEnum):

@@ -1,12 +1,13 @@
 # Vouch backend
 
 This package contains the Phase 1 backend foundation, Phase 2 canonical domain
-contracts, and the Phase 3 synthetic-data boundary. The domain layer defines
+contracts, the Phase 3 synthetic-data boundary, and the Phase 4 deterministic
+reconciliation engine. The domain layer defines
 immutable source lineage, raw evidence, integer currency-subunit arithmetic,
 gateway/bank/ledger records, policy inputs, and a shared reason-code vocabulary.
 The generator lives in `synthetic_data` outside the runtime `app` package and is
-not included in the application wheel. Reconciliation, persistence, and AI
-integration remain deferred to later phases.
+not included in the application wheel. Phase 4 reconciliation is in-memory and
+has no persistence, AI, or external integrations.
 
 ## Requirements
 
@@ -71,8 +72,14 @@ python -m ruff check .
 python -m ruff format --check .
 ```
 
-Reconciliation, AI, persistence, and frontend work are deliberately deferred to
-later phases. Phase 3 dataset commands are:
+AI, persistence, API reconciliation endpoints, and frontend work remain deferred
+to later phases. The Phase 4 runtime CLI is:
+
+```bash
+python -m app.cli reconcile --help
+```
+
+Phase 3 dataset commands are:
 
 ```bash
 python -m synthetic_data generate --dataset development
@@ -88,3 +95,7 @@ variant; the effective seed is recorded in `generation_command`. The public CLI
 spelling is `held-out` while its frozen directory is `held_out`. Verification and
 frozen checks are read-only. Use `--data-root PATH` to generate into a temporary
 location.
+
+Reconciliation results keep gateway-to-ledger evidence at movement granularity:
+each link cites one gateway source record and its exact same-journal ledger
+assignment. Settlement-level bank/clearing postings use a separate link.

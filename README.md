@@ -9,9 +9,9 @@ movements, investigates ambiguous exceptions through a bounded AI agent, and
 reports whether the settlement close is ready or blocked.
 
 > **Project status:** Phase 3 deterministic synthetic datasets and separate
-> ground truth are complete; Phase 4 deterministic reconciliation is next.
-> Reconciliation behavior remains deferred to later phases. All examples and
-> evaluation data are synthetic.
+> ground truth are complete; Phase 4 deterministic reconciliation is complete.
+> All examples and evaluation data are synthetic. Phase 5 evaluation metrics
+> remain separate from the runtime engine.
 
 ## The problem
 
@@ -105,6 +105,23 @@ coverage, money-weighted reconciliation rate, unresolved value, throughput, and
 AI abstention/failure rates. The primary safety objective is **zero incorrect
 auto-clears on the frozen held-out batch**. No performance number will be claimed
 until it is reproduced by the evaluation harness.
+
+## Deterministic runtime
+
+The framework-independent service is available without the API or persistence:
+
+```bash
+cd backend
+python -m app.cli reconcile --help
+```
+
+The result is deterministic JSON containing source fingerprints, immutable
+lineage, candidates, evidence links, accounting controls, decisions, exceptions,
+value buckets, and close readiness. Similarity and narration can produce
+candidates, but only independent deterministic evidence can clear a settlement.
+Gateway-to-ledger evidence is emitted per movement with exact same-journal
+lineage; settlement-level bank/clearing posting evidence is represented
+separately.
 
 ## Repository map
 

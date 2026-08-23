@@ -81,15 +81,16 @@ It does not perform matching.
 
 ### Canonical record store
 
-SQLite holds batch metadata, immutable source records, canonical projections,
-evidence links, decisions, exceptions, and audit events. Source files remain the
-origin of truth; canonical records are versioned interpretations of that evidence.
+Phase 4 keeps batch metadata, immutable source records, canonical projections,
+evidence links, decisions, exceptions, and audit events in an in-memory result.
+Persistence remains a later-phase adapter. Source files remain the origin of
+truth; canonical records are versioned interpretations of that evidence.
 The Phase 2 domain boundary is framework-independent and currently provides
 `SourceLineage`, `RawEvidence`, `Money`, `GatewayMovement`, `BankEntry`,
 `LedgerLine`, and `ClosePolicy`. Each projection retains scalar raw values and
-source identity. It does not aggregate journals, calculate journal residuals,
-link records, or make decisions; persistence adapters and those controls are
-deferred to later phases.
+source identity. Phase 4 application services aggregate settlements, calculate
+journal residuals, link records, and emit immutable decisions without importing
+filesystem or framework concerns into the domain.
 
 Phase 3 adds `backend/synthetic_data/` as a generator-only package. It may
 import canonical contracts from `app.domain`, but `backend/app/` does not import
@@ -108,10 +109,12 @@ The graph is a logical domain structure, not a graph database. It connects:
 
 - Razorpay transaction rows to a settlement;
 - settlement to UTR and candidate bank entries;
-- transaction and settlement references to ledger journals; and
+- each gateway movement to its exact ledger evidence pair, with one movement
+  link per assignment; settlement bank/clearing postings are separate
+  settlement-level links; and
 - every proposed relationship to the evidence that supports or contradicts it.
 
-### Deterministic control engine (planned after Phase 2)
+### Deterministic control engine (Phase 4)
 
 Controls run from strongest evidence to weakest:
 
@@ -124,6 +127,23 @@ Controls run from strongest evidence to weakest:
 7. candidate generation for unresolved cases.
 
 Similarity scores never directly produce a cleared decision.
+
+Ledger lineage is deliberately movement-scoped. A `gateway_to_ledger` link
+contains one gateway source record, only the ledger source records assigned to
+that movement, and one journal ID. It never aggregates unrelated movements.
+Settlement-level bank and clearing postings use a separate
+`settlement_to_ledger` link. Assignment consumes journal evidence once, and
+ambiguous, swapped, reused, duplicate, or missing lines remain proposed or
+rejected with explicit reasons. A verified movement pair must also satisfy the
+configured counterpart role and debit/credit direction; role or direction
+mismatches are blocking controls for every movement type.
+
+Runtime precedence is: source/schema integrity; canonical settlement arithmetic
+and ledger controls; exact UTR plus independent direction, currency, amount,
+partition, timing, uniqueness, and one-use checks; configured explanations;
+fallback candidates; then SLA/materiality close policy. Critical integrity or
+overdue conditions dominate pending and clearing states. The evaluation clock is
+always passed explicitly; no system clock is read.
 
 ### Exception case manager
 
@@ -202,19 +222,25 @@ No lower authority may override a failed higher-authority control.
 
 ## Persistence and audit design
 
-The MVP uses SQLite through a repository layer. Domain logic must not depend on
-SQLAlchemy models directly.
+Phase 4 has no repository or database implementation. A future persistence
+adapter may use the accepted local architecture, but domain logic must not depend
+on persistence models directly.
 
 Audit records are append-only at the application layer and capture:
 
 - batch and decision IDs;
 - raw and canonical source-row IDs;
 - input SHA-256 fingerprints;
-- rule, policy, schema, and prompt versions;
+- rule, policy, and schema versions;
 - before and after states;
 - calculated evidence values;
 - resolver type (`rule`, `agent_verified`, or `manual_review`); and
 - timestamp in UTC.
+
+The Phase 4 runtime emits one evidence-link audit event for every accepted or
+proposed movement-level assignment, preserving the exact cited source IDs and
+calculated line count. Candidate bank signals and settlement-level posting
+evidence are retained in their own link or candidate events.
 
 ## API boundary
 

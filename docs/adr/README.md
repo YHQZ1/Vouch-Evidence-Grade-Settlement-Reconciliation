@@ -19,6 +19,7 @@ correctness, trust boundaries, data model, dependencies, or deployment shape.
 | [0003](0003-bounded-provider-isolated-ai.md) | Keep AI bounded, local-first, and provider-isolated | Accepted |
 | [0004](0004-local-modular-architecture.md) | Use a local modular architecture with SQLite | Accepted |
 | [0005](0005-immutable-canonical-domain-contracts.md) | Use immutable canonical domain contracts and integer subunits | Accepted |
+| [0006](0006-phase4-deterministic-reconciliation.md) | Use conservative deterministic evidence precedence and policy close readiness | Accepted |
 
 ## Creating an ADR
 
