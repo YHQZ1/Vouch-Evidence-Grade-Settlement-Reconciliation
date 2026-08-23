@@ -1,0 +1,39 @@
+{
+  "dataset_id": "vouch-phase3-held_out",
+  "dataset_kind": "held_out",
+  "files": {
+    "bank_statement.csv": {
+      "bytes": 2417,
+      "sha256": "9b200c5f88f33684b4840ea7e8e5bdae709d08ad73abe301846c9aa7c9bf900a"
+    },
+    "batch_policy.json": {
+      "bytes": 702,
+      "sha256": "903cdfbdcdcd025b83fa715ea1c0e1afde644142c8090265f4bd84ac080a769e"
+    },
+    "general_ledger.csv": {
+      "bytes": 51946,
+      "sha256": "4a4c6a786074b1af1abdf9732b505df2f723993bda6a0ef1b3c3b9622dac0c61"
+    },
+    "razorpay_recon.csv": {
+      "bytes": 27333,
+      "sha256": "989b3e6f2cf005e95a7af70a18fec8b8bf640a6eebf322e2048d5cc274d24be5"
+    }
+  },
+  "fixed_evaluation_clock": "2026-08-31T18:30:00Z",
+  "generation_command": "python -m synthetic_data generate --dataset held-out --seed 3103",
+  "generator_version": "phase3-4.0",
+  "record_counts": {
+    "bank_statement": 16,
+    "general_ledger": 236,
+    "razorpay_recon": 109
+  },
+  "schema_version": "v1",
+  "seed": 3103,
+  "settlement_count": 12,
+  "source_filenames": [
+    "bank_statement.csv",
+    "batch_policy.json",
+    "general_ledger.csv",
+    "razorpay_recon.csv"
+  ]
+}

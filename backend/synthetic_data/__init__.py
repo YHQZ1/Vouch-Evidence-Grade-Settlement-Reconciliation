@@ -1,0 +1,13 @@
+"""Phase 3 synthetic source generation and evaluation-only ground truth."""
+
+GENERATOR_VERSION = "phase3-4.0"
+GROUND_TRUTH_SCHEMA_VERSION = "v1"
+DATA_SCHEMA_VERSION = "v1"
+FIXED_EVALUATION_CLOCK = "2026-08-31T18:30:00Z"
+
+__all__ = [
+    "DATA_SCHEMA_VERSION",
+    "FIXED_EVALUATION_CLOCK",
+    "GENERATOR_VERSION",
+    "GROUND_TRUTH_SCHEMA_VERSION",
+]

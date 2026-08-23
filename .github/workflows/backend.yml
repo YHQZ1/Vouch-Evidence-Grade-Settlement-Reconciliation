@@ -35,3 +35,9 @@ jobs:
 
       - name: Check Ruff formatting
         run: python -m ruff format --check .
+
+      - name: Verify frozen datasets
+        run: python -m synthetic_data verify --all
+
+      - name: Check frozen artifact equivalence
+        run: python -m synthetic_data check-frozen

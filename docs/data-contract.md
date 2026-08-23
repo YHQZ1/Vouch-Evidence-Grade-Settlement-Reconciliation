@@ -26,6 +26,10 @@ by Vouch. Phase 2 implements the framework-independent contracts in
 - Empty values are null, never overloaded sentinel strings such as `NA` or `-`.
 - Identifiers remain strings and are never numerically coerced.
 - Ground-truth columns are prohibited in runtime input files.
+- `source_row_number` means the one-based physical data-row number in the
+  emitted CSV, excluding the header. The interpretation is identical for every
+  source file and is used with the final file fingerprint to derive
+  `source_record_id`.
 
 ## Phase 2 implementation boundary
 
@@ -252,6 +256,25 @@ Ground truth is stored separately from runtime sources and records:
 
 Runtime packages may not import ground-truth schemas or file locations.
 
+Phase 3 emits runtime inputs under `data/<dataset>/inputs/`, runtime-only
+manifests under `data/manifests/`, and the versioned answer key under
+`data/ground_truth/<dataset>/`. Ground truth is constructed only after final
+input bytes are written and fingerprinted, avoiding a circular dependency
+between source-record IDs and answer-key content.
+
+Phase 3 ground truth also records the unresolved value contributed by each
+settlement and its policy-derived materiality result. A material unresolved
+`needs_review` settlement blocks close; an absent bank credit that is still
+within the configured SLA is `pending_within_sla` and may contribute to
+`READY_WITH_EXCEPTIONS`. These are evaluation-only labels, not runtime policy
+logic. The frozen batches use a 48-hour SLA and an absolute threshold of 10,000
+paise or the configured relative threshold, whichever applies.
+The shared reason-code vocabulary also distinguishes `fee_tax_netted` and
+`refund_netted` from the generic `exact_evidence_verified` explanation.
+Balance-account isolation is a clean partition control: an exact candidate in
+the configured account remains valid while an otherwise similar candidate in a
+different account is excluded.
+
 ## Synthetic scenario catalogue
 
 The frozen evaluation batch must include:
@@ -269,4 +292,6 @@ The frozen evaluation batch must include:
 11. unrelated bank distractors;
 12. balance-account isolation;
 13. malformed rows that must be rejected; and
-14. untrusted narration that resembles model instructions.
+14. untrusted narration that resembles model instructions;
+15. amount resemblance without sufficient proof; and
+16. a distinct pending-within-SLA case with no bank credit.

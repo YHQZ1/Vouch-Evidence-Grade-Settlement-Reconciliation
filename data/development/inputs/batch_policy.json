@@ -1,0 +1,29 @@
+{
+  "account_role_mapping": {
+    "1000": "bank",
+    "1100": "razorpay_clearing",
+    "2100": "input_gst",
+    "4000": "sales_revenue",
+    "5000": "refunds",
+    "5100": "gateway_fee_expense",
+    "6000": "other"
+  },
+  "amount_tolerance_subunits": 0,
+  "balance_account_ids": [
+    "ba_01",
+    "ba_02"
+  ],
+  "currency": "INR",
+  "display_timezone": "Asia/Kolkata",
+  "materiality_absolute_subunits": 10000,
+  "materiality_relative_bps": 100,
+  "period_end": "2026-09-01T00:00:00+05:30",
+  "period_start": "2026-08-01T00:00:00+05:30",
+  "policy_version": "synthetic-phase3-policy-v1",
+  "settlement_sla": [
+    {
+      "max_age_hours": 48,
+      "settlement_class": "standard_domestic"
+    }
+  ]
+}

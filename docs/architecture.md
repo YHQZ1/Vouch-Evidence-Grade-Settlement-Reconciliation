@@ -91,6 +91,17 @@ source identity. It does not aggregate journals, calculate journal residuals,
 link records, or make decisions; persistence adapters and those controls are
 deferred to later phases.
 
+Phase 3 adds `backend/synthetic_data/` as a generator-only package. It may
+import canonical contracts from `app.domain`, but `backend/app/` does not import
+the generator, scenario registry, ground-truth schema, or ground-truth paths.
+Generated runtime inputs and manifests are separate from
+`data/ground_truth/<dataset>/`; the wheel build packages only `app`. An AST
+architecture test and the dataset verifier enforce this boundary.
+Ground truth is produced from final input fingerprints and one-based data-row
+numbers in a separate write step. The independent verifier reads emitted files
+from disk and checks scenario evidence, timing, accounting, materiality, and
+reference resolution without consulting generator traits.
+
 ### Evidence graph builder
 
 The graph is a logical domain structure, not a graph database. It connects:

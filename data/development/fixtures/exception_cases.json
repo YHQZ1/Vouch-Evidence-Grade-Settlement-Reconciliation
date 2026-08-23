@@ -1,0 +1,36 @@
+{
+  "fixture_id": "fixture-exceptions-01",
+  "description": "Small readable examples for missing evidence and accounting failure.",
+  "cases": [
+    {
+      "case_id": "missing-utr",
+      "trait": "missing_settlement_utr",
+      "evidence": {
+        "gateway_movements": [
+          {"entity_id": "fixture_missing_utr_payment", "type": "payment", "credit": "12500", "debit": "0", "settlement_id": "fixture_missing_utr", "settlement_utr": ""}
+        ],
+        "bank_credit": {"bank_row_id": "fixture_missing_utr_bank", "direction": "credit", "amount": "12500", "reference": ""}
+      },
+      "expected": {
+        "resolution_state": "needs_review",
+        "reason_codes": ["utr_missing"],
+        "auto_clear_eligibility": false
+      }
+    },
+    {
+      "case_id": "unbalanced-journal",
+      "trait": "missing_ledger_line",
+      "evidence": {
+        "journal_id": "fixture_unbalanced_01",
+        "ledger_lines": [
+          {"line_id": "fixture_unbalanced_debit", "debit": "12500", "credit": "0", "account_code": "1100"}
+        ]
+      },
+      "expected": {
+        "resolution_state": "critical_exception",
+        "reason_codes": ["ledger_line_missing", "journal_unbalanced"],
+        "expected_blocking_behavior": "blocking"
+      }
+    }
+  ]
+}

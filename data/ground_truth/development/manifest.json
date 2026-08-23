@@ -1,0 +1,19 @@
+{
+  "dataset_id": "vouch-phase3-development",
+  "dataset_kind": "development",
+  "fixed_evaluation_clock": "2026-08-31T18:30:00Z",
+  "generator_version": "phase3-4.0",
+  "ground_truth_artifact": {
+    "bytes": 52441,
+    "filename": "ground_truth.json",
+    "sha256": "ede7e89abff2758bebc1a322ca76c43619e1720d2172a62440a3768acfa53544"
+  },
+  "ground_truth_schema_version": "v1",
+  "seed": 3101,
+  "source_fingerprints": {
+    "bank_statement.csv": "7857e28aefdcf083ba941658017fa319e6e43102156bdfc33089737252ea1d19",
+    "batch_policy.json": "903cdfbdcdcd025b83fa715ea1c0e1afde644142c8090265f4bd84ac080a769e",
+    "general_ledger.csv": "765ce4ac9c22c86928bc7ed49d5f0eca7cb59fd5b4fb52a2591e37d0d14ec472",
+    "razorpay_recon.csv": "6bd7f0634efdea376a7a323b88db99d71c0e67e494846a8e6aa98514608f69a0"
+  }
+}

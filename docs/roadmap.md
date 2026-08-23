@@ -58,15 +58,16 @@ evidence, and never represent money with floating-point values.
 **Outcome:** A reproducible dataset generator creates realistic source files and a
 separate answer key.
 
-- [ ] Define scenario and reason-code registry
-- [ ] Implement a deterministic seeded generator
-- [ ] Generate readable development fixtures
-- [ ] Freeze a 50+ record demonstration batch
-- [ ] Freeze a separate held-out batch
-- [ ] Verify ledger balance and settlement arithmetic independently
-- [ ] Prove that runtime inputs contain no ground-truth fields
+- [x] Define scenario and reason-code registry
+- [x] Implement a deterministic seeded generator
+- [x] Generate readable development fixtures
+- [x] Freeze a 50+ record demonstration batch
+- [x] Freeze a separate held-out batch
+- [x] Verify ledger balance and settlement arithmetic independently
+- [x] Prove that runtime inputs contain no ground-truth fields
 
-**Exit gate:** Dataset invariants pass without a reconciliation engine.
+**Exit gate:** Dataset invariants pass without a reconciliation engine. The
+checked-in batches are byte-for-byte reproducible from seeds `3102` and `3103`.
 
 ## Phase 4 — Deterministic reconciliation engine
 

@@ -34,6 +34,17 @@ thresholds, prompts, and scenario logic must not be tuned by inspecting its labe
 
 Ground truth remains inaccessible to the runtime engine in all three cases.
 
+Phase 3 locations are `data/demonstration/inputs/`,
+`data/held_out/inputs/`, and `data/ground_truth/held_out/`. The runtime-only
+manifests in `data/manifests/` contain source hashes and counts but no labels.
+The held-out seed is `3103`, with fixed clock `2026-08-31T18:30:00Z`; future
+rules and prompts must not be tuned by inspecting its separate answer key.
+The current phase freezes evidence and verification only; it does not publish
+evaluation metrics. The generator records `phase3-4.0`, the effective seed, and
+the fixed clock in each manifest. `valid_bank_arrival_within_sla` has an exact
+credit and is cleared; `pending_within_sla` has no credit and an age below 48
+hours; `overdue_missing_bank_credit` has no credit and an age above 48 hours.
+
 ## Units of evaluation
 
 Metrics are reported at multiple levels:

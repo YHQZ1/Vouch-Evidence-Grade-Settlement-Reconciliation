@@ -8,10 +8,10 @@ reconstructs each settlement, verifies the corresponding cash and ledger
 movements, investigates ambiguous exceptions through a bounded AI agent, and
 reports whether the settlement close is ready or blocked.
 
-> **Project status:** Phase 2 canonical schemas and financial value objects are
-> complete; Phase 3 synthetic dataset generation is next. Reconciliation
-> behavior remains deferred to later phases. All examples and evaluation data
-> will be synthetic.
+> **Project status:** Phase 3 deterministic synthetic datasets and separate
+> ground truth are complete; Phase 4 deterministic reconciliation is next.
+> Reconciliation behavior remains deferred to later phases. All examples and
+> evaluation data are synthetic.
 
 ## The problem
 
@@ -110,9 +110,9 @@ until it is reproduced by the evaluation harness.
 
 ```text
 vouch/
-├── backend/                  # Phase 1 backend foundation; future reconciliation engine and API
+├── backend/                  # Domain contracts, Phase 3 generator, future reconciliation engine and API
 ├── frontend/                 # Future review and close-readiness interface
-├── data/                     # Synthetic-data policy and future fixtures
+├── data/                     # Frozen synthetic inputs, fixtures, manifests, and labels
 ├── docs/
 │   ├── adr/                  # Architecture decision records
 │   ├── architecture.md

@@ -1,0 +1,19 @@
+{
+  "dataset_id": "vouch-phase3-held_out",
+  "dataset_kind": "held_out",
+  "fixed_evaluation_clock": "2026-08-31T18:30:00Z",
+  "generator_version": "phase3-4.0",
+  "ground_truth_artifact": {
+    "bytes": 144090,
+    "filename": "ground_truth.json",
+    "sha256": "11b5374ce0f083ed37ac1dbb22a339acb449ae76aa9641b64a3b8b98e3bee390"
+  },
+  "ground_truth_schema_version": "v1",
+  "seed": 3103,
+  "source_fingerprints": {
+    "bank_statement.csv": "9b200c5f88f33684b4840ea7e8e5bdae709d08ad73abe301846c9aa7c9bf900a",
+    "batch_policy.json": "903cdfbdcdcd025b83fa715ea1c0e1afde644142c8090265f4bd84ac080a769e",
+    "general_ledger.csv": "4a4c6a786074b1af1abdf9732b505df2f723993bda6a0ef1b3c3b9622dac0c61",
+    "razorpay_recon.csv": "989b3e6f2cf005e95a7af70a18fec8b8bf640a6eebf322e2048d5cc274d24be5"
+  }
+}

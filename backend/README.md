@@ -1,10 +1,12 @@
 # Vouch backend
 
-This package contains the Phase 1 backend foundation and Phase 2 canonical
-domain contracts for Vouch. The domain layer defines immutable source lineage,
-raw evidence, integer currency-subunit arithmetic, gateway/bank/ledger records,
-and versioned close-policy inputs. Reconciliation, persistence, data generation,
-and AI integration remain deferred to later phases.
+This package contains the Phase 1 backend foundation, Phase 2 canonical domain
+contracts, and the Phase 3 synthetic-data boundary. The domain layer defines
+immutable source lineage, raw evidence, integer currency-subunit arithmetic,
+gateway/bank/ledger records, policy inputs, and a shared reason-code vocabulary.
+The generator lives in `synthetic_data` outside the runtime `app` package and is
+not included in the application wheel. Reconciliation, persistence, and AI
+integration remain deferred to later phases.
 
 ## Requirements
 
@@ -69,5 +71,20 @@ python -m ruff check .
 python -m ruff format --check .
 ```
 
-Reconciliation, source-data generation, AI, persistence, and frontend work are
-deliberately deferred to later phases.
+Reconciliation, AI, persistence, and frontend work are deliberately deferred to
+later phases. Phase 3 dataset commands are:
+
+```bash
+python -m synthetic_data generate --dataset development
+python -m synthetic_data generate --dataset demonstration
+python -m synthetic_data generate --dataset held-out
+python -m synthetic_data verify --all
+python -m synthetic_data check-frozen
+```
+
+Generation is deterministic and refuses to overwrite existing artifacts unless
+`--overwrite` is supplied explicitly. Use `--seed INTEGER` to create a reproducible
+variant; the effective seed is recorded in `generation_command`. The public CLI
+spelling is `held-out` while its frozen directory is `held_out`. Verification and
+frozen checks are read-only. Use `--data-root PATH` to generate into a temporary
+location.

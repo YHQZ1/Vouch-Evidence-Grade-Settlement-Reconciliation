@@ -1,0 +1,3705 @@
+{
+  "dataset_id": "vouch-phase3-demonstration",
+  "dataset_kind": "demonstration",
+  "expected_close_readiness": "BLOCKED",
+  "expected_deliberately_unbalanced_journals": [
+    "j_3102_ent_3102_p06_00",
+    "j_3102_ent_3102_p07_00"
+  ],
+  "expected_duplicate_ledger_lines": [
+    {
+      "line_id": "l_3102_ent_3102_p06_00_d",
+      "source_records": [
+        {
+          "journal_id": "j_3102_ent_3102_p06_00",
+          "line_id": "l_3102_ent_3102_p06_00_d",
+          "settlement_id": "set_3102_p06",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_352d7107b4127152be8c6fa2a6e31ea76cf22d0fbc694f8077e4a46e1198221a",
+          "source_row_number": 1
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p06_00",
+          "line_id": "l_3102_ent_3102_p06_00_d",
+          "settlement_id": "set_3102_p06",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_999db9bdf06b9b683618a07e1d0e867788c80cfcf6859c4dfb4092e4fa86540a",
+          "source_row_number": 200
+        }
+      ]
+    }
+  ],
+  "expected_excluded_or_distractor_records": [
+    {
+      "bank_row_id": "bank_3102_p09_collision",
+      "settlement_id": null,
+      "source_file": "bank_statement.csv",
+      "source_record_id": "src_5a68aeaa7bd3134bbbfce8d1c187db0d1a1a7f6cbb37624becea59a50fa2715d",
+      "source_row_number": 1
+    },
+    {
+      "bank_row_id": "bank_3102_amount_adversary",
+      "settlement_id": null,
+      "source_file": "bank_statement.csv",
+      "source_record_id": "src_b9131b68207b74ef3806354008aef29539049ffe835909cbd21162f3e776206a",
+      "source_row_number": 3
+    },
+    {
+      "bank_row_id": "bank_3102_distractor_00",
+      "settlement_id": null,
+      "source_file": "bank_statement.csv",
+      "source_record_id": "src_162fe82da4b4acf5f4538c872745c884529ae96885e9d49e3a8b93faf1851e42",
+      "source_row_number": 4
+    },
+    {
+      "bank_row_id": "bank_3102_distractor_02",
+      "settlement_id": null,
+      "source_file": "bank_statement.csv",
+      "source_record_id": "src_8db5425eb2e55e37aaec6f6f91962e811796a471a915367ed0865138d709bdb0",
+      "source_row_number": 7
+    },
+    {
+      "bank_row_id": "bank_3102_distractor_01",
+      "settlement_id": null,
+      "source_file": "bank_statement.csv",
+      "source_record_id": "src_3086d2e16ccf9a2111d9d6d7fc9adf898cfdbb4431053a2314bba125f7bc7070",
+      "source_row_number": 8
+    },
+    {
+      "bank_row_id": "bank_3102_partition_adversary",
+      "settlement_id": null,
+      "source_file": "bank_statement.csv",
+      "source_record_id": "src_4ac405903eed139d7ad061fc263ba34b0df95234b8a9b440fdc2f40e154811b7",
+      "source_row_number": 14
+    }
+  ],
+  "expected_gateway_to_ledger_links": [
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p01_09",
+        "settlement_id": "set_3102_p01",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_e8d20274f9b8928ac3779ee338b30638c42d93ba85dd726e80926342405029ce",
+        "source_row_number": 10
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p01_09",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p01_09",
+          "line_id": "l_3102_ent_3102_p01_09_c",
+          "settlement_id": "set_3102_p01",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_6a75e109cf0c53c872d8e5ac8b3b6e348cf50f2f07a863a7d0ccdf2b36cbb1cd",
+          "source_row_number": 49
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p01_09",
+          "line_id": "l_3102_ent_3102_p01_09_d",
+          "settlement_id": "set_3102_p01",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_ed02e20dfddaf8631b8f74e77b320bc6609e802fab4549404329ee1faf8e3ffd",
+          "source_row_number": 163
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p01_02",
+        "settlement_id": "set_3102_p01",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_8b22d11a6053f6cf72ccc34a70fcdf276ed7e488dccd4fa3de782028da6efd2a",
+        "source_row_number": 13
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p01_02",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p01_02",
+          "line_id": "l_3102_ent_3102_p01_02_c",
+          "settlement_id": "set_3102_p01",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_9ddfa94e563eb6b6210023ee001e4c457199d74df8de9db9bf7dc98be80f218a",
+          "source_row_number": 53
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p01_02",
+          "line_id": "l_3102_ent_3102_p01_02_d",
+          "settlement_id": "set_3102_p01",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_c61171de314994dbeb8772791377e17c0e84a29f2e3e291d2d90b7c9a7e04a41",
+          "source_row_number": 132
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p01_00",
+        "settlement_id": "set_3102_p01",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_20cd87ece235ed36304891bc40512597d14b1fe5ae0a7d4dfa64240667cba960",
+        "source_row_number": 15
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p01_00",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p01_00",
+          "line_id": "l_3102_ent_3102_p01_00_d",
+          "settlement_id": "set_3102_p01",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_93cb33af30c546b535e5c1453b05386261aafbd2e62c2b67d252ae24339bf239",
+          "source_row_number": 29
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p01_00",
+          "line_id": "l_3102_ent_3102_p01_00_c",
+          "settlement_id": "set_3102_p01",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_ab3daf4b3152656f38f95f6c3c843b78dab670e9a6f0721bf2e9f7585b4b07cf",
+          "source_row_number": 89
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p01_05",
+        "settlement_id": "set_3102_p01",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_cf91e5d70f3be9db7cd50905a93b7e2aeec5fe80419dde8227b57e3b4d844bb5",
+        "source_row_number": 21
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p01_05",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p01_05",
+          "line_id": "l_3102_ent_3102_p01_05_c",
+          "settlement_id": "set_3102_p01",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_221ba6945e529bee129ab7aa45d98dc3990bfde37ba76d6fe6f0821274f730b7",
+          "source_row_number": 92
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p01_05",
+          "line_id": "l_3102_ent_3102_p01_05_d",
+          "settlement_id": "set_3102_p01",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_7308c185321738beedcadf42a68d36d934dd19e28c58aa9a179ddb184a9a6211",
+          "source_row_number": 148
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p01_04",
+        "settlement_id": "set_3102_p01",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_7f645f2515f52aa4b7aeada525e843bb8f067fdabae16e64d8af6458645da024",
+        "source_row_number": 22
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p01_04",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p01_04",
+          "line_id": "l_3102_ent_3102_p01_04_c",
+          "settlement_id": "set_3102_p01",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_af0f00207b0bb83671306d3a7fbf6e5bae7a0e3f6e300e81ee3902753be130cf",
+          "source_row_number": 63
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p01_04",
+          "line_id": "l_3102_ent_3102_p01_04_d",
+          "settlement_id": "set_3102_p01",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_f057154e4507cf1dab212a13db146845b941390d40b830d2b294a54012d46adf",
+          "source_row_number": 69
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p01_06",
+        "settlement_id": "set_3102_p01",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_e919cb1d3198489bc2b050d89fc4234ffec339eb6fe759c91722e45e4aed5546",
+        "source_row_number": 45
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p01_06",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p01_06",
+          "line_id": "l_3102_ent_3102_p01_06_d",
+          "settlement_id": "set_3102_p01",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_8b8ca306f0646e211bc75011e3a7909519daef89275dea9fb71ba55b450518c7",
+          "source_row_number": 10
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p01_06",
+          "line_id": "l_3102_ent_3102_p01_06_c",
+          "settlement_id": "set_3102_p01",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_4721959b3f4f8fa967c2b54a90310d4b7e67024d0d98e751fe50f48b7dbe0a86",
+          "source_row_number": 187
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p01_01",
+        "settlement_id": "set_3102_p01",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_682e5725e01f17b785510efb537a83b13b2dd2cd1fb03a3efc660822c29234ea",
+        "source_row_number": 51
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p01_01",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p01_01",
+          "line_id": "l_3102_ent_3102_p01_01_c",
+          "settlement_id": "set_3102_p01",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_e0d8659b837200fdef59819f426f5f03e418ef14e03d0aa2e4f3271e0610b040",
+          "source_row_number": 37
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p01_01",
+          "line_id": "l_3102_ent_3102_p01_01_d",
+          "settlement_id": "set_3102_p01",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_8faf85ce379f071f62882714db35150f4dbce982fe510bfc2b82db8b69d70ac8",
+          "source_row_number": 133
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p01_03",
+        "settlement_id": "set_3102_p01",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_fbb7280342d739f672bdadd15ef2f267a405f6cb4f7934e460940df4edaea453",
+        "source_row_number": 84
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p01_03",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p01_03",
+          "line_id": "l_3102_ent_3102_p01_03_c",
+          "settlement_id": "set_3102_p01",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_1df7897acee0a4583e9d7e9b11791b1f8cd9952519f0315cf65f1ade5f4e7f3a",
+          "source_row_number": 50
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p01_03",
+          "line_id": "l_3102_ent_3102_p01_03_d",
+          "settlement_id": "set_3102_p01",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_9914d114acfbd7eab799b8977a417d1e0221d17e3c9955580830d669cdc27eef",
+          "source_row_number": 147
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p01_07",
+        "settlement_id": "set_3102_p01",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_a8433d7ae6352b97da0134aa8133f7dabc7fc3e3e4be725191fd1722fffe9b3a",
+        "source_row_number": 88
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p01_07",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p01_07",
+          "line_id": "l_3102_ent_3102_p01_07_d",
+          "settlement_id": "set_3102_p01",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_a367481e0da86a87c67b3581c669fbbe79cb652b0598a506dbdb232733fa7797",
+          "source_row_number": 55
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p01_07",
+          "line_id": "l_3102_ent_3102_p01_07_c",
+          "settlement_id": "set_3102_p01",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_418638667e92e9f840dcc18bf6bd48b5bd66d76ab25f44a32f8339cf7d200ddc",
+          "source_row_number": 121
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p01_08",
+        "settlement_id": "set_3102_p01",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_fe18230064787e126926698602399e13804e20f3eec26149d27e8613ad23c20e",
+        "source_row_number": 89
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p01_08",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p01_08",
+          "line_id": "l_3102_ent_3102_p01_08_c",
+          "settlement_id": "set_3102_p01",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_c408256e0e18d248ef1021f9d4c052d4b2b9cacf36c5e69eb12814d630b5b868",
+          "source_row_number": 60
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p01_08",
+          "line_id": "l_3102_ent_3102_p01_08_d",
+          "settlement_id": "set_3102_p01",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_130b27d0178d35a7f4ea8c31690d37229f2f11ab7e76e9e5fe0ec8d70532a103",
+          "source_row_number": 127
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p04_10",
+        "settlement_id": "set_3102_p04",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_f0f7d5a7dbf44445f3aee0d9933345736972fbfc6ace87ed2dfe6995e684fd8e",
+        "source_row_number": 3
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p04_10",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p04_10",
+          "line_id": "l_3102_ent_3102_p04_10_c",
+          "settlement_id": "set_3102_p04",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_81a0daa76a471f92c405079e161cb91883571eac7f1adaaec012f2d3419b5a08",
+          "source_row_number": 76
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p04_10",
+          "line_id": "l_3102_ent_3102_p04_10_d",
+          "settlement_id": "set_3102_p04",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_46974f57e3fd73ad07d8b13079f8a534a721cc0f5626e3f0dbefc703ed0ccf89",
+          "source_row_number": 170
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p04_02",
+        "settlement_id": "set_3102_p04",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_2180f0906292ee288d9749112d2fce411f7e978a76967ca593e905390d83b81a",
+        "source_row_number": 7
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p04_02",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p04_02",
+          "line_id": "l_3102_ent_3102_p04_02_c",
+          "settlement_id": "set_3102_p04",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_fd2f13393905e55e12c04203be2df86ed9cc7179a2258f486c413442b4ba98a1",
+          "source_row_number": 104
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p04_02",
+          "line_id": "l_3102_ent_3102_p04_02_d",
+          "settlement_id": "set_3102_p04",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_31dc189ddbbccd246711a468b1a32cc3de780fe0cdd92cd70947c7976b90965b",
+          "source_row_number": 115
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p04_01",
+        "settlement_id": "set_3102_p04",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_5d5a17209f38eab0baf569b103feb130e8c4b11c7dc29410d80f3e4e5292944f",
+        "source_row_number": 28
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p04_01",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p04_01",
+          "line_id": "l_3102_ent_3102_p04_01_c",
+          "settlement_id": "set_3102_p04",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_cc700573fe7f1eb8f99059485ee9d5913ca5cf2ca9ee79b70f960952c7a8529a",
+          "source_row_number": 13
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p04_01",
+          "line_id": "l_3102_ent_3102_p04_01_d",
+          "settlement_id": "set_3102_p04",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_6a6cf0d5c56af3a8f8c90888a912854f5ad89dbdbadf83ff19d862db89b4b5c4",
+          "source_row_number": 68
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p04_04",
+        "settlement_id": "set_3102_p04",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_bd495f1b5e8496eec3cb2fa6885beba55d4d5f77a677dbb4cd2216b031726fc6",
+        "source_row_number": 61
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p04_04",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p04_04",
+          "line_id": "l_3102_ent_3102_p04_04_c",
+          "settlement_id": "set_3102_p04",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_5aa4e4217cb7e9cbac90c93179d68b554f9044c815869e86a6c922e88f7b931a",
+          "source_row_number": 109
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p04_04",
+          "line_id": "l_3102_ent_3102_p04_04_d",
+          "settlement_id": "set_3102_p04",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_664d4830bc37f3d5f790b576f390a461ae4cb93bb5e8d8d22c57f74a8143874c",
+          "source_row_number": 193
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p04_03",
+        "settlement_id": "set_3102_p04",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_2a5be99b4c0543a0e3ba2ec071a4f98f1b11700d38576be1013a93880d9b152c",
+        "source_row_number": 70
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p04_03",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p04_03",
+          "line_id": "l_3102_ent_3102_p04_03_c",
+          "settlement_id": "set_3102_p04",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_fbec94e749dab9f92666c0dd90ea4e55f1b93099641e9e3b58ab41cff887f3a6",
+          "source_row_number": 155
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p04_03",
+          "line_id": "l_3102_ent_3102_p04_03_d",
+          "settlement_id": "set_3102_p04",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_b607342b0ffca0df8505a6d449a04ef0d2e4f348823bfd2da7f8d6bcea92b830",
+          "source_row_number": 188
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p04_00",
+        "settlement_id": "set_3102_p04",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_86d91c2f4e70d934b0d28de4cdf19bb3e5cc9362c307be60478059eaea815e3a",
+        "source_row_number": 80
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p04_00",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p04_00",
+          "line_id": "l_3102_ent_3102_p04_00_c",
+          "settlement_id": "set_3102_p04",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_d26311b3818ae7948e6b889f45d499ef3f7a0303834a5a09fdadbbb09119e41f",
+          "source_row_number": 154
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p04_00",
+          "line_id": "l_3102_ent_3102_p04_00_d",
+          "settlement_id": "set_3102_p04",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_03b0b08cee5ac2500e285d834ccce8b33ec6aaefa02a4ce8c15f8ddcc4571cf5",
+          "source_row_number": 234
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p04_05",
+        "settlement_id": "set_3102_p04",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_ac953da2484b4d4b6b010f285745d26983769736aa7870abc3b0f2235dc14fe2",
+        "source_row_number": 81
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p04_05",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p04_05",
+          "line_id": "l_3102_ent_3102_p04_05_c",
+          "settlement_id": "set_3102_p04",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_43f490324cc250a22c97ebee438f5cf77b9264558b3480ad4ba42673cdf47ea8",
+          "source_row_number": 23
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p04_05",
+          "line_id": "l_3102_ent_3102_p04_05_d",
+          "settlement_id": "set_3102_p04",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_c8b85115b14defec5d5eef9e724f9ec604cd54c984537db0477a3dde63216d23",
+          "source_row_number": 218
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p04_07",
+        "settlement_id": "set_3102_p04",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_36d875bce766c8db48e2c297ad12f4d57b673661549fe116f37abffe4fb8ce60",
+        "source_row_number": 97
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p04_07",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p04_07",
+          "line_id": "l_3102_ent_3102_p04_07_c",
+          "settlement_id": "set_3102_p04",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_2dee71f206b3df79053347e65de39e7e5c4a78a63da5b2563c8d2479f5eefcfb",
+          "source_row_number": 8
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p04_07",
+          "line_id": "l_3102_ent_3102_p04_07_d",
+          "settlement_id": "set_3102_p04",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_edfb909927ae2a99d1161c19cee5aa6a3d5dfe3b344472ddfaf55671c65593b6",
+          "source_row_number": 189
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p04_06",
+        "settlement_id": "set_3102_p04",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_a1cf5a8309d02097fb150902c74bdaf2563c4cac5dfa293ce23016449e51bd33",
+        "source_row_number": 106
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p04_06",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p04_06",
+          "line_id": "l_3102_ent_3102_p04_06_c",
+          "settlement_id": "set_3102_p04",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_2202d7fae06911e81d87d96a12597493f3bc1556ac64634e1f505f8422cb1e99",
+          "source_row_number": 123
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p04_06",
+          "line_id": "l_3102_ent_3102_p04_06_d",
+          "settlement_id": "set_3102_p04",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_4758c59252150f333835806204f0d4f04faf0408b21607f9ff70a35a54d2d416",
+          "source_row_number": 135
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p03_00",
+        "settlement_id": "set_3102_p03",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_609a0d49f0717dfe07fa19275264486fd108a2dddc66a97a05a1b0bc630af22c",
+        "source_row_number": 17
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p03_00",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p03_00",
+          "line_id": "l_3102_ent_3102_p03_00_c",
+          "settlement_id": "set_3102_p03",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_024dc69b3c840b8540340d365c58802238397c2311081aa6dce6bd9117185d6c",
+          "source_row_number": 39
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p03_00",
+          "line_id": "l_3102_ent_3102_p03_00_d",
+          "settlement_id": "set_3102_p03",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_a026616f5f6f3d198a29bc67dc4f9fd3c5afbbb00107ff6da04a9fb7f74ddb65",
+          "source_row_number": 102
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p03_08",
+        "settlement_id": "set_3102_p03",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_ac8cfafc48dc8757c1e5a316557d3de375300b82fcb11ff5082995c33f075406",
+        "source_row_number": 25
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p03_08",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p03_08",
+          "line_id": "l_3102_ent_3102_p03_08_c",
+          "settlement_id": "set_3102_p03",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_a7b14cd210b4e9b1638bb54b3e0259c0e2d412b95679b88777eba279bf167224",
+          "source_row_number": 156
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p03_08",
+          "line_id": "l_3102_ent_3102_p03_08_d",
+          "settlement_id": "set_3102_p03",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_3ec2902dc1ecbfb56c0a9c207c8a458ba83b575c866dca0ddfa118e63151f2ff",
+          "source_row_number": 191
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p03_02",
+        "settlement_id": "set_3102_p03",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_5d6cb662c34b3a0bd007a9a5d51b73f9f78d3114abf486370b282a4dca7761f8",
+        "source_row_number": 34
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p03_02",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p03_02",
+          "line_id": "l_3102_ent_3102_p03_02_c",
+          "settlement_id": "set_3102_p03",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_c9894929321ea63d54777c855f2b3a567c1a499c5687f62f02b8c9c60d993638",
+          "source_row_number": 168
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p03_02",
+          "line_id": "l_3102_ent_3102_p03_02_d",
+          "settlement_id": "set_3102_p03",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_d9d2253296d255bf279a76262602e8053192d361b701af0f9b3640dfe1997f54",
+          "source_row_number": 231
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p03_04",
+        "settlement_id": "set_3102_p03",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_25d1936be35db2a84457f969266181f7c283678ff9d5313694f1d2ef913da39d",
+        "source_row_number": 43
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p03_04",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p03_04",
+          "line_id": "l_3102_ent_3102_p03_04_d",
+          "settlement_id": "set_3102_p03",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_be682b7f19dcd1edbded6ec1e6b790caf473f5c2eb0ba46d0b90b9d65ed01935",
+          "source_row_number": 5
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p03_04",
+          "line_id": "l_3102_ent_3102_p03_04_c",
+          "settlement_id": "set_3102_p03",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_6ace6e94ea134f2c91e5c2794d5a607bb8ec9d8686f1afaae52c80672777e3ae",
+          "source_row_number": 160
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p03_09",
+        "settlement_id": "set_3102_p03",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_906c56fe02753fa5e22b55a6122fb8c6896bfc414386d9ac328ae58106bc9f96",
+        "source_row_number": 58
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p03_09",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p03_09",
+          "line_id": "l_3102_ent_3102_p03_09_c",
+          "settlement_id": "set_3102_p03",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_13d23a38979ec691cad8935905ce205aad47e17b5263ceeee7d851eafff5eb38",
+          "source_row_number": 208
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p03_09",
+          "line_id": "l_3102_ent_3102_p03_09_d",
+          "settlement_id": "set_3102_p03",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_bbb72877d14e721b28dc63228bc8d933a9ec30519073d78bafda5b74b9f575de",
+          "source_row_number": 217
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p03_06",
+        "settlement_id": "set_3102_p03",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_5783810f0fde4bc7539aac8ae5e919c6c69dede39083223ceb9baa6ba66363b8",
+        "source_row_number": 65
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p03_06",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p03_06",
+          "line_id": "l_3102_ent_3102_p03_06_c",
+          "settlement_id": "set_3102_p03",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_f3a4b8a63785d4e7d45fa133c0fcad16907e4e860b8c59b9009fe7b2da64f325",
+          "source_row_number": 103
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p03_06",
+          "line_id": "l_3102_ent_3102_p03_06_d",
+          "settlement_id": "set_3102_p03",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_fc1c8e3cfef82bbca84c975aa580b180d4997fec85b0f2ddfb57f5b9f63acc35",
+          "source_row_number": 222
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p03_01",
+        "settlement_id": "set_3102_p03",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_53cfddd2c3812f45610cbb794de1fe6c6adcc26ee012ecac2156807fd2bd9ead",
+        "source_row_number": 83
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p03_01",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p03_01",
+          "line_id": "l_3102_ent_3102_p03_01_d",
+          "settlement_id": "set_3102_p03",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_76a25b05071ff1fbba46e148fed803f38ebb72a7db018b12198f18328e1dfa16",
+          "source_row_number": 83
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p03_01",
+          "line_id": "l_3102_ent_3102_p03_01_c",
+          "settlement_id": "set_3102_p03",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_035fcd17d1a57ead63b1d10be1c26cca5403cb51ac0fb7ea646f4fc19d9ac2a3",
+          "source_row_number": 158
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p03_03",
+        "settlement_id": "set_3102_p03",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_293e2c627be6bf1d3f0c1443673f682d3f37da18e2e45e71b7429d06ad620294",
+        "source_row_number": 93
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p03_03",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p03_03",
+          "line_id": "l_3102_ent_3102_p03_03_d",
+          "settlement_id": "set_3102_p03",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_7f8c6d19d82a7b40295954cde24d071603d26d6fdc9909fad81b10fabaa35e9e",
+          "source_row_number": 46
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p03_03",
+          "line_id": "l_3102_ent_3102_p03_03_c",
+          "settlement_id": "set_3102_p03",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_deeec8b03f23c7c36d55a8ef10be71aa247581ba676197aa3baa50f8d7a9731e",
+          "source_row_number": 117
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p03_07",
+        "settlement_id": "set_3102_p03",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_24bd370fd80048ec26788ea6c588d772c1ec5433128da96a06d017f4edc21269",
+        "source_row_number": 94
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p03_07",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p03_07",
+          "line_id": "l_3102_ent_3102_p03_07_c",
+          "settlement_id": "set_3102_p03",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_e7f493a91c2b0de8431898072e42df6498dd84f664e535be11e30451bd66e435",
+          "source_row_number": 181
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p03_07",
+          "line_id": "l_3102_ent_3102_p03_07_d",
+          "settlement_id": "set_3102_p03",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_c9f643c616593331761435bb71d47286dc6b8a43234351893701faf710166500",
+          "source_row_number": 229
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p03_05",
+        "settlement_id": "set_3102_p03",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_738a7b2574cc5a68fff7c1d50a085af5030110a2c0d827241ff4a1a2d81349bc",
+        "source_row_number": 102
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p03_05",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p03_05",
+          "line_id": "l_3102_ent_3102_p03_05_c",
+          "settlement_id": "set_3102_p03",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_ccc483b35a79f13e9b1ccd4a315216dfd5c9216d004005025957a9d48c20d63f",
+          "source_row_number": 149
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p03_05",
+          "line_id": "l_3102_ent_3102_p03_05_d",
+          "settlement_id": "set_3102_p03",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_328e9b8d16396a4f12207a251d2e3e3649e0f38898af21604f08ce06ca1386a9",
+          "source_row_number": 220
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p08_07",
+        "settlement_id": "set_3102_p08",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_ab12d43dc4451f8d96246127e8119c510ca8949efcf49da0e0a33b7ba0824374",
+        "source_row_number": 1
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p08_07",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p08_07",
+          "line_id": "l_3102_ent_3102_p08_07_c",
+          "settlement_id": "set_3102_p08",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_dd6eabd05e2bb300fd26adabce560d68595809f8b1fec599899904051a7847ad",
+          "source_row_number": 84
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p08_07",
+          "line_id": "l_3102_ent_3102_p08_07_d",
+          "settlement_id": "set_3102_p08",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_9c20c926f29259c0ad06ea2dc0de904fefcc3f11ee0762b4ec85f00ef1127e28",
+          "source_row_number": 96
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p08_01",
+        "settlement_id": "set_3102_p08",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_7d233c9d845bdf986da0d2035892949ca16a0b5e2446dd9a3e1eae4b3f50c926",
+        "source_row_number": 26
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p08_01",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p08_01",
+          "line_id": "l_3102_ent_3102_p08_01_d",
+          "settlement_id": "set_3102_p08",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_f650bd12b04333577c12e64f81833188b00afcbfce0b7cb5ce5d96505353d75e",
+          "source_row_number": 65
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p08_01",
+          "line_id": "l_3102_ent_3102_p08_01_c",
+          "settlement_id": "set_3102_p08",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_2b0fd8a363bff6355331043253af5e2bfb1c75e2c1cd8657b814b72ab89968c0",
+          "source_row_number": 216
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p08_05",
+        "settlement_id": "set_3102_p08",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_8b80654750c0dba75b7d8b2ce164bb2c601cda9f2223c64c28096d29c79a27e6",
+        "source_row_number": 36
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p08_05",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p08_05",
+          "line_id": "l_3102_ent_3102_p08_05_c",
+          "settlement_id": "set_3102_p08",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_5e8b82de3c8485bd78ea05a78970bfe3ec4465cfbcde8d40f9e6157999bc038e",
+          "source_row_number": 85
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p08_05",
+          "line_id": "l_3102_ent_3102_p08_05_d",
+          "settlement_id": "set_3102_p08",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_12152a30aeb9028036209f850f1aab50bff0a707706f530d2d93552110361d62",
+          "source_row_number": 125
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p08_04",
+        "settlement_id": "set_3102_p08",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_91fb768b225cc118cfbedfcf49a8ef4f6a9ea9f51fae0378423a57520c79a57a",
+        "source_row_number": 49
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p08_04",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p08_04",
+          "line_id": "l_3102_ent_3102_p08_04_d",
+          "settlement_id": "set_3102_p08",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_11a4ba5390d557a8073d92f8d4af6c69258d48deb2b2185075a69ee99e13c983",
+          "source_row_number": 71
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p08_04",
+          "line_id": "l_3102_ent_3102_p08_04_c",
+          "settlement_id": "set_3102_p08",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_8b79c4547a846df2744d3d3315982063c04c28503bc9acf891cd561aebf90c97",
+          "source_row_number": 150
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p08_06",
+        "settlement_id": "set_3102_p08",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_3e995d0dc796aa5f4829fe65fcb9c9558247631fff85a8dc7f1fc15a668893e8",
+        "source_row_number": 52
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p08_06",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p08_06",
+          "line_id": "l_3102_ent_3102_p08_06_c",
+          "settlement_id": "set_3102_p08",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_f1f280f477175ddbc1792b210bd361ddc11c1e8a122e6bb356abf4cae382b920",
+          "source_row_number": 91
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p08_06",
+          "line_id": "l_3102_ent_3102_p08_06_d",
+          "settlement_id": "set_3102_p08",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_4d660ac18031c8e84fcb8f30aa072292d254576d6cdfa04ed1c511eef13b1b86",
+          "source_row_number": 99
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p08_03",
+        "settlement_id": "set_3102_p08",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_6823267095c9140c388cc0a3b839e28c06048374b1929a06b791ca87480e12e6",
+        "source_row_number": 60
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p08_03",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p08_03",
+          "line_id": "l_3102_ent_3102_p08_03_d",
+          "settlement_id": "set_3102_p08",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_17b692916805cb678184e013a06a3031b7207b5c82e316652546095d401b37da",
+          "source_row_number": 131
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p08_03",
+          "line_id": "l_3102_ent_3102_p08_03_c",
+          "settlement_id": "set_3102_p08",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_f50eff5867f5b4aec6c785778099278d86dde0f6a4c4e692abf38bc42dd6e90a",
+          "source_row_number": 159
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p08_00",
+        "settlement_id": "set_3102_p08",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_f69cdb089944144ccea741ca66234bc8567caac72b6b235d32e2b0276ce10893",
+        "source_row_number": 73
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p08_00",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p08_00",
+          "line_id": "l_3102_ent_3102_p08_00_d",
+          "settlement_id": "set_3102_p08",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_ad195a970c05d74a9e47527e40b8fafb58198f6e99134383d7a1352ddb2bbe00",
+          "source_row_number": 79
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p08_00",
+          "line_id": "l_3102_ent_3102_p08_00_c",
+          "settlement_id": "set_3102_p08",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_e977c3ff7c51a8ba8294bf38bd984f41eaf5f0768a880e0c324e68a985d3165a",
+          "source_row_number": 197
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p08_02",
+        "settlement_id": "set_3102_p08",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_b5032bfad92d35eac1c3b6dbf18f7b59b83543a7ffdea7847419ee3b65f9f879",
+        "source_row_number": 109
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p08_02",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p08_02",
+          "line_id": "l_3102_ent_3102_p08_02_d",
+          "settlement_id": "set_3102_p08",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_ee4b9ff03cafff62ebc1d5b039e1f8053b4d47c7f0cdd698a10a465bfda376b6",
+          "source_row_number": 173
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p08_02",
+          "line_id": "l_3102_ent_3102_p08_02_c",
+          "settlement_id": "set_3102_p08",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_1582209539bce4de2c80af578d6fb548a60b91aebd956dd141c23197f9eabfac",
+          "source_row_number": 177
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p11_05",
+        "settlement_id": "set_3102_p11",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_c418790871d1bbefb59817c8d2f714d81bb40fd1904b039e7a03f2b449bc20d7",
+        "source_row_number": 5
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p11_05",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p11_05",
+          "line_id": "l_3102_ent_3102_p11_05_c",
+          "settlement_id": "set_3102_p11",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_c771921afef33e5340355f20c580d65f99ed4fa39b260da9509cc36eeb588731",
+          "source_row_number": 111
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p11_05",
+          "line_id": "l_3102_ent_3102_p11_05_d",
+          "settlement_id": "set_3102_p11",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_6a100390ae703b2d7b62426e327d7ee83938804a34093b1112f9850a518347b8",
+          "source_row_number": 119
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p11_02",
+        "settlement_id": "set_3102_p11",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_f64f82223c88afe9221410d1c1f6fc0b628be821bb39f51159aa952823dc48ed",
+        "source_row_number": 6
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p11_02",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p11_02",
+          "line_id": "l_3102_ent_3102_p11_02_c",
+          "settlement_id": "set_3102_p11",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_2fa79f1ce9aa8c5fe374e3bfe777d8b187188c260a0f4bda5d5d1a08537be177",
+          "source_row_number": 54
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p11_02",
+          "line_id": "l_3102_ent_3102_p11_02_d",
+          "settlement_id": "set_3102_p11",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_336ca66fed2f0b0922cabb3247234fac5bb6073264e32919ee44c8fc0e45f23c",
+          "source_row_number": 195
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p11_06",
+        "settlement_id": "set_3102_p11",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_8dec752a6eefdf0f3f574be240d07ab874bb97af83fd68c00df5be13dfce09af",
+        "source_row_number": 35
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p11_06",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p11_06",
+          "line_id": "l_3102_ent_3102_p11_06_d",
+          "settlement_id": "set_3102_p11",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_e6caf76ca380159b8a5647636763a3b7733652490714fe71004d0f6c0c33fbd1",
+          "source_row_number": 21
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p11_06",
+          "line_id": "l_3102_ent_3102_p11_06_c",
+          "settlement_id": "set_3102_p11",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_919cfb9dc1050c46781834b28778b5de35710c8319712b8db1dadad3bc9bbe05",
+          "source_row_number": 225
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p11_01",
+        "settlement_id": "set_3102_p11",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_d461ab90b6a8d30ee1afb13799dfd94a9d71892a8de1d7dfd1fec2f952bebaac",
+        "source_row_number": 42
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p11_01",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p11_01",
+          "line_id": "l_3102_ent_3102_p11_01_c",
+          "settlement_id": "set_3102_p11",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_cdd9bf63a1d05956f9dcf72f5fa5063fd0279e4122830e5342979298d9f3c0fc",
+          "source_row_number": 3
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p11_01",
+          "line_id": "l_3102_ent_3102_p11_01_d",
+          "settlement_id": "set_3102_p11",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_c31183e4d5743db6324bb9598286969428d99af3c22c749d84d4b95b63b4b405",
+          "source_row_number": 19
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p11_04",
+        "settlement_id": "set_3102_p11",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_c630f708a44c66870f46688b3b142a64079913b2ef186ede1b7f407d6d39c764",
+        "source_row_number": 50
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p11_04",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p11_04",
+          "line_id": "l_3102_ent_3102_p11_04_c",
+          "settlement_id": "set_3102_p11",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_a0cac14b5c5acaf06b6f10b0619c9145721f3e804ca95294c7a9c9712f7926e1",
+          "source_row_number": 90
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p11_04",
+          "line_id": "l_3102_ent_3102_p11_04_d",
+          "settlement_id": "set_3102_p11",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_c9249691f8047234982153125ec75ac61c00174eb3e1304df53185d9a6d2a2c0",
+          "source_row_number": 171
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p11_03",
+        "settlement_id": "set_3102_p11",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_761f1a2f42a4751ecec19d01f4941004b22008f89d51a15885c877c2b0309a98",
+        "source_row_number": 67
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p11_03",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p11_03",
+          "line_id": "l_3102_ent_3102_p11_03_c",
+          "settlement_id": "set_3102_p11",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_8477d90fa7df10c35040daf6946074171e2a47f1570abc1eb6f5cbec719615d8",
+          "source_row_number": 73
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p11_03",
+          "line_id": "l_3102_ent_3102_p11_03_d",
+          "settlement_id": "set_3102_p11",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_93cd85957daad501ac1a0c16adfbee992a6f7cb4442f1a07675246d5d33afdd6",
+          "source_row_number": 118
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p11_07",
+        "settlement_id": "set_3102_p11",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_13cda4a308454986b006cf327d902173117bc93ca76b19ef9688718a1a1dc83f",
+        "source_row_number": 78
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p11_07",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p11_07",
+          "line_id": "l_3102_ent_3102_p11_07_c",
+          "settlement_id": "set_3102_p11",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_fffe67ba0de42de1e34ffc15d9befa00f6796c707e2924082d42a92d8d70d6f0",
+          "source_row_number": 33
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p11_07",
+          "line_id": "l_3102_ent_3102_p11_07_d",
+          "settlement_id": "set_3102_p11",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_c5888929c3f6d347a6af6b296093d6aab8829c99c41826f4b4fe3d2f66c7ac21",
+          "source_row_number": 210
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p11_00",
+        "settlement_id": "set_3102_p11",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_1308bb498c146f3341fac7edd2952bba2d915b27ca588c5e326851926b173052",
+        "source_row_number": 92
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p11_00",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p11_00",
+          "line_id": "l_3102_ent_3102_p11_00_d",
+          "settlement_id": "set_3102_p11",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_0e1877f34676b5556c2321f27d0104d459ee99a9f287a9386459b659af0d5f04",
+          "source_row_number": 2
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p11_00",
+          "line_id": "l_3102_ent_3102_p11_00_c",
+          "settlement_id": "set_3102_p11",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_6a44cee4aa9cdd1fa24ee59121ecfeb0562beba6f9cc957d16798201fe9f3a7f",
+          "source_row_number": 110
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p10_05",
+        "settlement_id": "set_3102_p10",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_2304c32d790e18bfb4969b25c8141d8a7909ceb8717bb8844660cab40a484da9",
+        "source_row_number": 27
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p10_05",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p10_05",
+          "line_id": "l_3102_ent_3102_p10_05_d",
+          "settlement_id": "set_3102_p10",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_349dd38eabe8b63ae4b35831f4edf9f8ea286d7ec5497a778814023d1ed11473",
+          "source_row_number": 28
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p10_05",
+          "line_id": "l_3102_ent_3102_p10_05_c",
+          "settlement_id": "set_3102_p10",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_9a6cd88e54979fb7a2ffb956fea6e0eca63c7197b2f1e64d0423a0912274bc67",
+          "source_row_number": 87
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p10_02",
+        "settlement_id": "set_3102_p10",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_66274514a2d36de5340ce00b773afc68eba88f561b72ad356df879caf9fdb661",
+        "source_row_number": 44
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p10_02",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p10_02",
+          "line_id": "l_3102_ent_3102_p10_02_c",
+          "settlement_id": "set_3102_p10",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_21cd658f6da50a1a59d45a191e5722ba0b206a1edee204287bbd724231a2f528",
+          "source_row_number": 178
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p10_02",
+          "line_id": "l_3102_ent_3102_p10_02_d",
+          "settlement_id": "set_3102_p10",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_1b5651665dc0ed253736c734f460991ce99a97ca51e9984b08b346f272224151",
+          "source_row_number": 190
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p10_01",
+        "settlement_id": "set_3102_p10",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_bf75510a94d4d236839e3c47ac87c1777c5d656f5d8398360c37944b0bae9965",
+        "source_row_number": 48
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p10_01",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p10_01",
+          "line_id": "l_3102_ent_3102_p10_01_d",
+          "settlement_id": "set_3102_p10",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_b8e16d19b87e002dcc53d533f9d6a78111425352de38f8ed1abaaa01843b61a8",
+          "source_row_number": 112
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p10_01",
+          "line_id": "l_3102_ent_3102_p10_01_c",
+          "settlement_id": "set_3102_p10",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_f6081c42d5b2d79615826742b7c8fa8d69d33c6be0211169336194177985806a",
+          "source_row_number": 221
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p10_03",
+        "settlement_id": "set_3102_p10",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_b85f60b8c9321a234c3b3c02c70df23c663b37099556c1542c17c4e582c5ada6",
+        "source_row_number": 75
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p10_03",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p10_03",
+          "line_id": "l_3102_ent_3102_p10_03_c",
+          "settlement_id": "set_3102_p10",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_32759b988d8254c19230367a421c3a05a4457ae5052b096cbda403e068fcdcfa",
+          "source_row_number": 114
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p10_03",
+          "line_id": "l_3102_ent_3102_p10_03_d",
+          "settlement_id": "set_3102_p10",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_06c9bd51dcc1f767746b73de5bffc37cf88ccecdaff03b9ae7561b666d226e31",
+          "source_row_number": 153
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p10_00",
+        "settlement_id": "set_3102_p10",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_5e8135d232a7dbd6d09df248aae17a90198fc19bfb18d5dc0db75ace699bf5d6",
+        "source_row_number": 86
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p10_00",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p10_00",
+          "line_id": "l_3102_ent_3102_p10_00_c",
+          "settlement_id": "set_3102_p10",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_530d1637fe4882ca06faa6b70557d162c380ac8919c83c17e39d1be93c85ea84",
+          "source_row_number": 14
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p10_00",
+          "line_id": "l_3102_ent_3102_p10_00_d",
+          "settlement_id": "set_3102_p10",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_5845a176f5800c9f4dc1164129681e3374c75ca4ecac06833e0887ac39950960",
+          "source_row_number": 51
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p10_06",
+        "settlement_id": "set_3102_p10",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_fa246749571707e8210ff1f9da8fdbc0c2a0baaca506608ef2f4a061dd36810f",
+        "source_row_number": 91
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p10_06",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p10_06",
+          "line_id": "l_3102_ent_3102_p10_06_d",
+          "settlement_id": "set_3102_p10",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_38dd44e410769fd27312afa1b77e1a5d7ab98e339dcf528870c0316af20972ca",
+          "source_row_number": 9
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p10_06",
+          "line_id": "l_3102_ent_3102_p10_06_c",
+          "settlement_id": "set_3102_p10",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_c9ea3c45a69df3020710626d53c509d98b19f3dfb7811324d447da8266686da0",
+          "source_row_number": 152
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p10_04",
+        "settlement_id": "set_3102_p10",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_1ecbb8546a256b5cb2b238e8e44e652b3a2dd0bfe32fdbffc5b71d2c2d450541",
+        "source_row_number": 96
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p10_04",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p10_04",
+          "line_id": "l_3102_ent_3102_p10_04_d",
+          "settlement_id": "set_3102_p10",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_b3e537d7408402b4197ce3e6e8babd68183219194257c322c72380cfe9e5ebd6",
+          "source_row_number": 67
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p10_04",
+          "line_id": "l_3102_ent_3102_p10_04_c",
+          "settlement_id": "set_3102_p10",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_160d5db1863612eed7c26271354c0e632ceae1001eb9d78d7ac59b77cf1d33d5",
+          "source_row_number": 130
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p10_07",
+        "settlement_id": "set_3102_p10",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_c8b223e5d6b0234aab068e734969fd18b4baa8a181336fa7a4b366d317194790",
+        "source_row_number": 105
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p10_07",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p10_07",
+          "line_id": "l_3102_ent_3102_p10_07_d",
+          "settlement_id": "set_3102_p10",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_f520851a95e892d73bd1c78bdc265533e619ad42a0a3e2308f7af98d900cbd08",
+          "source_row_number": 35
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p10_07",
+          "line_id": "l_3102_ent_3102_p10_07_c",
+          "settlement_id": "set_3102_p10",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_89cf34f2381c0ef8481498fedb699ef31dd92810311ecaf4db676c8870617038",
+          "source_row_number": 176
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p06_03",
+        "settlement_id": "set_3102_p06",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_bffdb4a85631ca3fd80e450bf0cbca59ae38d236be6f15d72c3b21d71668b9b9",
+        "source_row_number": 2
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p06_03",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p06_03",
+          "line_id": "l_3102_ent_3102_p06_03_d",
+          "settlement_id": "set_3102_p06",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_7d374955b1252635d55a1c1c966c87c614fd856ec609cbddf91cfcc4076f0be9",
+          "source_row_number": 101
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p06_03",
+          "line_id": "l_3102_ent_3102_p06_03_c",
+          "settlement_id": "set_3102_p06",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_74c71ce3f16ce0852231b0b387ab6202032e80da1ff290fc12c1a5f903900db0",
+          "source_row_number": 144
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p06_07",
+        "settlement_id": "set_3102_p06",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_47d826c88def3fc90ce5e0305519a5df0e530c710255705c4310424c2a7fe716",
+        "source_row_number": 11
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p06_07",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p06_07",
+          "line_id": "l_3102_ent_3102_p06_07_d",
+          "settlement_id": "set_3102_p06",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_9004066db75e2ace0b7a0f4386ed1dc4369e590d87e7eb1af8d9774713aa0cdc",
+          "source_row_number": 142
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p06_07",
+          "line_id": "l_3102_ent_3102_p06_07_c",
+          "settlement_id": "set_3102_p06",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_0b1270fa94950f3cb2df02148121e7df6543fb30e067fc4c755fac9b319b9e2a",
+          "source_row_number": 166
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p06_11",
+        "settlement_id": "set_3102_p06",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_2e47b3c35542416febd78c35bce6bd3ee3e6d861afcd29a328e8772a297f9e69",
+        "source_row_number": 16
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p06_11",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p06_11",
+          "line_id": "l_3102_ent_3102_p06_11_c",
+          "settlement_id": "set_3102_p06",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_4bd481f9d7c347d9a2160e8a080793ee5f4905c736496fabbeef0bf2d6fe13e2",
+          "source_row_number": 17
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p06_11",
+          "line_id": "l_3102_ent_3102_p06_11_d",
+          "settlement_id": "set_3102_p06",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_c410b4876861cf800196621bbd7bbb49bad3397c7209903920c0da07b4b11d0e",
+          "source_row_number": 98
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p06_10",
+        "settlement_id": "set_3102_p06",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_23d3221b2c842fe1afaf6960f54af5d157f3e18fb13022bb445f5f4379d2c463",
+        "source_row_number": 19
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p06_10",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p06_10",
+          "line_id": "l_3102_ent_3102_p06_10_c",
+          "settlement_id": "set_3102_p06",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_280846e4030966b3d24b56bc6d4294cea17899350c17ce7f184a9354706e9d10",
+          "source_row_number": 58
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p06_10",
+          "line_id": "l_3102_ent_3102_p06_10_d",
+          "settlement_id": "set_3102_p06",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_fe731c5ebb7afb0dfc36c66290551b3fca74f9af8386e8ee8d49659091dc6f16",
+          "source_row_number": 81
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p06_05",
+        "settlement_id": "set_3102_p06",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_7c44430f4bfc8ca5721c30ba247161c94d832c9157b9d6063e70ed725545fa18",
+        "source_row_number": 40
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p06_05",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p06_05",
+          "line_id": "l_3102_ent_3102_p06_05_d",
+          "settlement_id": "set_3102_p06",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_bdc465cc979e967c0472d96907f1ba1cf0b488baa006cc9ab5801682f10e982a",
+          "source_row_number": 202
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p06_05",
+          "line_id": "l_3102_ent_3102_p06_05_c",
+          "settlement_id": "set_3102_p06",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_8722a5f696978d573d83f55c5ed799362415c182c5540fdb3ebb44f3afce1f95",
+          "source_row_number": 203
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p06_01",
+        "settlement_id": "set_3102_p06",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_ac023ece0dbea9b9257ec162e3fc9484654dd8caaa70c31983b2e20dfad62623",
+        "source_row_number": 53
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p06_01",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p06_01",
+          "line_id": "l_3102_ent_3102_p06_01_d",
+          "settlement_id": "set_3102_p06",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_7ef3554a06c63ef05bc4a3a1dab1a2e73490be8e2623156ab3b5bf348e4d7bd3",
+          "source_row_number": 7
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p06_01",
+          "line_id": "l_3102_ent_3102_p06_01_c",
+          "settlement_id": "set_3102_p06",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_1e579dde7f85900d55f146a64c418b150ea4811f629f78889bb65b7a10d2d149",
+          "source_row_number": 34
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p06_00",
+        "settlement_id": "set_3102_p06",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_988ce0f5f05399c9668077a369370759ea7cfdaa448203cec84a9d5af4e91981",
+        "source_row_number": 63
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p06_00",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p06_00",
+          "line_id": "l_3102_ent_3102_p06_00_d",
+          "settlement_id": "set_3102_p06",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_352d7107b4127152be8c6fa2a6e31ea76cf22d0fbc694f8077e4a46e1198221a",
+          "source_row_number": 1
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p06_00",
+          "line_id": "l_3102_ent_3102_p06_00_c",
+          "settlement_id": "set_3102_p06",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_7c0dc8f20dcf936a0dd119f2798c0f4e818ce9b89e84568bf71714f5056a46fa",
+          "source_row_number": 88
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p06_00",
+          "line_id": "l_3102_ent_3102_p06_00_d",
+          "settlement_id": "set_3102_p06",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_999db9bdf06b9b683618a07e1d0e867788c80cfcf6859c4dfb4092e4fa86540a",
+          "source_row_number": 200
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p06_06",
+        "settlement_id": "set_3102_p06",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_48933ee6e61a15684a88f246282cef59f8631dbad9513e5dc2caf8559d190637",
+        "source_row_number": 101
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p06_06",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p06_06",
+          "line_id": "l_3102_ent_3102_p06_06_c",
+          "settlement_id": "set_3102_p06",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_c8d0b5664f92111a397e9a90501a73564a7d6fb37475c178075299079870b907",
+          "source_row_number": 45
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p06_06",
+          "line_id": "l_3102_ent_3102_p06_06_d",
+          "settlement_id": "set_3102_p06",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_927218e9fb54c49d86a2ade76bbad4f4163833d675bc7dc5c57cb9ee862a7676",
+          "source_row_number": 183
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p06_04",
+        "settlement_id": "set_3102_p06",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_a1237448e788e659370375237631133e5b68d9cce46344b3590464adc13c8567",
+        "source_row_number": 103
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p06_04",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p06_04",
+          "line_id": "l_3102_ent_3102_p06_04_d",
+          "settlement_id": "set_3102_p06",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_5e3a567a6237444f2cee23c550428112062e99a559254a15a6d523bb1e88d125",
+          "source_row_number": 41
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p06_04",
+          "line_id": "l_3102_ent_3102_p06_04_c",
+          "settlement_id": "set_3102_p06",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_2e7abbc4033fcd075d884c42061b2e044b37a9b7886a987cea08b982289ca00c",
+          "source_row_number": 230
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p06_02",
+        "settlement_id": "set_3102_p06",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_be43c413f6acf83bae16f7b079bbd9b1323c62080fd1fe3c56fc3ca5165c9eea",
+        "source_row_number": 108
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p06_02",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p06_02",
+          "line_id": "l_3102_ent_3102_p06_02_c",
+          "settlement_id": "set_3102_p06",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_c21d47bd2ea04a5cc62b6689a8eb6b0654f415ca9b0369f809f0d7b4400be69b",
+          "source_row_number": 4
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p06_02",
+          "line_id": "l_3102_ent_3102_p06_02_d",
+          "settlement_id": "set_3102_p06",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_652e2579144224311fe52af3541c026c1038963cf5ce97dea658be1a6754a444",
+          "source_row_number": 138
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p00_05",
+        "settlement_id": "set_3102_p00",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_91cd71766c624cdae457ee617191055eb1114d4ebac11460f58f12bee4f2501e",
+        "source_row_number": 4
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p00_05",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p00_05",
+          "line_id": "l_3102_ent_3102_p00_05_d",
+          "settlement_id": "set_3102_p00",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_2dc06182575dc704ba63fd4f2f100e307ec79a9e26246781a2b5e3a9cde46b75",
+          "source_row_number": 40
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p00_05",
+          "line_id": "l_3102_ent_3102_p00_05_c",
+          "settlement_id": "set_3102_p00",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_774a24f5df8000d10103e5eb7f1cd436c5c694a61da42bf7454e1c2ef68de141",
+          "source_row_number": 62
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p00_06",
+        "settlement_id": "set_3102_p00",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_c4427a03e7d7529b7cf2dc4d9ee2efb0c37a0eacb73458312e1ee294ec189097",
+        "source_row_number": 24
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p00_06",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p00_06",
+          "line_id": "l_3102_ent_3102_p00_06_c",
+          "settlement_id": "set_3102_p00",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_2813b5d414b195ae1451cbbaf85479540ac91088df2002390a8cae483651613f",
+          "source_row_number": 74
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p00_06",
+          "line_id": "l_3102_ent_3102_p00_06_d",
+          "settlement_id": "set_3102_p00",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_e83eac34ddf4d31105ffde3baaf93292a8f05722f0e30ed542e6c033e9810512",
+          "source_row_number": 113
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p00_09",
+        "settlement_id": "set_3102_p00",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_099de2fb2950d1e88eaed25a660fb64fafcd8cbf15689f5bc3685744e3811f53",
+        "source_row_number": 30
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p00_09",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p00_09",
+          "line_id": "l_3102_ent_3102_p00_09_d",
+          "settlement_id": "set_3102_p00",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_08ed4290d1888f78a1b1bdf00a233db256ee4e52e70f71578d395ce15976c254",
+          "source_row_number": 93
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p00_09",
+          "line_id": "l_3102_ent_3102_p00_09_c",
+          "settlement_id": "set_3102_p00",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_9cf4ced85f8ef71be094d5d6f0c678f7687079bbf34e17c2eb542074d07a7d2b",
+          "source_row_number": 206
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p00_04",
+        "settlement_id": "set_3102_p00",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_971618b6ebf4d3de2227eeaf23a13679998f23fdc3701b6fda49ce9c743e52b1",
+        "source_row_number": 37
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p00_04",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p00_04",
+          "line_id": "l_3102_ent_3102_p00_04_c",
+          "settlement_id": "set_3102_p00",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_66c42b3d66f1e3cff6612b7c4ec57ea3ffc6385ea195aa1c77de6e0a48bdcc6f",
+          "source_row_number": 16
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p00_04",
+          "line_id": "l_3102_ent_3102_p00_04_d",
+          "settlement_id": "set_3102_p00",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_16063bb32bea0f34ac82488258504bdda971fede6f01518c086221a5f4147b37",
+          "source_row_number": 198
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p00_07",
+        "settlement_id": "set_3102_p00",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_f0294f47df5a1e94ea4a1047adb353680c02da325cf4392c161557d45b0f8921",
+        "source_row_number": 39
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p00_07",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p00_07",
+          "line_id": "l_3102_ent_3102_p00_07_d",
+          "settlement_id": "set_3102_p00",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_043ccbe0c65a65835a47c1f7189508525a93d3f544e76d0b5d81a70f016eea09",
+          "source_row_number": 25
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p00_07",
+          "line_id": "l_3102_ent_3102_p00_07_c",
+          "settlement_id": "set_3102_p00",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_82d615535d645b495ac5bafcde7d1f064f4bb8c2e8c4681f5d2b643a392db0be",
+          "source_row_number": 192
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p00_01",
+        "settlement_id": "set_3102_p00",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_b0c1c569b1d3f04f4dbbefdb4cfa9de7d2f608e1f6745322cf8532cc316c9b51",
+        "source_row_number": 47
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p00_01",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p00_01",
+          "line_id": "l_3102_ent_3102_p00_01_c",
+          "settlement_id": "set_3102_p00",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_f0f4d8b28cd124568378af8d4ceadc1cf2317c5654ceb7d0c0331cd231ba48c6",
+          "source_row_number": 11
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p00_01",
+          "line_id": "l_3102_ent_3102_p00_01_d",
+          "settlement_id": "set_3102_p00",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_d8c7e4283bde5ad581849adde507ac964eae4d295daca8695bc8d169b25741c3",
+          "source_row_number": 12
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p00_02",
+        "settlement_id": "set_3102_p00",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_f89bda32d1a50bc9bee30de1f5c53aaa88e179fc2cd807873b85315544565bc3",
+        "source_row_number": 62
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p00_02",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p00_02",
+          "line_id": "l_3102_ent_3102_p00_02_d",
+          "settlement_id": "set_3102_p00",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_6458d30ba3fa828cdb3e397169def597ee0da38dfc376bf9b9e8a52b14ff4616",
+          "source_row_number": 57
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p00_02",
+          "line_id": "l_3102_ent_3102_p00_02_c",
+          "settlement_id": "set_3102_p00",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_7135d71c9002bd6c75f2121a62dcf1e0c9516544f9459c4cd535b6d0d2a2161e",
+          "source_row_number": 105
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p00_03",
+        "settlement_id": "set_3102_p00",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_132575997f77dbe5fce3fe611cf751f887374d0d201a730d0ff4056dfa9a5e30",
+        "source_row_number": 72
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p00_03",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p00_03",
+          "line_id": "l_3102_ent_3102_p00_03_c",
+          "settlement_id": "set_3102_p00",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_d9f7cf50aeba9101b5169e3b7fb8d4bcd3021f697abe4a4a1f9dcc0d41c8079f",
+          "source_row_number": 120
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p00_03",
+          "line_id": "l_3102_ent_3102_p00_03_d",
+          "settlement_id": "set_3102_p00",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_e4b3bc6375590a54f3ec391dcdfbc19ce6b4efa810ad5fad34f4e0f80e1f5007",
+          "source_row_number": 209
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p00_00",
+        "settlement_id": "set_3102_p00",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_d08513027da2ce25d73d1a2520fd4e1cd54b846fa21d65b1c751adf97a204b4a",
+        "source_row_number": 98
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p00_00",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p00_00",
+          "line_id": "l_3102_ent_3102_p00_00_d",
+          "settlement_id": "set_3102_p00",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_d01e89ad86aaa6d6d62c5cd2a89eaa0cbd87008132920bab6a1ffaec4d3c6de3",
+          "source_row_number": 143
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p00_00",
+          "line_id": "l_3102_ent_3102_p00_00_c",
+          "settlement_id": "set_3102_p00",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_27fe64331919686886bb3b11bd4d97d38fc6df6d00566452645ea0cea120bfde",
+          "source_row_number": 185
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p00_08",
+        "settlement_id": "set_3102_p00",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_07790418aaf792773d3d866b302c9e788681b6e5745eaa0e7791499360842362",
+        "source_row_number": 104
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p00_08",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p00_08",
+          "line_id": "l_3102_ent_3102_p00_08_c",
+          "settlement_id": "set_3102_p00",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_f538bf61a2c20d2297758f5c639038859eab57196573500a284913a03d1c9539",
+          "source_row_number": 139
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p00_08",
+          "line_id": "l_3102_ent_3102_p00_08_d",
+          "settlement_id": "set_3102_p00",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_f79105dd0c86e9835a378fefc4eb99ac35c486884bc40dd7cbae6c5da59fe8d1",
+          "source_row_number": 196
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p02_05",
+        "settlement_id": "set_3102_p02",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_41e50ddb6159eedb48ba66f534e80ac0ef8066085a889f94170e2029e238e60d",
+        "source_row_number": 8
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p02_05",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p02_05",
+          "line_id": "l_3102_ent_3102_p02_05_c",
+          "settlement_id": "set_3102_p02",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_76157b3b8893e3c2594ead0384085d81ec2aebe9d25a7a3e5ec1bdd6cf90c221",
+          "source_row_number": 94
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p02_05",
+          "line_id": "l_3102_ent_3102_p02_05_d",
+          "settlement_id": "set_3102_p02",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_10725955771173dea3317a4a4dd3cba9f09dd262cf9b32eeb833108fc83cf772",
+          "source_row_number": 227
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p02_07",
+        "settlement_id": "set_3102_p02",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_01b686ad9a66b02fa06f414d0e50d2314034b376960295fcb0c2bc72c7ab2a7b",
+        "source_row_number": 14
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p02_07",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p02_07",
+          "line_id": "l_3102_ent_3102_p02_07_c",
+          "settlement_id": "set_3102_p02",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_03129c715eca77353792274338578a0e7fba661094018cf29e94ac0f17df6e1d",
+          "source_row_number": 107
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p02_07",
+          "line_id": "l_3102_ent_3102_p02_07_d",
+          "settlement_id": "set_3102_p02",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_aaa8a98e2a026bcf36aef81ebf9281bcb5fa5cde218cdc6ee4489a614e85ce90",
+          "source_row_number": 212
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p02_01",
+        "settlement_id": "set_3102_p02",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_c5c0abef0fdcb5965911db03672c8edfe9b066ffc795ab1d200e56efe79a7c95",
+        "source_row_number": 41
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p02_01",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p02_01",
+          "line_id": "l_3102_ent_3102_p02_01_c",
+          "settlement_id": "set_3102_p02",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_79cd579a886cc41307ed190d6e57d51ac415fc375446c22bf6b15825f5ff8701",
+          "source_row_number": 52
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p02_01",
+          "line_id": "l_3102_ent_3102_p02_01_d",
+          "settlement_id": "set_3102_p02",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_a7d660c9375e4d7720a253315fad5f97d955e4488bf4fdf4c276aa7259bb2e88",
+          "source_row_number": 165
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p02_06",
+        "settlement_id": "set_3102_p02",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_2774a5e1f0af99a84865d2dacb8a2135995ea816317ec3d2e782ef098c7aca53",
+        "source_row_number": 56
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p02_06",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p02_06",
+          "line_id": "l_3102_ent_3102_p02_06_c",
+          "settlement_id": "set_3102_p02",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_bddf1563f54a1b13afc9cfdfde2d2b1b65481e3bfe812d441e34ed886ee7e647",
+          "source_row_number": 6
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p02_06",
+          "line_id": "l_3102_ent_3102_p02_06_d",
+          "settlement_id": "set_3102_p02",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_7103fddcc55ce1e6d138af1931779f0bee9e688876fa88d4a42b11cd1d06f324",
+          "source_row_number": 214
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p02_02",
+        "settlement_id": "set_3102_p02",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_8c1d7abeb8eb75473b9b3f63b3d878cba04977d066f41d3ad40afa39f5a299c5",
+        "source_row_number": 66
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p02_02",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p02_02",
+          "line_id": "l_3102_ent_3102_p02_02_d",
+          "settlement_id": "set_3102_p02",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_184a2e0621c52230f8ab6c75a3e8a659e6e0d34df9c751c402e3803048ed43d9",
+          "source_row_number": 134
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p02_02",
+          "line_id": "l_3102_ent_3102_p02_02_c",
+          "settlement_id": "set_3102_p02",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_32f8f753185086260750a55ed436d9bff653dfc2c842df17bbcd4cec62f02819",
+          "source_row_number": 145
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p02_00",
+        "settlement_id": "set_3102_p02",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_e8214b16b87a50de178afc14bef37efad150fd2e69cf8870b68511517e3b93a2",
+        "source_row_number": 68
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p02_00",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p02_00",
+          "line_id": "l_3102_ent_3102_p02_00_d",
+          "settlement_id": "set_3102_p02",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_3b9714a3b01e8ab78412371fa24246d68a085859fdb76be16df629e9d9e202a5",
+          "source_row_number": 26
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p02_00",
+          "line_id": "l_3102_ent_3102_p02_00_c",
+          "settlement_id": "set_3102_p02",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_185b3a8e9f7729b2a82aa0ffa48ed63a02e2dfa1c89c919435fdea54096e3963",
+          "source_row_number": 224
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p02_08",
+        "settlement_id": "set_3102_p02",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_308484a609c496e7a28e8b975c5bab4974ab690018db5fa6fd0df8dbab88c99e",
+        "source_row_number": 69
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p02_08",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p02_08",
+          "line_id": "l_3102_ent_3102_p02_08_c",
+          "settlement_id": "set_3102_p02",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_26d6836a6ef1f85db0139f74b8447577693e0fe4bfe0b31af8bcfde8122dc084",
+          "source_row_number": 80
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p02_08",
+          "line_id": "l_3102_ent_3102_p02_08_d",
+          "settlement_id": "set_3102_p02",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_4c721aca94ebad6a28874419175936daa9c8c5f5a24f15bec5a3d918ccb9655a",
+          "source_row_number": 140
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p02_09",
+        "settlement_id": "set_3102_p02",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_957564b17ff41310a3ceac4eeb7dce19a6fa1f68737a6d0a9c10e90d686c01da",
+        "source_row_number": 74
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p02_09",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p02_09",
+          "line_id": "l_3102_ent_3102_p02_09_d",
+          "settlement_id": "set_3102_p02",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_cc4883fb46d9f97c63e56d3ca6a1dad9c34d6a2dbc0fc13c32b6933acfb1467b",
+          "source_row_number": 42
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p02_09",
+          "line_id": "l_3102_ent_3102_p02_09_c",
+          "settlement_id": "set_3102_p02",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_dcd56ea5814b12d606ae6ed31e557e70e5be8f426400f18519ac87b3492cc839",
+          "source_row_number": 116
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p02_03",
+        "settlement_id": "set_3102_p02",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_73f860d7884b21632bd46e677e6f1d85541c6e842755beacc9d0a8e24998fba9",
+        "source_row_number": 76
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p02_03",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p02_03",
+          "line_id": "l_3102_ent_3102_p02_03_d",
+          "settlement_id": "set_3102_p02",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_74566d870f5a6faa9aa56937c4eb034c8b95d62c67139a894e2c391614d041f6",
+          "source_row_number": 30
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p02_03",
+          "line_id": "l_3102_ent_3102_p02_03_c",
+          "settlement_id": "set_3102_p02",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_dddafd032fe0d1f3045347683db723657de64f60a9207feae63b26c9cde2039c",
+          "source_row_number": 235
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p02_04",
+        "settlement_id": "set_3102_p02",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_ebae88092195ef9983da6e811877e807657b260a3c18d45ed71cf5b2e3c4165c",
+        "source_row_number": 95
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p02_04",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p02_04",
+          "line_id": "l_3102_ent_3102_p02_04_d",
+          "settlement_id": "set_3102_p02",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_703b7de22b12c135205fe9ff387c95fe2b9a7ee949b080b23398e0556b3cc621",
+          "source_row_number": 126
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p02_04",
+          "line_id": "l_3102_ent_3102_p02_04_c",
+          "settlement_id": "set_3102_p02",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_c6e3c530233bb939893dd518ea381ded6001f15b84ada445224e1dcd873aab1d",
+          "source_row_number": 232
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p05_00",
+        "settlement_id": "set_3102_p05",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_e5a14a6a94bbf3201f1e31d613c5014affbca23554e401dd7dc67eead3ddbd56",
+        "source_row_number": 12
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p05_00",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p05_00",
+          "line_id": "l_3102_ent_3102_p05_00_c",
+          "settlement_id": "set_3102_p05",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_715f64c0ba34d9f7da41640572fca97e71d821574bc78b40a36eecf18b1e93f5",
+          "source_row_number": 82
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p05_00",
+          "line_id": "l_3102_ent_3102_p05_00_d",
+          "settlement_id": "set_3102_p05",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_ba49caf6566edcc48f481ca13ceae4764f350eefd8721b942573cdbe14fd7a0a",
+          "source_row_number": 186
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p05_05",
+        "settlement_id": "set_3102_p05",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_6231617d3662a46933d562dea7d7978ba9e1a0717be5d93af328684d40f0b946",
+        "source_row_number": 23
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p05_05",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p05_05",
+          "line_id": "l_3102_ent_3102_p05_05_c",
+          "settlement_id": "set_3102_p05",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_cecc94ab7e021452876385a42b5003f5cc7a541743cc9667a270287cda789971",
+          "source_row_number": 86
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p05_05",
+          "line_id": "l_3102_ent_3102_p05_05_d",
+          "settlement_id": "set_3102_p05",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_3e9a9ea84d4e3491fca971fc038d863c1a7d2e41f8d61a7bcd85faac54f16df8",
+          "source_row_number": 205
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p05_03",
+        "settlement_id": "set_3102_p05",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_2e761d4067e5b70cef44386624fe6b1685917ceb239df9e59cfe919f686074ac",
+        "source_row_number": 31
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p05_03",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p05_03",
+          "line_id": "l_3102_ent_3102_p05_03_c",
+          "settlement_id": "set_3102_p05",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_bb6787257efa1b212bfb39edae0decf29b4b187eff0ccde89ec723861dbda370",
+          "source_row_number": 77
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p05_03",
+          "line_id": "l_3102_ent_3102_p05_03_d",
+          "settlement_id": "set_3102_p05",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_3acc09969632aa249709c802fd9aac6cbe657c71b6f74055a52aab2d4bd99e43",
+          "source_row_number": 236
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p05_04",
+        "settlement_id": "set_3102_p05",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_9872d9012daf1e744f0c2a9854c283b35b998e701fd05c364ea0a3d3be2087b2",
+        "source_row_number": 32
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p05_04",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p05_04",
+          "line_id": "l_3102_ent_3102_p05_04_c",
+          "settlement_id": "set_3102_p05",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_34c6dbfcc6d75b644b662cca3dcd04255d8d361c401de25fe0f49aecbfee2897",
+          "source_row_number": 44
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p05_04",
+          "line_id": "l_3102_ent_3102_p05_04_d",
+          "settlement_id": "set_3102_p05",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_d27bdb05fea395f92c02344cd7c7af57f5c91cb15e8a85067116dcf9c32b44ff",
+          "source_row_number": 141
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p05_02",
+        "settlement_id": "set_3102_p05",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_89de3ea6e3c562d44359b2ed25524cbb91b2670ad3b76d5cf91fafa0bfc15f17",
+        "source_row_number": 38
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p05_02",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p05_02",
+          "line_id": "l_3102_ent_3102_p05_02_d",
+          "settlement_id": "set_3102_p05",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_cf8988bb7cecb2fd1f563fc0da85215be350ac1dfa4523b401b5614f79f62bcd",
+          "source_row_number": 47
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p05_02",
+          "line_id": "l_3102_ent_3102_p05_02_c",
+          "settlement_id": "set_3102_p05",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_94b35ca5031eb517a4a88b8eb44626efa89e73e590ffc8596554926d7e8868de",
+          "source_row_number": 66
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p05_07",
+        "settlement_id": "set_3102_p05",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_cad795f463002e0cdbe83a1e0474e438babe4173c5348b52102622e6da5f7d65",
+        "source_row_number": 54
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p05_07",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p05_07",
+          "line_id": "l_3102_ent_3102_p05_07_c",
+          "settlement_id": "set_3102_p05",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_ebd12dec827155aea72b99265ea901fa800eb685d5e6fb008dae655525af70a4",
+          "source_row_number": 20
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p05_07",
+          "line_id": "l_3102_ent_3102_p05_07_d",
+          "settlement_id": "set_3102_p05",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_d2c96255f3bc56a22061112847247d0bfc9edc6cd0582897cdd6630260c16887",
+          "source_row_number": 129
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p05_06",
+        "settlement_id": "set_3102_p05",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_97037c5c838ad23e27e8a63a798ce9c97a704e9b021b8d10386d161a80954127",
+        "source_row_number": 64
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p05_06",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p05_06",
+          "line_id": "l_3102_ent_3102_p05_06_d",
+          "settlement_id": "set_3102_p05",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_597ecc032e24d80a5ab4b72c80d3435bf524eb6537b946efd52a556cd0a82a51",
+          "source_row_number": 174
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p05_06",
+          "line_id": "l_3102_ent_3102_p05_06_c",
+          "settlement_id": "set_3102_p05",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_25afa67501e55e75b32a9fc9e3b139bd996321a28dd264964539e7c549741442",
+          "source_row_number": 201
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p05_10",
+        "settlement_id": "set_3102_p05",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_f449c44a4cfc6ce9fcbc8687abeda7bdd68c5781991e99252b69cc538fd473db",
+        "source_row_number": 82
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p05_10",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p05_10",
+          "line_id": "l_3102_ent_3102_p05_10_c",
+          "settlement_id": "set_3102_p05",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_c87fdb27089ead243f23971005db9c2126f488adf3694114c971d472e47c4dcc",
+          "source_row_number": 64
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p05_10",
+          "line_id": "l_3102_ent_3102_p05_10_d",
+          "settlement_id": "set_3102_p05",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_c335648d752223dd3e2156e3f47250e6f6b716c5e8fef894f55f131b93094fb0",
+          "source_row_number": 78
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p05_01",
+        "settlement_id": "set_3102_p05",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_8f066e7910044c83a8357d68566bff59264b512376d3cf20ce14f2bad7908d1d",
+        "source_row_number": 85
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p05_01",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p05_01",
+          "line_id": "l_3102_ent_3102_p05_01_d",
+          "settlement_id": "set_3102_p05",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_e7b3b5db740775b4cd055196dee0a14984639e76339e6c7e35269e0cd231c35a",
+          "source_row_number": 172
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p05_01",
+          "line_id": "l_3102_ent_3102_p05_01_c",
+          "settlement_id": "set_3102_p05",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_329f6d65cb3c1d5fefb21f6e0962460a71257e224963a507b274ba476ce472ae",
+          "source_row_number": 180
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p09_02",
+        "settlement_id": "set_3102_p09",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_26f0dad8bd65a20b527c5e38b16b4bae6d561217ebf460a4857dfa22731ef5ba",
+        "source_row_number": 20
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p09_02",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p09_02",
+          "line_id": "l_3102_ent_3102_p09_02_d",
+          "settlement_id": "set_3102_p09",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_5312a9cd414cd6d178fed113ec36c2101925aacf2e90f1a26cc08c68cd62d44e",
+          "source_row_number": 31
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p09_02",
+          "line_id": "l_3102_ent_3102_p09_02_c",
+          "settlement_id": "set_3102_p09",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_ad195d66ddf93871c708a1d3130578d7ae79e30a076ec17a8a91c0d1962a7351",
+          "source_row_number": 124
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p09_00",
+        "settlement_id": "set_3102_p09",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_b9679aad766a66cf23cedbf88dcef080d470442d64115f85d9ae71dbd6b9197b",
+        "source_row_number": 29
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p09_00",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p09_00",
+          "line_id": "l_3102_ent_3102_p09_00_c",
+          "settlement_id": "set_3102_p09",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_1b3a5d26a7a0890ccca6c7837055550be0ae46f41857492e7e3a53aa320305d6",
+          "source_row_number": 15
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p09_00",
+          "line_id": "l_3102_ent_3102_p09_00_d",
+          "settlement_id": "set_3102_p09",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_47b15de74bf0c58f1007f9690deb7fcb470094564cb2026177374db05742db45",
+          "source_row_number": 223
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p09_07",
+        "settlement_id": "set_3102_p09",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_b139f0fd4e089420e85df454c1380e7d7008dd2d9d8aad0716f8ae74d2afdcf6",
+        "source_row_number": 33
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p09_07",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p09_07",
+          "line_id": "l_3102_ent_3102_p09_07_c",
+          "settlement_id": "set_3102_p09",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_6c040c8e985824b476fac72924a4f52dd4127097e4bec0815099365abffe89f6",
+          "source_row_number": 61
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p09_07",
+          "line_id": "l_3102_ent_3102_p09_07_d",
+          "settlement_id": "set_3102_p09",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_64e691c68e87f66c57a8e18000a9243ca7606e453acaa0ea0166e50e82c6391a",
+          "source_row_number": 215
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p09_04",
+        "settlement_id": "set_3102_p09",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_2fc787457c9bff9c2cb1c536815e3f24d037a9365f35d3aae4c9e55c4e508f9b",
+        "source_row_number": 57
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p09_04",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p09_04",
+          "line_id": "l_3102_ent_3102_p09_04_c",
+          "settlement_id": "set_3102_p09",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_99a4bdfc97782511bd7e32ebeab20f2c318a5d3d438dc9614276034fd3a4fd6b",
+          "source_row_number": 22
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p09_04",
+          "line_id": "l_3102_ent_3102_p09_04_d",
+          "settlement_id": "set_3102_p09",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_126ea5121c4d0586f5f8f0c97272392830ee54585238cbf395a849437a4635df",
+          "source_row_number": 97
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p09_03",
+        "settlement_id": "set_3102_p09",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_1bbc129d7ac260fc3ac9c9f29144f786be57de3dccce056ac36684bf89396843",
+        "source_row_number": 59
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p09_03",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p09_03",
+          "line_id": "l_3102_ent_3102_p09_03_d",
+          "settlement_id": "set_3102_p09",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_13829326f47409e1b80331042b59d3732d455e21e41bc32270b190d998c922a6",
+          "source_row_number": 36
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p09_03",
+          "line_id": "l_3102_ent_3102_p09_03_c",
+          "settlement_id": "set_3102_p09",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_c4cb84c3d134cc186cbcd9586fd9ef99ba14553aca9ef92083ed2acb9e588480",
+          "source_row_number": 179
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p09_01",
+        "settlement_id": "set_3102_p09",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_0ff64e339621562c000f855cef79fcd136b2e426c79c3abdf41c023b3c6828e1",
+        "source_row_number": 79
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p09_01",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p09_01",
+          "line_id": "l_3102_ent_3102_p09_01_d",
+          "settlement_id": "set_3102_p09",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_031ba1be07fce20b81050311e87d831fa75b15e0f423cdee24dadcbdc6d76b28",
+          "source_row_number": 27
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p09_01",
+          "line_id": "l_3102_ent_3102_p09_01_c",
+          "settlement_id": "set_3102_p09",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_42d9a9e2f1b3543b8819785f758d7794bb2bcab989816ca0de2ea463c8783b81",
+          "source_row_number": 75
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p09_06",
+        "settlement_id": "set_3102_p09",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_9ceb4701721e349577a76cc3bd5109ef090983f70918e7b532f425a7616b2b61",
+        "source_row_number": 90
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p09_06",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p09_06",
+          "line_id": "l_3102_ent_3102_p09_06_c",
+          "settlement_id": "set_3102_p09",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_c38ca551b5209fbaaa5ea0c07619b1959a0806a48b761c82a0b04048dcd58016",
+          "source_row_number": 72
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p09_06",
+          "line_id": "l_3102_ent_3102_p09_06_d",
+          "settlement_id": "set_3102_p09",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_07e11a41956f457eb4bc432a7a5c75ee7fa3c628f0506e7f8739e7194c7233d9",
+          "source_row_number": 128
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p09_05",
+        "settlement_id": "set_3102_p09",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_3080851b483d232b6536c545938010beb85d86b671242eae680327a8029f3b9d",
+        "source_row_number": 99
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p09_05",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p09_05",
+          "line_id": "l_3102_ent_3102_p09_05_c",
+          "settlement_id": "set_3102_p09",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_22efbb18db52b616111e6fe9f56f98a8b4874fa54a0acc99a75eabc5ed3951b6",
+          "source_row_number": 169
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p09_05",
+          "line_id": "l_3102_ent_3102_p09_05_d",
+          "settlement_id": "set_3102_p09",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_42031fd30c73b619ee01b31b581036f26c38e236efdd14e2c76e60a4bc28df7d",
+          "source_row_number": 219
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p07_00",
+        "settlement_id": "set_3102_p07",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_05ca260a98ba5b1a9a7365698d8d2a411d1d29ab2412036e5caacb4f7f06ec63",
+        "source_row_number": 9
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p07_00",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p07_00",
+          "line_id": "l_3102_ent_3102_p07_00_c",
+          "settlement_id": "set_3102_p07",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_0a9f45d9de683187a0398338e80cfb87a439ad0fcb5f79035bedf7157cf19bc2",
+          "source_row_number": 233
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p07_01",
+        "settlement_id": "set_3102_p07",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_a6dafdfaea53be126b4376d91c87eb161f180b5c4a44e0812ba8d19c114c1f91",
+        "source_row_number": 18
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p07_01",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p07_01",
+          "line_id": "l_3102_ent_3102_p07_01_d",
+          "settlement_id": "set_3102_p07",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_43cf4263f25a2e40b82959751554f14b8fe2375d10fa8f2a51ac3541b46e961f",
+          "source_row_number": 43
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p07_01",
+          "line_id": "l_3102_ent_3102_p07_01_c",
+          "settlement_id": "set_3102_p07",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_d0b396b796828744c1ad3004e3036a1b9e39e6b4cb8ef62b2f55b77e7d5424bb",
+          "source_row_number": 211
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p07_02",
+        "settlement_id": "set_3102_p07",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_e57faf9df585574677ddb399ae57a9b8ca8ae483bb2461c0c1aed0a4a98da283",
+        "source_row_number": 46
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p07_02",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p07_02",
+          "line_id": "l_3102_ent_3102_p07_02_c",
+          "settlement_id": "set_3102_p07",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_f210790981b778b879911cc7af66d0beca91029010337efe55418f1b481213f1",
+          "source_row_number": 122
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p07_02",
+          "line_id": "l_3102_ent_3102_p07_02_d",
+          "settlement_id": "set_3102_p07",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_6c7ff171c59dfd320354c65cf603caef355b1f1689a2d94ac1323546a5959376",
+          "source_row_number": 162
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p07_03",
+        "settlement_id": "set_3102_p07",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_a092939f3931ef89b96ea3e9f2a9c89fad4dce0b90dee349f26153c5fa6d0515",
+        "source_row_number": 55
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p07_03",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p07_03",
+          "line_id": "l_3102_ent_3102_p07_03_c",
+          "settlement_id": "set_3102_p07",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_a4e70c152dedaa58542b90ded8709df36000e51a1e472e971be2985f674960a8",
+          "source_row_number": 108
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p07_03",
+          "line_id": "l_3102_ent_3102_p07_03_d",
+          "settlement_id": "set_3102_p07",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_e12c645920becc8a7f688952e4b97ab2daa59305c6f0bbcb2df7334614ec11c2",
+          "source_row_number": 167
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p07_05",
+        "settlement_id": "set_3102_p07",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_7cf03a62d3d5c15e0d49ea97fb38031b394e849793d0dd0b5887ae932cb0759e",
+        "source_row_number": 71
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p07_05",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p07_05",
+          "line_id": "l_3102_ent_3102_p07_05_d",
+          "settlement_id": "set_3102_p07",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_0414fc105882f7fc0bdcc469533a75f00aa0b9e76823b43563380e3ae25b3570",
+          "source_row_number": 146
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p07_05",
+          "line_id": "l_3102_ent_3102_p07_05_c",
+          "settlement_id": "set_3102_p07",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_609086cb5f57a2390942111f4bdd9f0e972470cc58c6a6c17b65f911a4142300",
+          "source_row_number": 182
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p07_07",
+        "settlement_id": "set_3102_p07",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_42ef3196077316a4e8d5827c47d9b14d49ef39a03c31615f2da83ff3232e0c1d",
+        "source_row_number": 87
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p07_07",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p07_07",
+          "line_id": "l_3102_ent_3102_p07_07_d",
+          "settlement_id": "set_3102_p07",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_2dca369e57c0deae0735d6b1b4b978530fd1fd35a707d719ecfaa5eb777473a8",
+          "source_row_number": 175
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p07_07",
+          "line_id": "l_3102_ent_3102_p07_07_c",
+          "settlement_id": "set_3102_p07",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_ab41213fed0ea10036c61459f2013397fbb904b5e44f48ad85aa7fc026b9054e",
+          "source_row_number": 226
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p07_04",
+        "settlement_id": "set_3102_p07",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_e4844749cd6ea4cbb87c01daa7c80780f09254524e8d4e0d660928cc32ded35b",
+        "source_row_number": 100
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p07_04",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p07_04",
+          "line_id": "l_3102_ent_3102_p07_04_c",
+          "settlement_id": "set_3102_p07",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_3fbc3cfea1b1580de000bcf8682c4819a31fba0e68efa1a6fac423b590ed31b4",
+          "source_row_number": 157
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p07_04",
+          "line_id": "l_3102_ent_3102_p07_04_d",
+          "settlement_id": "set_3102_p07",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_537cd9fd6575c9f68d3e4f05dba8a22471c950fc6fcb08bb9a96e32e80f79a02",
+          "source_row_number": 161
+        }
+      ]
+    },
+    {
+      "gateway": {
+        "entity_id": "ent_3102_p07_06",
+        "settlement_id": "set_3102_p07",
+        "source_file": "razorpay_recon.csv",
+        "source_record_id": "src_8bf2392a48ed09e1a52263f10383a4dee9dd89fdce9141a71c157b21f147a0de",
+        "source_row_number": 107
+      },
+      "ledger_journal_id": "j_3102_ent_3102_p07_06",
+      "ledger_lines": [
+        {
+          "journal_id": "j_3102_ent_3102_p07_06",
+          "line_id": "l_3102_ent_3102_p07_06_d",
+          "settlement_id": "set_3102_p07",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_33abf34b1f6793e228097cdcca18f42f46b0d84642052a2d831c33ef3593f06c",
+          "source_row_number": 59
+        },
+        {
+          "journal_id": "j_3102_ent_3102_p07_06",
+          "line_id": "l_3102_ent_3102_p07_06_c",
+          "settlement_id": "set_3102_p07",
+          "source_file": "general_ledger.csv",
+          "source_record_id": "src_51c395c8eacc8ef9260b20d0cdc697596ccc0d9284040aba8a7244cf4379edba",
+          "source_row_number": 164
+        }
+      ]
+    }
+  ],
+  "expected_rejected_rows": [
+    {
+      "entity_id": null,
+      "rejection_reason": "malformed_source_record",
+      "source_file": "razorpay_recon.csv",
+      "source_record_id": "src_7cd4c59773c33736f651fd288d43647d8bd75fb0cabffdea0ed1f18a1cf1a97d",
+      "source_row_number": 77
+    }
+  ],
+  "expected_settlement_to_bank_links": [
+    {
+      "balance_account_id": "ba_02",
+      "expected_bank_credit": {
+        "bank_row_id": "bank_3102_p01",
+        "settlement_id": null,
+        "source_file": "bank_statement.csv",
+        "source_record_id": "src_686c56659da736405b1d3c58ee6fdd55da2ed4092f8f16b2f0b1685c1309619e",
+        "source_row_number": 13
+      },
+      "expected_link_supported_by_design": true,
+      "expected_link_verification": "exact_utr_and_independent_attributes",
+      "settlement_id": "set_3102_p01"
+    },
+    {
+      "balance_account_id": "ba_01",
+      "expected_bank_credit": null,
+      "expected_link_supported_by_design": false,
+      "expected_link_verification": "not_sufficient_for_auto_clear",
+      "settlement_id": "set_3102_p04"
+    },
+    {
+      "balance_account_id": "ba_02",
+      "expected_bank_credit": {
+        "bank_row_id": "bank_3102_p03",
+        "settlement_id": null,
+        "source_file": "bank_statement.csv",
+        "source_record_id": "src_38b56594678fe8844215bf0933c0bb0eb2db47dff89f9fa9394a7a7fd56cb662",
+        "source_row_number": 11
+      },
+      "expected_link_supported_by_design": true,
+      "expected_link_verification": "exact_utr_and_independent_attributes",
+      "settlement_id": "set_3102_p03"
+    },
+    {
+      "balance_account_id": "ba_01",
+      "expected_bank_credit": {
+        "bank_row_id": "bank_3102_p08",
+        "settlement_id": null,
+        "source_file": "bank_statement.csv",
+        "source_record_id": "src_b9dd86a1d60ce38d148e4a755e5eb9819a6bab8c597561f0ba55fac83217beab",
+        "source_row_number": 16
+      },
+      "expected_link_supported_by_design": true,
+      "expected_link_verification": "not_sufficient_for_auto_clear",
+      "settlement_id": "set_3102_p08"
+    },
+    {
+      "balance_account_id": "ba_02",
+      "expected_bank_credit": null,
+      "expected_link_supported_by_design": false,
+      "expected_link_verification": "not_sufficient_for_auto_clear",
+      "settlement_id": "set_3102_p11"
+    },
+    {
+      "balance_account_id": "ba_01",
+      "expected_bank_credit": {
+        "bank_row_id": "bank_3102_p10",
+        "settlement_id": null,
+        "source_file": "bank_statement.csv",
+        "source_record_id": "src_58a0975191d19e8028f76e85f15a6670326304b979b5817f546c5f1eebe4b6c5",
+        "source_row_number": 2
+      },
+      "expected_link_supported_by_design": true,
+      "expected_link_verification": "exact_utr_and_independent_attributes",
+      "settlement_id": "set_3102_p10"
+    },
+    {
+      "balance_account_id": "ba_01",
+      "expected_bank_credit": {
+        "bank_row_id": "bank_3102_p06",
+        "settlement_id": null,
+        "source_file": "bank_statement.csv",
+        "source_record_id": "src_71964538e3a2697502c2fd3a98f007f22f4bf8330447d3e2c08a175c6f32d4cc",
+        "source_row_number": 6
+      },
+      "expected_link_supported_by_design": true,
+      "expected_link_verification": "exact_utr_and_independent_attributes",
+      "settlement_id": "set_3102_p06"
+    },
+    {
+      "balance_account_id": "ba_01",
+      "expected_bank_credit": {
+        "bank_row_id": "bank_3102_p00",
+        "settlement_id": null,
+        "source_file": "bank_statement.csv",
+        "source_record_id": "src_49e848abbbf35e7e60486a1c62c28e938104a356384bcc23a35f9816a97c1283",
+        "source_row_number": 9
+      },
+      "expected_link_supported_by_design": true,
+      "expected_link_verification": "exact_utr_and_independent_attributes",
+      "settlement_id": "set_3102_p00"
+    },
+    {
+      "balance_account_id": "ba_01",
+      "expected_bank_credit": {
+        "bank_row_id": "bank_3102_p02",
+        "settlement_id": null,
+        "source_file": "bank_statement.csv",
+        "source_record_id": "src_de6e6902a362d3227486d35d6c1133d35c19b9b893d8bfd797755a959ecf43e5",
+        "source_row_number": 5
+      },
+      "expected_link_supported_by_design": true,
+      "expected_link_verification": "exact_utr_and_independent_attributes",
+      "settlement_id": "set_3102_p02"
+    },
+    {
+      "balance_account_id": "ba_02",
+      "expected_bank_credit": {
+        "bank_row_id": "bank_3102_p05",
+        "settlement_id": null,
+        "source_file": "bank_statement.csv",
+        "source_record_id": "src_030b8c7cdb3407999b6700b157400e3789bc6f705b4c55d38b9a54342424b829",
+        "source_row_number": 12
+      },
+      "expected_link_supported_by_design": true,
+      "expected_link_verification": "exact_utr_and_independent_attributes",
+      "settlement_id": "set_3102_p05"
+    },
+    {
+      "balance_account_id": "ba_02",
+      "expected_bank_credit": {
+        "bank_row_id": "bank_3102_p09",
+        "settlement_id": null,
+        "source_file": "bank_statement.csv",
+        "source_record_id": "src_411fc37324755f5282dcd0e622832512252954ff0ebf9fc2dd232e644bb2d6d4",
+        "source_row_number": 15
+      },
+      "expected_link_supported_by_design": true,
+      "expected_link_verification": "not_sufficient_for_auto_clear",
+      "settlement_id": "set_3102_p09"
+    },
+    {
+      "balance_account_id": "ba_02",
+      "expected_bank_credit": {
+        "bank_row_id": "bank_3102_p07",
+        "settlement_id": null,
+        "source_file": "bank_statement.csv",
+        "source_record_id": "src_eb260a810dddf7dbba9ef57b966e912848de281b4d1db6e999c1c78a71dba5b1",
+        "source_row_number": 10
+      },
+      "expected_link_supported_by_design": true,
+      "expected_link_verification": "exact_utr_and_independent_attributes",
+      "settlement_id": "set_3102_p07"
+    }
+  ],
+  "fixed_evaluation_clock": "2026-08-31T18:30:00Z",
+  "generator_version": "phase3-4.0",
+  "ground_truth_schema_version": "v1",
+  "policy_version": "synthetic-phase3-policy-v1",
+  "required_scenarios_present": [
+    "adjustment_movement",
+    "amount_date_collision",
+    "amount_resemblance_is_not_label",
+    "balance_account_isolation",
+    "clean_multi_payment_settlement",
+    "corrupted_conflicting_utr",
+    "duplicate_ledger_line",
+    "incorrect_fee_booking",
+    "incorrect_tax_booking",
+    "later_settlement_refund",
+    "missing_ledger_line",
+    "missing_settlement_utr",
+    "normal_fees_and_tax",
+    "overdue_missing_bank_credit",
+    "pending_within_sla",
+    "same_settlement_refund",
+    "transfer_movement",
+    "valid_bank_arrival_within_sla",
+    "unrelated_bank_distractors",
+    "malformed_source_rows",
+    "untrusted_instruction_narration"
+  ],
+  "seed": 3102,
+  "settlements": [
+    {
+      "auto_clear_eligibility": true,
+      "balance_account_id": "ba_02",
+      "expected_blocking_behavior": "non_blocking",
+      "expected_close_readiness": "READY",
+      "expected_net_subunits": 384169,
+      "expected_reason_codes": [
+        "fee_tax_netted",
+        "exact_evidence_verified"
+      ],
+      "expected_resolution_state": "auto_cleared",
+      "expected_unresolved_value_subunits": 0,
+      "gateway_source_record_ids": [
+        "src_20cd87ece235ed36304891bc40512597d14b1fe5ae0a7d4dfa64240667cba960",
+        "src_682e5725e01f17b785510efb537a83b13b2dd2cd1fb03a3efc660822c29234ea",
+        "src_7f645f2515f52aa4b7aeada525e843bb8f067fdabae16e64d8af6458645da024",
+        "src_8b22d11a6053f6cf72ccc34a70fcdf276ed7e488dccd4fa3de782028da6efd2a",
+        "src_a8433d7ae6352b97da0134aa8133f7dabc7fc3e3e4be725191fd1722fffe9b3a",
+        "src_cf91e5d70f3be9db7cd50905a93b7e2aeec5fe80419dde8227b57e3b4d844bb5",
+        "src_e8d20274f9b8928ac3779ee338b30638c42d93ba85dd726e80926342405029ce",
+        "src_e919cb1d3198489bc2b050d89fc4234ffec339eb6fe759c91722e45e4aed5546",
+        "src_fbb7280342d739f672bdadd15ef2f267a405f6cb4f7934e460940df4edaea453",
+        "src_fe18230064787e126926698602399e13804e20f3eec26149d27e8613ad23c20e"
+      ],
+      "materiality": {
+        "absolute_threshold_subunits": 10000,
+        "basis": "absolute_or_relative",
+        "is_material": false,
+        "relative_threshold_bps": 100
+      },
+      "scenario_ids": [
+        "normal_fees_and_tax",
+        "balance_account_isolation"
+      ],
+      "settlement_id": "set_3102_p01"
+    },
+    {
+      "auto_clear_eligibility": false,
+      "balance_account_id": "ba_01",
+      "expected_blocking_behavior": "pending",
+      "expected_close_readiness": "READY_WITH_EXCEPTIONS",
+      "expected_net_subunits": 403850,
+      "expected_reason_codes": [
+        "pending_within_sla",
+        "refund_netted"
+      ],
+      "expected_resolution_state": "pending_within_sla",
+      "expected_unresolved_value_subunits": 403850,
+      "gateway_source_record_ids": [
+        "src_2180f0906292ee288d9749112d2fce411f7e978a76967ca593e905390d83b81a",
+        "src_2a5be99b4c0543a0e3ba2ec071a4f98f1b11700d38576be1013a93880d9b152c",
+        "src_36d875bce766c8db48e2c297ad12f4d57b673661549fe116f37abffe4fb8ce60",
+        "src_5d5a17209f38eab0baf569b103feb130e8c4b11c7dc29410d80f3e4e5292944f",
+        "src_86d91c2f4e70d934b0d28de4cdf19bb3e5cc9362c307be60478059eaea815e3a",
+        "src_a1cf5a8309d02097fb150902c74bdaf2563c4cac5dfa293ce23016449e51bd33",
+        "src_ac953da2484b4d4b6b010f285745d26983769736aa7870abc3b0f2235dc14fe2",
+        "src_bd495f1b5e8496eec3cb2fa6885beba55d4d5f77a677dbb4cd2216b031726fc6",
+        "src_f0f7d5a7dbf44445f3aee0d9933345736972fbfc6ace87ed2dfe6995e684fd8e"
+      ],
+      "materiality": {
+        "absolute_threshold_subunits": 10000,
+        "basis": "absolute_or_relative",
+        "is_material": true,
+        "relative_threshold_bps": 100
+      },
+      "scenario_ids": [
+        "same_settlement_refund",
+        "pending_within_sla"
+      ],
+      "settlement_id": "set_3102_p04"
+    },
+    {
+      "auto_clear_eligibility": false,
+      "balance_account_id": "ba_02",
+      "expected_blocking_behavior": "blocking",
+      "expected_close_readiness": "BLOCKED",
+      "expected_net_subunits": 454669,
+      "expected_reason_codes": [
+        "tax_booking_mismatch"
+      ],
+      "expected_resolution_state": "critical_exception",
+      "expected_unresolved_value_subunits": 454669,
+      "gateway_source_record_ids": [
+        "src_24bd370fd80048ec26788ea6c588d772c1ec5433128da96a06d017f4edc21269",
+        "src_25d1936be35db2a84457f969266181f7c283678ff9d5313694f1d2ef913da39d",
+        "src_293e2c627be6bf1d3f0c1443673f682d3f37da18e2e45e71b7429d06ad620294",
+        "src_53cfddd2c3812f45610cbb794de1fe6c6adcc26ee012ecac2156807fd2bd9ead",
+        "src_5783810f0fde4bc7539aac8ae5e919c6c69dede39083223ceb9baa6ba66363b8",
+        "src_5d6cb662c34b3a0bd007a9a5d51b73f9f78d3114abf486370b282a4dca7761f8",
+        "src_609a0d49f0717dfe07fa19275264486fd108a2dddc66a97a05a1b0bc630af22c",
+        "src_738a7b2574cc5a68fff7c1d50a085af5030110a2c0d827241ff4a1a2d81349bc",
+        "src_906c56fe02753fa5e22b55a6122fb8c6896bfc414386d9ac328ae58106bc9f96",
+        "src_ac8cfafc48dc8757c1e5a316557d3de375300b82fcb11ff5082995c33f075406"
+      ],
+      "materiality": {
+        "absolute_threshold_subunits": 10000,
+        "basis": "absolute_or_relative",
+        "is_material": true,
+        "relative_threshold_bps": 100
+      },
+      "scenario_ids": [
+        "normal_fees_and_tax",
+        "incorrect_tax_booking"
+      ],
+      "settlement_id": "set_3102_p03"
+    },
+    {
+      "auto_clear_eligibility": false,
+      "balance_account_id": "ba_01",
+      "expected_blocking_behavior": "blocking",
+      "expected_close_readiness": "BLOCKED",
+      "expected_net_subunits": 473000,
+      "expected_reason_codes": [
+        "utr_missing"
+      ],
+      "expected_resolution_state": "needs_review",
+      "expected_unresolved_value_subunits": 473000,
+      "gateway_source_record_ids": [
+        "src_3e995d0dc796aa5f4829fe65fcb9c9558247631fff85a8dc7f1fc15a668893e8",
+        "src_6823267095c9140c388cc0a3b839e28c06048374b1929a06b791ca87480e12e6",
+        "src_7d233c9d845bdf986da0d2035892949ca16a0b5e2446dd9a3e1eae4b3f50c926",
+        "src_8b80654750c0dba75b7d8b2ce164bb2c601cda9f2223c64c28096d29c79a27e6",
+        "src_91fb768b225cc118cfbedfcf49a8ef4f6a9ea9f51fae0378423a57520c79a57a",
+        "src_ab12d43dc4451f8d96246127e8119c510ca8949efcf49da0e0a33b7ba0824374",
+        "src_b5032bfad92d35eac1c3b6dbf18f7b59b83543a7ffdea7847419ee3b65f9f879",
+        "src_f69cdb089944144ccea741ca66234bc8567caac72b6b235d32e2b0276ce10893"
+      ],
+      "materiality": {
+        "absolute_threshold_subunits": 10000,
+        "basis": "absolute_or_relative",
+        "is_material": true,
+        "relative_threshold_bps": 100
+      },
+      "scenario_ids": [
+        "missing_settlement_utr"
+      ],
+      "settlement_id": "set_3102_p08"
+    },
+    {
+      "auto_clear_eligibility": false,
+      "balance_account_id": "ba_02",
+      "expected_blocking_behavior": "blocking",
+      "expected_close_readiness": "BLOCKED",
+      "expected_net_subunits": 386200,
+      "expected_reason_codes": [
+        "overdue_bank_credit_missing"
+      ],
+      "expected_resolution_state": "critical_exception",
+      "expected_unresolved_value_subunits": 386200,
+      "gateway_source_record_ids": [
+        "src_1308bb498c146f3341fac7edd2952bba2d915b27ca588c5e326851926b173052",
+        "src_13cda4a308454986b006cf327d902173117bc93ca76b19ef9688718a1a1dc83f",
+        "src_761f1a2f42a4751ecec19d01f4941004b22008f89d51a15885c877c2b0309a98",
+        "src_8dec752a6eefdf0f3f574be240d07ab874bb97af83fd68c00df5be13dfce09af",
+        "src_c418790871d1bbefb59817c8d2f714d81bb40fd1904b039e7a03f2b449bc20d7",
+        "src_c630f708a44c66870f46688b3b142a64079913b2ef186ede1b7f407d6d39c764",
+        "src_d461ab90b6a8d30ee1afb13799dfd94a9d71892a8de1d7dfd1fec2f952bebaac",
+        "src_f64f82223c88afe9221410d1c1f6fc0b628be821bb39f51159aa952823dc48ed"
+      ],
+      "materiality": {
+        "absolute_threshold_subunits": 10000,
+        "basis": "absolute_or_relative",
+        "is_material": true,
+        "relative_threshold_bps": 100
+      },
+      "scenario_ids": [
+        "overdue_missing_bank_credit"
+      ],
+      "settlement_id": "set_3102_p11"
+    },
+    {
+      "auto_clear_eligibility": true,
+      "balance_account_id": "ba_01",
+      "expected_blocking_behavior": "non_blocking",
+      "expected_close_readiness": "READY",
+      "expected_net_subunits": 390300,
+      "expected_reason_codes": [
+        "exact_evidence_verified"
+      ],
+      "expected_resolution_state": "auto_cleared",
+      "expected_unresolved_value_subunits": 0,
+      "gateway_source_record_ids": [
+        "src_1ecbb8546a256b5cb2b238e8e44e652b3a2dd0bfe32fdbffc5b71d2c2d450541",
+        "src_2304c32d790e18bfb4969b25c8141d8a7909ceb8717bb8844660cab40a484da9",
+        "src_5e8135d232a7dbd6d09df248aae17a90198fc19bfb18d5dc0db75ace699bf5d6",
+        "src_66274514a2d36de5340ce00b773afc68eba88f561b72ad356df879caf9fdb661",
+        "src_b85f60b8c9321a234c3b3c02c70df23c663b37099556c1542c17c4e582c5ada6",
+        "src_bf75510a94d4d236839e3c47ac87c1777c5d656f5d8398360c37944b0bae9965",
+        "src_c8b223e5d6b0234aab068e734969fd18b4baa8a181336fa7a4b366d317194790",
+        "src_fa246749571707e8210ff1f9da8fdbc0c2a0baaca506608ef2f4a061dd36810f"
+      ],
+      "materiality": {
+        "absolute_threshold_subunits": 10000,
+        "basis": "absolute_or_relative",
+        "is_material": false,
+        "relative_threshold_bps": 100
+      },
+      "scenario_ids": [
+        "valid_bank_arrival_within_sla"
+      ],
+      "settlement_id": "set_3102_p10"
+    },
+    {
+      "auto_clear_eligibility": false,
+      "balance_account_id": "ba_01",
+      "expected_blocking_behavior": "blocking",
+      "expected_close_readiness": "BLOCKED",
+      "expected_net_subunits": 386925,
+      "expected_reason_codes": [
+        "ledger_line_duplicated",
+        "journal_unbalanced"
+      ],
+      "expected_resolution_state": "critical_exception",
+      "expected_unresolved_value_subunits": 386925,
+      "gateway_source_record_ids": [
+        "src_23d3221b2c842fe1afaf6960f54af5d157f3e18fb13022bb445f5f4379d2c463",
+        "src_2e47b3c35542416febd78c35bce6bd3ee3e6d861afcd29a328e8772a297f9e69",
+        "src_47d826c88def3fc90ce5e0305519a5df0e530c710255705c4310424c2a7fe716",
+        "src_48933ee6e61a15684a88f246282cef59f8631dbad9513e5dc2caf8559d190637",
+        "src_7c44430f4bfc8ca5721c30ba247161c94d832c9157b9d6063e70ed725545fa18",
+        "src_988ce0f5f05399c9668077a369370759ea7cfdaa448203cec84a9d5af4e91981",
+        "src_a1237448e788e659370375237631133e5b68d9cce46344b3590464adc13c8567",
+        "src_ac023ece0dbea9b9257ec162e3fc9484654dd8caaa70c31983b2e20dfad62623",
+        "src_be43c413f6acf83bae16f7b079bbd9b1323c62080fd1fe3c56fc3ca5165c9eea",
+        "src_bffdb4a85631ca3fd80e450bf0cbca59ae38d236be6f15d72c3b21d71668b9b9"
+      ],
+      "materiality": {
+        "absolute_threshold_subunits": 10000,
+        "basis": "absolute_or_relative",
+        "is_material": true,
+        "relative_threshold_bps": 100
+      },
+      "scenario_ids": [
+        "transfer_movement",
+        "adjustment_movement",
+        "duplicate_ledger_line"
+      ],
+      "settlement_id": "set_3102_p06"
+    },
+    {
+      "auto_clear_eligibility": true,
+      "balance_account_id": "ba_01",
+      "expected_blocking_behavior": "non_blocking",
+      "expected_close_readiness": "READY",
+      "expected_net_subunits": 437669,
+      "expected_reason_codes": [
+        "fee_tax_netted",
+        "exact_evidence_verified"
+      ],
+      "expected_resolution_state": "auto_cleared",
+      "expected_unresolved_value_subunits": 0,
+      "gateway_source_record_ids": [
+        "src_07790418aaf792773d3d866b302c9e788681b6e5745eaa0e7791499360842362",
+        "src_099de2fb2950d1e88eaed25a660fb64fafcd8cbf15689f5bc3685744e3811f53",
+        "src_132575997f77dbe5fce3fe611cf751f887374d0d201a730d0ff4056dfa9a5e30",
+        "src_91cd71766c624cdae457ee617191055eb1114d4ebac11460f58f12bee4f2501e",
+        "src_971618b6ebf4d3de2227eeaf23a13679998f23fdc3701b6fda49ce9c743e52b1",
+        "src_b0c1c569b1d3f04f4dbbefdb4cfa9de7d2f608e1f6745322cf8532cc316c9b51",
+        "src_c4427a03e7d7529b7cf2dc4d9ee2efb0c37a0eacb73458312e1ee294ec189097",
+        "src_d08513027da2ce25d73d1a2520fd4e1cd54b846fa21d65b1c751adf97a204b4a",
+        "src_f0294f47df5a1e94ea4a1047adb353680c02da325cf4392c161557d45b0f8921",
+        "src_f89bda32d1a50bc9bee30de1f5c53aaa88e179fc2cd807873b85315544565bc3"
+      ],
+      "materiality": {
+        "absolute_threshold_subunits": 10000,
+        "basis": "absolute_or_relative",
+        "is_material": false,
+        "relative_threshold_bps": 100
+      },
+      "scenario_ids": [
+        "clean_multi_payment_settlement",
+        "normal_fees_and_tax",
+        "amount_resemblance_is_not_label"
+      ],
+      "settlement_id": "set_3102_p00"
+    },
+    {
+      "auto_clear_eligibility": false,
+      "balance_account_id": "ba_01",
+      "expected_blocking_behavior": "blocking",
+      "expected_close_readiness": "BLOCKED",
+      "expected_net_subunits": 391969,
+      "expected_reason_codes": [
+        "fee_booking_mismatch"
+      ],
+      "expected_resolution_state": "critical_exception",
+      "expected_unresolved_value_subunits": 391969,
+      "gateway_source_record_ids": [
+        "src_01b686ad9a66b02fa06f414d0e50d2314034b376960295fcb0c2bc72c7ab2a7b",
+        "src_2774a5e1f0af99a84865d2dacb8a2135995ea816317ec3d2e782ef098c7aca53",
+        "src_308484a609c496e7a28e8b975c5bab4974ab690018db5fa6fd0df8dbab88c99e",
+        "src_41e50ddb6159eedb48ba66f534e80ac0ef8066085a889f94170e2029e238e60d",
+        "src_73f860d7884b21632bd46e677e6f1d85541c6e842755beacc9d0a8e24998fba9",
+        "src_8c1d7abeb8eb75473b9b3f63b3d878cba04977d066f41d3ad40afa39f5a299c5",
+        "src_957564b17ff41310a3ceac4eeb7dce19a6fa1f68737a6d0a9c10e90d686c01da",
+        "src_c5c0abef0fdcb5965911db03672c8edfe9b066ffc795ab1d200e56efe79a7c95",
+        "src_e8214b16b87a50de178afc14bef37efad150fd2e69cf8870b68511517e3b93a2",
+        "src_ebae88092195ef9983da6e811877e807657b260a3c18d45ed71cf5b2e3c4165c"
+      ],
+      "materiality": {
+        "absolute_threshold_subunits": 10000,
+        "basis": "absolute_or_relative",
+        "is_material": true,
+        "relative_threshold_bps": 100
+      },
+      "scenario_ids": [
+        "normal_fees_and_tax",
+        "incorrect_fee_booking"
+      ],
+      "settlement_id": "set_3102_p02"
+    },
+    {
+      "auto_clear_eligibility": true,
+      "balance_account_id": "ba_02",
+      "expected_blocking_behavior": "non_blocking",
+      "expected_close_readiness": "READY",
+      "expected_net_subunits": 505350,
+      "expected_reason_codes": [
+        "refund_netted",
+        "exact_evidence_verified"
+      ],
+      "expected_resolution_state": "cleared_with_explanation",
+      "expected_unresolved_value_subunits": 0,
+      "gateway_source_record_ids": [
+        "src_2e761d4067e5b70cef44386624fe6b1685917ceb239df9e59cfe919f686074ac",
+        "src_6231617d3662a46933d562dea7d7978ba9e1a0717be5d93af328684d40f0b946",
+        "src_89de3ea6e3c562d44359b2ed25524cbb91b2670ad3b76d5cf91fafa0bfc15f17",
+        "src_8f066e7910044c83a8357d68566bff59264b512376d3cf20ce14f2bad7908d1d",
+        "src_97037c5c838ad23e27e8a63a798ce9c97a704e9b021b8d10386d161a80954127",
+        "src_9872d9012daf1e744f0c2a9854c283b35b998e701fd05c364ea0a3d3be2087b2",
+        "src_cad795f463002e0cdbe83a1e0474e438babe4173c5348b52102622e6da5f7d65",
+        "src_e5a14a6a94bbf3201f1e31d613c5014affbca23554e401dd7dc67eead3ddbd56",
+        "src_f449c44a4cfc6ce9fcbc8687abeda7bdd68c5781991e99252b69cc538fd473db"
+      ],
+      "materiality": {
+        "absolute_threshold_subunits": 10000,
+        "basis": "absolute_or_relative",
+        "is_material": false,
+        "relative_threshold_bps": 100
+      },
+      "scenario_ids": [
+        "later_settlement_refund"
+      ],
+      "settlement_id": "set_3102_p05"
+    },
+    {
+      "auto_clear_eligibility": false,
+      "balance_account_id": "ba_02",
+      "expected_blocking_behavior": "blocking",
+      "expected_close_readiness": "BLOCKED",
+      "expected_net_subunits": 368100,
+      "expected_reason_codes": [
+        "utr_conflicting_or_malformed",
+        "bank_candidate_ambiguity"
+      ],
+      "expected_resolution_state": "critical_exception",
+      "expected_unresolved_value_subunits": 368100,
+      "gateway_source_record_ids": [
+        "src_0ff64e339621562c000f855cef79fcd136b2e426c79c3abdf41c023b3c6828e1",
+        "src_1bbc129d7ac260fc3ac9c9f29144f786be57de3dccce056ac36684bf89396843",
+        "src_26f0dad8bd65a20b527c5e38b16b4bae6d561217ebf460a4857dfa22731ef5ba",
+        "src_2fc787457c9bff9c2cb1c536815e3f24d037a9365f35d3aae4c9e55c4e508f9b",
+        "src_3080851b483d232b6536c545938010beb85d86b671242eae680327a8029f3b9d",
+        "src_9ceb4701721e349577a76cc3bd5109ef090983f70918e7b532f425a7616b2b61",
+        "src_b139f0fd4e089420e85df454c1380e7d7008dd2d9d8aad0716f8ae74d2afdcf6",
+        "src_b9679aad766a66cf23cedbf88dcef080d470442d64115f85d9ae71dbd6b9197b"
+      ],
+      "materiality": {
+        "absolute_threshold_subunits": 10000,
+        "basis": "absolute_or_relative",
+        "is_material": true,
+        "relative_threshold_bps": 100
+      },
+      "scenario_ids": [
+        "corrupted_conflicting_utr",
+        "amount_date_collision"
+      ],
+      "settlement_id": "set_3102_p09"
+    },
+    {
+      "auto_clear_eligibility": false,
+      "balance_account_id": "ba_02",
+      "expected_blocking_behavior": "blocking",
+      "expected_close_readiness": "BLOCKED",
+      "expected_net_subunits": 334300,
+      "expected_reason_codes": [
+        "ledger_line_missing",
+        "journal_unbalanced"
+      ],
+      "expected_resolution_state": "critical_exception",
+      "expected_unresolved_value_subunits": 334300,
+      "gateway_source_record_ids": [
+        "src_05ca260a98ba5b1a9a7365698d8d2a411d1d29ab2412036e5caacb4f7f06ec63",
+        "src_42ef3196077316a4e8d5827c47d9b14d49ef39a03c31615f2da83ff3232e0c1d",
+        "src_7cf03a62d3d5c15e0d49ea97fb38031b394e849793d0dd0b5887ae932cb0759e",
+        "src_8bf2392a48ed09e1a52263f10383a4dee9dd89fdce9141a71c157b21f147a0de",
+        "src_a092939f3931ef89b96ea3e9f2a9c89fad4dce0b90dee349f26153c5fa6d0515",
+        "src_a6dafdfaea53be126b4376d91c87eb161f180b5c4a44e0812ba8d19c114c1f91",
+        "src_e4844749cd6ea4cbb87c01daa7c80780f09254524e8d4e0d660928cc32ded35b",
+        "src_e57faf9df585574677ddb399ae57a9b8ca8ae483bb2461c0c1aed0a4a98da283"
+      ],
+      "materiality": {
+        "absolute_threshold_subunits": 10000,
+        "basis": "absolute_or_relative",
+        "is_material": true,
+        "relative_threshold_bps": 100
+      },
+      "scenario_ids": [
+        "missing_ledger_line"
+      ],
+      "settlement_id": "set_3102_p07"
+    }
+  ],
+  "source_fingerprints": {
+    "bank_statement.csv": "f108aef4216dc18ceb94007797db13d97d9936622eaceae0741901473ad137ab",
+    "batch_policy.json": "903cdfbdcdcd025b83fa715ea1c0e1afde644142c8090265f4bd84ac080a769e",
+    "general_ledger.csv": "e38d3c42981922b1b632f555095cc93972e815c4d79c964b0e6f5f126edf8070",
+    "razorpay_recon.csv": "6e9c33ce18a9fa5a077673aeef4261f9fc45baba2f4250bd2880710850a82123"
+  }
+}

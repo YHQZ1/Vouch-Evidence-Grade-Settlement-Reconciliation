@@ -1,0 +1,86 @@
+{
+  "fixture_id": "fixture-clean-settlement-01",
+  "description": "Readable two-payment INR settlement with exact bank evidence.",
+  "gateway_rows": [
+    {
+      "entity_id": "fixture_payment_01",
+      "type": "payment",
+      "debit": "0",
+      "credit": "10000",
+      "amount": "10000",
+      "currency": "INR",
+      "fee": "0",
+      "tax": "0",
+      "settled": "true",
+      "on_hold": "false",
+      "created_at": "2026-08-10T10:00:00Z",
+      "settled_at": "2026-08-10T18:00:00Z",
+      "settlement_id": "fixture_settlement_01",
+      "settlement_utr": "FIXTUREUTR01",
+      "description": "Synthetic fixture payment",
+      "payment_id": "fixture_payment_01",
+      "order_id": "fixture_order_01",
+      "balance_account_id": "ba_01"
+    },
+    {
+      "entity_id": "fixture_payment_02",
+      "type": "payment",
+      "debit": "0",
+      "credit": "5000",
+      "amount": "5000",
+      "currency": "INR",
+      "fee": "0",
+      "tax": "0",
+      "settled": "true",
+      "on_hold": "false",
+      "created_at": "2026-08-10T10:05:00Z",
+      "settled_at": "2026-08-10T18:00:00Z",
+      "settlement_id": "fixture_settlement_01",
+      "settlement_utr": "FIXTUREUTR01",
+      "description": "Synthetic fixture payment",
+      "payment_id": "fixture_payment_02",
+      "order_id": "fixture_order_02",
+      "balance_account_id": "ba_01"
+    }
+  ],
+  "bank_row": {
+    "bank_row_id": "fixture_bank_01",
+    "posted_at": "2026-08-10T20:00:00Z",
+    "direction": "credit",
+    "amount": "15000",
+    "currency": "INR",
+    "narration": "Synthetic settlement credit",
+    "reference": "FIXTUREUTR01",
+    "account_suffix": "ba_01",
+    "value_date": "2026-08-10T20:00:00Z"
+  },
+  "ledger_rows": [
+    {
+      "journal_id": "fixture_journal_01",
+      "line_id": "fixture_line_debit",
+      "posted_at": "2026-08-10T20:00:00Z",
+      "account_code": "1100",
+      "account_name": "Synthetic Razorpay clearing",
+      "debit": "15000",
+      "credit": "0",
+      "currency": "INR",
+      "settlement_id": "fixture_settlement_01"
+    },
+    {
+      "journal_id": "fixture_journal_01",
+      "line_id": "fixture_line_credit",
+      "posted_at": "2026-08-10T20:00:00Z",
+      "account_code": "4000",
+      "account_name": "Synthetic sales revenue",
+      "debit": "0",
+      "credit": "15000",
+      "currency": "INR",
+      "settlement_id": "fixture_settlement_01"
+    }
+  ],
+  "expected": {
+    "resolution_state": "auto_cleared",
+    "reason_codes": ["exact_evidence_verified"],
+    "signed_net_subunits": 15000
+  }
+}

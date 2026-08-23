@@ -1,0 +1,5 @@
+bank_row_id,posted_at,direction,amount,currency,narration,value_date,reference,account_suffix,balance_after
+bank_3101_p01,2026-08-31T04:30:00Z,credit,417669,INR,Razorpay settlement credit UTR3101P01A,2026-08-31T04:30:00Z,UTR3101P01A,ba_02,10417669
+bank_3101_p03,2026-08-31T00:30:00Z,credit,424969,INR,Razorpay settlement credit UTR3101P03A,2026-08-31T00:30:00Z,UTR3101P03A,ba_02,10424969
+bank_3101_p00,2026-08-31T06:30:00Z,credit,423669,INR,Razorpay settlement credit UTR3101P00A,2026-08-31T06:30:00Z,UTR3101P00A,ba_01,10423669
+bank_3101_p02,2026-08-31T02:30:00Z,credit,319069,INR,Razorpay settlement credit UTR3101P02A,2026-08-31T02:30:00Z,UTR3101P02A,ba_01,10319069

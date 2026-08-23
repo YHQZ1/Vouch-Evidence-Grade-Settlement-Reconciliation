@@ -1,0 +1,39 @@
+{
+  "dataset_id": "vouch-phase3-demonstration",
+  "dataset_kind": "demonstration",
+  "files": {
+    "bank_statement.csv": {
+      "bytes": 2417,
+      "sha256": "f108aef4216dc18ceb94007797db13d97d9936622eaceae0741901473ad137ab"
+    },
+    "batch_policy.json": {
+      "bytes": 702,
+      "sha256": "903cdfbdcdcd025b83fa715ea1c0e1afde644142c8090265f4bd84ac080a769e"
+    },
+    "general_ledger.csv": {
+      "bytes": 51946,
+      "sha256": "e38d3c42981922b1b632f555095cc93972e815c4d79c964b0e6f5f126edf8070"
+    },
+    "razorpay_recon.csv": {
+      "bytes": 27333,
+      "sha256": "6e9c33ce18a9fa5a077673aeef4261f9fc45baba2f4250bd2880710850a82123"
+    }
+  },
+  "fixed_evaluation_clock": "2026-08-31T18:30:00Z",
+  "generation_command": "python -m synthetic_data generate --dataset demonstration --seed 3102",
+  "generator_version": "phase3-4.0",
+  "record_counts": {
+    "bank_statement": 16,
+    "general_ledger": 236,
+    "razorpay_recon": 109
+  },
+  "schema_version": "v1",
+  "seed": 3102,
+  "settlement_count": 12,
+  "source_filenames": [
+    "bank_statement.csv",
+    "batch_policy.json",
+    "general_ledger.csv",
+    "razorpay_recon.csv"
+  ]
+}

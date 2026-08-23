@@ -19,6 +19,7 @@ from app.domain.common import (
 )
 from app.domain.lineage import RawEvidence, SourceLineage, SourceRecord
 from app.domain.policy import AccountRoleMapping, ClosePolicy, SettlementSLA
+from app.domain.reason_codes import REASON_CODE_DESCRIPTIONS, ReasonCode
 from app.domain.records import (
     BankEntry,
     BankRecord,
@@ -45,6 +46,8 @@ __all__ = [
     "Money",
     "MvpCurrency",
     "RawEvidence",
+    "REASON_CODE_DESCRIPTIONS",
+    "ReasonCode",
     "SettlementClass",
     "SettlementSLA",
     "SourceKind",
