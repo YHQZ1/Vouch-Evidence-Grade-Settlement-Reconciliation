@@ -8,10 +8,10 @@ reconstructs each settlement, verifies the corresponding cash and ledger
 movements, investigates ambiguous exceptions through a bounded AI agent, and
 reports whether the settlement close is ready or blocked.
 
-> **Project status:** Phase 3 deterministic synthetic datasets and separate
-> ground truth are complete; Phase 4 deterministic reconciliation is complete.
-> All examples and evaluation data are synthetic. Phase 5 evaluation metrics
-> remain separate from the runtime engine.
+> **Project status:** Phase 5 deterministic evaluation is complete. Phase 4
+> reconciliation and Phase 5 reports remain separate from the runtime engine;
+> AI-specific gates remain deferred to Phase 8. All examples and evaluation
+> data are synthetic.
 
 ## The problem
 
@@ -122,6 +122,20 @@ candidates, but only independent deterministic evidence can clear a settlement.
 Gateway-to-ledger evidence is emitted per movement with exact same-journal
 lineage; settlement-level bank/clearing posting evidence is represented
 separately.
+
+The evaluation-only harness runs the engine without labels, persists the runtime
+result first, then joins isolated ground truth and emits deterministic reports:
+
+```bash
+cd backend
+python -m evaluation evaluate \
+  --dataset held-out \
+  --output-dir ../reports/evaluation/held_out
+```
+
+Only held-out output is eligible for final accuracy claims. `metrics.json` and
+`summary.md` are byte-reproducible; wall-clock measurements and explicitly
+disabled model counters are kept in `operational.json`.
 
 ## Repository map
 

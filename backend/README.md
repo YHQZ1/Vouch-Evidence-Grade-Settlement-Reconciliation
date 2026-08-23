@@ -1,13 +1,14 @@
 # Vouch backend
 
 This package contains the Phase 1 backend foundation, Phase 2 canonical domain
-contracts, the Phase 3 synthetic-data boundary, and the Phase 4 deterministic
-reconciliation engine. The domain layer defines
+contracts, the Phase 3 synthetic-data boundary, the Phase 4 deterministic
+reconciliation engine, and the Phase 5 evaluation-only harness. The domain layer defines
 immutable source lineage, raw evidence, integer currency-subunit arithmetic,
 gateway/bank/ledger records, policy inputs, and a shared reason-code vocabulary.
 The generator lives in `synthetic_data` outside the runtime `app` package and is
 not included in the application wheel. Phase 4 reconciliation is in-memory and
-has no persistence, AI, or external integrations.
+has no persistence, AI, or external integrations. Evaluation lives in
+`backend/evaluation/` and is not included in the runtime wheel.
 
 ## Requirements
 
@@ -44,12 +45,12 @@ Settings are read from environment variables prefixed with `VOUCH_`. Safe local
 defaults are used when no variables are supplied; the application has no
 credentials or data-path settings in this phase.
 
-| Variable | Default | Purpose |
-| --- | --- | --- |
-| `VOUCH_SERVICE_NAME` | `vouch-backend` | Health response service name |
-| `VOUCH_API_VERSION` | `v1` | Health response API version |
-| `VOUCH_ENVIRONMENT` | `development` | Application environment label |
-| `VOUCH_LOG_LEVEL` | `INFO` | Application logging level |
+| Variable             | Default         | Purpose                       |
+| -------------------- | --------------- | ----------------------------- |
+| `VOUCH_SERVICE_NAME` | `vouch-backend` | Health response service name  |
+| `VOUCH_API_VERSION`  | `v1`            | Health response API version   |
+| `VOUCH_ENVIRONMENT`  | `development`   | Application environment label |
+| `VOUCH_LOG_LEVEL`    | `INFO`          | Application logging level     |
 
 For example:
 
@@ -99,3 +100,15 @@ location.
 Reconciliation results keep gateway-to-ledger evidence at movement granularity:
 each link cites one gateway source record and its exact same-journal ledger
 assignment. Settlement-level bank/clearing postings use a separate link.
+
+Phase 5 evaluation is run from a clean checkout with:
+
+```bash
+python -m evaluation evaluate --dataset held-out --output-dir ../reports/evaluation/held_out
+```
+
+The harness saves `runtime-result.json` before loading labels and emits
+`metrics.json`, `summary.md`, and `operational.json`. Demonstration evaluation
+is supported for development; held-out output is the only accuracy-claim
+dataset. Phase 6 APIs, persistence, frontend work, AI, and production
+integrations remain excluded.

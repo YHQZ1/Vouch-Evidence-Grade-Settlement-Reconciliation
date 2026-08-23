@@ -92,16 +92,17 @@ the engine has no false auto-clears in the Phase 4 test cases.
 **Outcome:** Every public metric is reproducible from stored results and isolated
 ground truth.
 
-- [ ] Evaluation-only label adapter
-- [ ] Link and resolution metrics
-- [ ] Money-weighted metrics
-- [ ] Exception and close-readiness scoring
-- [ ] Property and metamorphic tests
-- [ ] Machine-readable and human-readable reports
-- [ ] Clean-checkout evaluation command
+- [x] Evaluation-only label adapter
+- [x] Link and resolution metrics
+- [x] Money-weighted metrics
+- [x] Exception and close-readiness scoring
+- [x] Property and metamorphic tests
+- [x] Machine-readable and human-readable reports
+- [x] Clean-checkout evaluation command
 
-**Exit gate:** The held-out deterministic run passes the release gates documented
-in `evaluation.md`.
+**Exit gate:** The held-out deterministic run passes the applicable deterministic
+release gates documented in `evaluation.md`. AI-specific gates remain deferred
+to Phase 8.
 
 ## Phase 6 — FastAPI application layer
 

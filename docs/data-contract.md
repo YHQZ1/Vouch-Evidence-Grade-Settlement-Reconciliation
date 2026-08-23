@@ -271,6 +271,25 @@ link must contain at least one reason code. A verified movement assignment
 requires one unique unused same-journal pair with the configured account role,
 amount, identifiers, settlement scope, and debit/credit direction.
 
+### Phase 5 evaluation artifacts
+
+Evaluation artifacts are outside runtime source contracts and are loaded only by
+the evaluation adapter. `runtime-result.json` is the canonical serialized
+`BatchResult` and is written before ground truth is opened. The machine report
+retains integer numerator and denominator for every ratio and deterministic
+decimal/percentage strings. Money metrics use only absolute signed
+settlement-net subunits. `metrics.json` and `summary.md` are deterministic;
+`operational.json` holds measured duration, throughput, accepted source-record
+count, and explicitly disabled/not-applicable model counters.
+
+The adapter rejects malformed, stale, mismatched, or tampered runtime, manifest,
+and ground-truth artifacts. It validates dataset identity, source fingerprints,
+fixed evaluation clock, schema version, Phase 4 rule version, policy version,
+and ground-truth schema version. Exact movement links retain the Phase 4
+108-relationship boundary; settlement containment cannot create a movement true
+positive. Phase 5 does not change runtime reconciliation policy or load labels
+from `app/`.
+
 ## Ground-truth contract
 
 Ground truth is stored separately from runtime sources and records:

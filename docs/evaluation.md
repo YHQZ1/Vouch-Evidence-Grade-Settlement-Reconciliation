@@ -1,7 +1,7 @@
 # Evaluation protocol
 
-**Status:** Accepted for MVP  
-**Last reviewed:** 2026-08-23
+**Status:** Phase 5 complete for deterministic evaluation
+**Last reviewed:** 2026-08-24
 
 ## Objective
 
@@ -39,7 +39,7 @@ Phase 3 locations are `data/demonstration/inputs/`,
 manifests in `data/manifests/` contain source hashes and counts but no labels.
 The held-out seed is `3103`, with fixed clock `2026-08-31T18:30:00Z`; future
 rules and prompts must not be tuned by inspecting its separate answer key.
-The current phase freezes evidence and verification only; it does not publish
+The current phase freezes evidence and verification and publishes deterministic
 evaluation metrics. The generator records `phase3-4.0`, the effective seed, and
 the fixed clock in each manifest. `valid_bank_arrival_within_sla` has an exact
 credit and is cleared; `pending_within_sla` has no credit and an age below 48
@@ -185,3 +185,64 @@ Before the submission can claim evaluation readiness:
 - the no-model run completes safely;
 - one invalid-model-output scenario is demonstrated; and
 - reported metrics can be regenerated from a clean checkout.
+
+## Phase 5 implementation contract
+
+The evaluation entry point is outside runtime `app/`:
+
+```bash
+cd backend
+python -m evaluation evaluate \
+  --dataset held-out \
+  --output-dir ../reports/evaluation/held_out
+```
+
+`demonstration` is supported for development and walkthroughs. Only `held_out`
+is eligible for final accuracy claims. The command validates the runtime
+manifest and input fingerprints, runs the label-free Phase 4 engine, saves and
+validates `runtime-result.json`, loads labels through the evaluation-only
+adapter, validates identity and versions, scores, and writes reports. Runtime
+output is checked for label-only fields before labels are opened.
+
+The exact Phase 5 denominator and money contracts are:
+
+| Metric | Numerator | Denominator |
+| --- | --- | --- |
+| Match rate | correct automated clears with valid lineage | labelled `auto_clear_eligibility` settlements |
+| Verified link precision | exact verified predicted relationships | unique verified predicted relationships |
+| Verified link recall | exact verified predicted relationships | exact expected verified relationships |
+| Bank-link precision/recall | exact verified settlement-to-bank source relationship | verified predicted / expected bank relationships |
+| Gateway-to-ledger precision/recall | exact verified movement relationship including source IDs and journal | verified predicted / expected movement relationships |
+| Auto-clear precision | correct automated clear decisions | all automated clear decisions |
+| Auto-clear coverage | automated clears on eligible settlements | eligible settlements |
+| Money-weighted reconciliation | correctly cleared absolute settlement-net | total in-scope absolute settlement-net |
+| Exception recall | surfaced material blocking labels with an expected reason | seeded material blocking exceptions |
+| State accuracy | exact expected state | labelled settlements |
+| Close-readiness correctness | matching batch readiness | one labelled batch decision |
+| Cleared-result lineage validity | automated clears with exact valid lineage | automated clear decisions |
+
+Both `auto_cleared` and `cleared_with_explanation` are automated clear
+decisions and are also reported separately. All money values use the named
+basis `settlement_net_absolute_subunits`; gateway gross, ledger lines, and bank
+postings are never added to that basis. Every ratio retains integer numerator
+and denominator and exposes deterministic decimal and percentage strings. A
+zero denominator is emitted as `not_applicable`.
+
+The command emits `runtime-result.json` (canonical Phase 4 output saved before
+labels), `metrics.json` (complete deterministic machine report), `summary.md`
+(deterministic human report), and `operational.json` (wall-clock measurements,
+accepted source-record count, throughput, and explicit disabled/not-applicable
+model counters). The human report includes source and settlement counts,
+scenario distribution, every metric denominator, a state confusion matrix, the
+money breakdown, the complete unresolved exception list, release gates,
+limitations, and model mode.
+
+`metrics.json` and `summary.md` contain no current timestamp, duration,
+temporary path, or random ID. The harness repeats canonical rendering and fails
+the deterministic-report gate if bytes differ. Applicable Phase 5 gates fail
+the CLI with a non-zero exit code. AI invalid-output and abstention gates are
+reported as `not_applicable`/deferred and do not claim to pass in Phase 5.
+
+Phase 5 does not change Phase 4 rules based on held-out labels and does not add
+APIs, persistence, frontend work, AI, production credentials, money movement,
+or external integrations.

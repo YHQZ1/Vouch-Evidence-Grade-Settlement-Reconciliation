@@ -187,9 +187,20 @@ can be reproduced.
 
 ### Evaluation harness
 
-Evaluation is a separate entry point. It loads runtime results and privately held
-ground truth, calculates metrics, and emits a reproducible report. Runtime modules
-must not import evaluation labels or ground-truth helpers.
+Evaluation is a separate entry point under `backend/evaluation/`. It validates
+runtime inputs and manifests, runs the label-free Phase 4 engine, saves canonical
+`runtime-result.json`, checks that the result contains no label-only fields, and
+only then opens private ground truth through the evaluation-only adapter. It
+checks dataset identity, source fingerprints, fixed clock, schema, rule, policy,
+and ground-truth schema versions before scoring.
+
+The harness emits deterministic `metrics.json` and `summary.md` plus a separate
+wall-clock `operational.json`. It uses exact source-record relationships, keeps
+integer ratio counts, names settlement-net absolute value as the sole money
+basis, and fails applicable release gates for false auto-clears, missed material
+exceptions, readiness disagreement, invalid cleared lineage, incompatible
+record reuse, identity mismatch, or non-reproducible reports. The application
+wheel continues to contain only `app/` and dist-info.
 
 ## Core domain objects
 
