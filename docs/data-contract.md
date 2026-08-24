@@ -283,6 +283,32 @@ link must contain at least one reason code. A verified movement assignment
 requires one unique unused same-journal pair with the configured account role,
 amount, identifiers, settlement scope, and debit/credit direction.
 
+### Phase 8 investigation records
+
+Investigation runs are retained separately from `BatchResult` and contain the
+batch/settlement IDs, explicit evaluation clock, source fingerprints, model
+mode, server-owned provider provenance (`disabled`, `ollama`, or `scripted_test`),
+configured identifier, prompt/tool/action-schema/verifier versions,
+bounded structured steps, tool traces, structured hypothesis or abstention,
+safe failure metadata, and deterministic verification result. A hypothesis is
+limited to one `settlement_to_bank` candidate and integer signed amount; it
+cannot author ledger relationships or confidence thresholds. Every cited source
+ID must be in the server-created allowlist and must have been returned by a
+read-only tool during that run. Source narration and notes are quoted
+untrusted data.
+
+An accepted run appends an `agent_verified` effective decision with prior state
+and effective `cleared_with_explanation` state. It never mutates the base
+decision, creates `auto_cleared`, or replaces the base close assessment. The
+post-investigation close assessment is a separate deterministic projection.
+An imported accepted run is admissible only when its retained successful tool
+observations include every required verifier tool and its observed/cited
+evidence covers aggregate members, the proposed bank record, linked ledger
+evidence, and settlement postings. The evaluator replays deterministic
+verification and requires exact hypothesis/verification canonical values,
+reason codes, tool-call count, and matching `agent_verified` audit citations
+before opening labels.
+
 ### Phase 5 evaluation artifacts
 
 Evaluation artifacts are outside runtime source contracts and are loaded only by

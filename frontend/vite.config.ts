@@ -1,14 +1,14 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import tailwindcss from '@tailwindcss/vite'
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   server: {
     proxy: {
-      '/api': 'http://127.0.0.1:8000',
-      '/healthz': 'http://127.0.0.1:8000',
-      '/openapi.json': 'http://127.0.0.1:8000',
+      '/api': process.env.VITE_API_PROXY_TARGET ?? 'http://127.0.0.1:8000',
+      '/healthz': process.env.VITE_API_PROXY_TARGET ?? 'http://127.0.0.1:8000',
+      '/openapi.json': process.env.VITE_API_PROXY_TARGET ?? 'http://127.0.0.1:8000',
     },
   },
-})
+});

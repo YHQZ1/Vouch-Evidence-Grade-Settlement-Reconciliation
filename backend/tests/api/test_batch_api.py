@@ -259,6 +259,46 @@ def test_openapi_declares_export_media_types_and_actual_payload_shapes() -> None
     ].endswith("/ErrorEnvelope")
 
 
+def test_openapi_declares_phase8_operations_and_error_envelopes() -> None:
+    schema = _client().app.openapi()
+    operations = {
+        (
+            "post",
+            "/api/v1/batches/{batch_id}/settlements/{settlement_id}/investigations",
+        ): "runInvestigation",
+        (
+            "get",
+            "/api/v1/batches/{batch_id}/settlements/{settlement_id}/investigations",
+        ): "listSettlementInvestigations",
+        ("get", "/api/v1/batches/{batch_id}/investigations"): "listBatchInvestigations",
+        (
+            "get",
+            "/api/v1/batches/{batch_id}/settlements/{settlement_id}/investigations/eligibility",
+        ): "getInvestigationEligibility",
+        (
+            "get",
+            "/api/v1/batches/{batch_id}/settlements/{settlement_id}/effective-review",
+        ): "getEffectiveReview",
+        ("get", "/api/v1/batches/{batch_id}/effective-review"): "listEffectiveReviews",
+        (
+            "get",
+            "/api/v1/batches/{batch_id}/exports/investigations",
+        ): "exportInvestigations",
+    }
+    for (method, path), operation_id in operations.items():
+        operation = schema["paths"][path][method]
+        assert operation["operationId"] == operation_id
+        assert "200" in operation["responses"]
+        assert any(
+            response.get("content", {})
+            .get("application/json", {})
+            .get("schema", {})
+            .get("$ref", "")
+            .endswith("/ErrorEnvelope")
+            for response in operation["responses"].values()
+        )
+
+
 def test_concurrent_source_uploads_receive_unique_lifecycle_sequences() -> None:
     workflow = BatchWorkflowService(InMemoryBatchRepository())
     batch = workflow.create_batch(CLOCK)

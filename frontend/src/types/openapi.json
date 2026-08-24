@@ -1,6 +1,27 @@
 {
   "components": {
     "schemas": {
+      "Abstention": {
+        "additionalProperties": false,
+        "properties": {
+          "explanation": {
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "Explanation",
+            "type": "string"
+          },
+          "reason_code": {
+            "title": "Reason Code",
+            "type": "string"
+          }
+        },
+        "required": [
+          "reason_code",
+          "explanation"
+        ],
+        "title": "Abstention",
+        "type": "object"
+      },
       "AccountingControlResult": {
         "additionalProperties": false,
         "properties": {
@@ -133,6 +154,344 @@
           "clearing_residual"
         ],
         "title": "AccountingControlResult",
+        "type": "object"
+      },
+      "AgentAuditEvent": {
+        "additionalProperties": false,
+        "properties": {
+          "audit_id": {
+            "title": "Audit Id",
+            "type": "string"
+          },
+          "batch_id": {
+            "title": "Batch Id",
+            "type": "string"
+          },
+          "cited_source_record_ids": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Cited Source Record Ids",
+            "type": "array"
+          },
+          "effective_state": {
+            "$ref": "#/components/schemas/ResolutionState"
+          },
+          "evaluation_clock": {
+            "format": "date-time",
+            "title": "Evaluation Clock",
+            "type": "string"
+          },
+          "event_type": {
+            "title": "Event Type",
+            "type": "string"
+          },
+          "prior_state": {
+            "$ref": "#/components/schemas/ResolutionState"
+          },
+          "reason_codes": {
+            "items": {
+              "$ref": "#/components/schemas/ReasonCode"
+            },
+            "title": "Reason Codes",
+            "type": "array"
+          },
+          "run_id": {
+            "title": "Run Id",
+            "type": "string"
+          },
+          "sequence_number": {
+            "minimum": 1.0,
+            "title": "Sequence Number",
+            "type": "integer"
+          },
+          "settlement_id": {
+            "title": "Settlement Id",
+            "type": "string"
+          },
+          "source_fingerprints": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Source Fingerprints",
+            "type": "array"
+          }
+        },
+        "required": [
+          "audit_id",
+          "run_id",
+          "batch_id",
+          "settlement_id",
+          "event_type",
+          "prior_state",
+          "effective_state",
+          "reason_codes",
+          "cited_source_record_ids",
+          "source_fingerprints",
+          "evaluation_clock",
+          "sequence_number"
+        ],
+        "title": "AgentAuditEvent",
+        "type": "object"
+      },
+      "AgentRun": {
+        "additionalProperties": false,
+        "properties": {
+          "batch_id": {
+            "title": "Batch Id",
+            "type": "string"
+          },
+          "completed_at": {
+            "format": "date-time",
+            "title": "Completed At",
+            "type": "string"
+          },
+          "configured_model_identifier": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Configured Model Identifier"
+          },
+          "eligibility": {
+            "$ref": "#/components/schemas/InvestigationEligibility"
+          },
+          "evaluation_clock": {
+            "format": "date-time",
+            "title": "Evaluation Clock",
+            "type": "string"
+          },
+          "failure_metadata": {
+            "anyOf": [
+              {
+                "maxLength": 500,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Failure Metadata"
+          },
+          "failure_reason_code": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Failure Reason Code"
+          },
+          "hypothesis": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/StructuredEvidenceHypothesis"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "model_latency_ms": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Model Latency Ms",
+            "type": "integer"
+          },
+          "model_mode": {
+            "enum": [
+              "disabled",
+              "local"
+            ],
+            "title": "Model Mode",
+            "type": "string"
+          },
+          "prompt_version": {
+            "title": "Prompt Version",
+            "type": "string"
+          },
+          "provider_provenance": {
+            "$ref": "#/components/schemas/ProviderProvenance",
+            "default": "disabled"
+          },
+          "run_id": {
+            "title": "Run Id",
+            "type": "string"
+          },
+          "schema_version": {
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "sequence_number": {
+            "minimum": 1.0,
+            "title": "Sequence Number",
+            "type": "integer"
+          },
+          "settlement_id": {
+            "title": "Settlement Id",
+            "type": "string"
+          },
+          "source_fingerprints": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Source Fingerprints",
+            "type": "array"
+          },
+          "started_at": {
+            "format": "date-time",
+            "title": "Started At",
+            "type": "string"
+          },
+          "status": {
+            "$ref": "#/components/schemas/InvestigationStatus"
+          },
+          "steps": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/AgentStep"
+            },
+            "title": "Steps",
+            "type": "array"
+          },
+          "tool_call_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Tool Call Count",
+            "type": "integer"
+          },
+          "tool_version": {
+            "title": "Tool Version",
+            "type": "string"
+          },
+          "total_duration_ms": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Total Duration Ms",
+            "type": "integer"
+          },
+          "verification": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/DeterministicVerificationResult"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "verifier_version": {
+            "title": "Verifier Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "run_id",
+          "batch_id",
+          "settlement_id",
+          "status",
+          "model_mode",
+          "prompt_version",
+          "tool_version",
+          "schema_version",
+          "verifier_version",
+          "sequence_number",
+          "evaluation_clock",
+          "source_fingerprints",
+          "eligibility",
+          "started_at",
+          "completed_at"
+        ],
+        "title": "AgentRun",
+        "type": "object"
+      },
+      "AgentStep": {
+        "additionalProperties": false,
+        "properties": {
+          "abstention": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Abstention"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "action_type": {
+            "enum": [
+              "tool_call",
+              "hypothesis",
+              "abstain",
+              "invalid"
+            ],
+            "title": "Action Type",
+            "type": "string"
+          },
+          "duration_ms": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Duration Ms",
+            "type": "integer"
+          },
+          "failure_reason_code": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Failure Reason Code"
+          },
+          "hypothesis": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/StructuredEvidenceHypothesis"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "request": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ToolRequest"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "sequence_number": {
+            "minimum": 1.0,
+            "title": "Sequence Number",
+            "type": "integer"
+          },
+          "tool_result": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ToolResult"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "sequence_number",
+          "action_type"
+        ],
+        "title": "AgentStep",
         "type": "object"
       },
       "ApiError": {
@@ -391,6 +750,14 @@
         ],
         "title": "AuditEventListResponse",
         "type": "object"
+      },
+      "BankDirection": {
+        "enum": [
+          "credit",
+          "debit"
+        ],
+        "title": "BankDirection",
+        "type": "string"
       },
       "BatchLinks": {
         "additionalProperties": false,
@@ -923,6 +1290,297 @@
         "title": "Currency",
         "type": "string"
       },
+      "DeterministicVerificationResult": {
+        "additionalProperties": false,
+        "properties": {
+          "accepted": {
+            "title": "Accepted",
+            "type": "boolean"
+          },
+          "canonical_currency": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Currency"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "canonical_direction": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/BankDirection"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "canonical_signed_amount_subunits": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Canonical Signed Amount Subunits"
+          },
+          "cited_source_record_ids": {
+            "default": [],
+            "items": {
+              "type": "string"
+            },
+            "title": "Cited Source Record Ids",
+            "type": "array"
+          },
+          "explanation": {
+            "maxLength": 700,
+            "title": "Explanation",
+            "type": "string"
+          },
+          "proposed_bank_source_record_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Proposed Bank Source Record Id"
+          },
+          "reason_codes": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/ReasonCode"
+            },
+            "title": "Reason Codes",
+            "type": "array"
+          },
+          "settlement_id": {
+            "title": "Settlement Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "accepted",
+          "settlement_id",
+          "explanation"
+        ],
+        "title": "DeterministicVerificationResult",
+        "type": "object"
+      },
+      "EffectiveAgentVerifiedDecision": {
+        "additionalProperties": false,
+        "properties": {
+          "batch_id": {
+            "title": "Batch Id",
+            "type": "string"
+          },
+          "cited_source_record_ids": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Cited Source Record Ids",
+            "type": "array"
+          },
+          "decision_id": {
+            "title": "Decision Id",
+            "type": "string"
+          },
+          "effective_state": {
+            "const": "cleared_with_explanation",
+            "title": "Effective State",
+            "type": "string"
+          },
+          "evaluation_clock": {
+            "format": "date-time",
+            "title": "Evaluation Clock",
+            "type": "string"
+          },
+          "prior_deterministic_state": {
+            "$ref": "#/components/schemas/ResolutionState"
+          },
+          "prompt_version": {
+            "title": "Prompt Version",
+            "type": "string"
+          },
+          "reason_codes": {
+            "items": {
+              "$ref": "#/components/schemas/ReasonCode"
+            },
+            "title": "Reason Codes",
+            "type": "array"
+          },
+          "run_id": {
+            "title": "Run Id",
+            "type": "string"
+          },
+          "sequence_number": {
+            "minimum": 1.0,
+            "title": "Sequence Number",
+            "type": "integer"
+          },
+          "settlement_id": {
+            "title": "Settlement Id",
+            "type": "string"
+          },
+          "source_fingerprints": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Source Fingerprints",
+            "type": "array"
+          },
+          "tool_version": {
+            "title": "Tool Version",
+            "type": "string"
+          },
+          "verifier_version": {
+            "title": "Verifier Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "decision_id",
+          "run_id",
+          "batch_id",
+          "settlement_id",
+          "prior_deterministic_state",
+          "effective_state",
+          "reason_codes",
+          "cited_source_record_ids",
+          "source_fingerprints",
+          "prompt_version",
+          "tool_version",
+          "verifier_version",
+          "evaluation_clock",
+          "sequence_number"
+        ],
+        "title": "EffectiveAgentVerifiedDecision",
+        "type": "object"
+      },
+      "EffectiveReview": {
+        "additionalProperties": false,
+        "properties": {
+          "accepted_decision": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/EffectiveAgentVerifiedDecision"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "base_close_assessment": {
+            "$ref": "#/components/schemas/CloseAssessment"
+          },
+          "base_settlement": {
+            "$ref": "#/components/schemas/SettlementResult"
+          },
+          "base_state": {
+            "$ref": "#/components/schemas/ResolutionState"
+          },
+          "batch_id": {
+            "title": "Batch Id",
+            "type": "string"
+          },
+          "effective_close_assessment": {
+            "$ref": "#/components/schemas/CloseAssessment"
+          },
+          "effective_settlement": {
+            "$ref": "#/components/schemas/SettlementResult"
+          },
+          "effective_state": {
+            "$ref": "#/components/schemas/ResolutionState"
+          },
+          "settlement_id": {
+            "title": "Settlement Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "batch_id",
+          "settlement_id",
+          "base_state",
+          "effective_state",
+          "base_settlement",
+          "effective_settlement",
+          "base_close_assessment",
+          "effective_close_assessment"
+        ],
+        "title": "EffectiveReview",
+        "type": "object"
+      },
+      "EffectiveReviewListResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "batch_id": {
+            "title": "Batch Id",
+            "type": "string"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/EffectiveReview"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "limit": {
+            "exclusiveMinimum": 0.0,
+            "title": "Limit",
+            "type": "integer"
+          },
+          "next_offset": {
+            "anyOf": [
+              {
+                "minimum": 0.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Next Offset"
+          },
+          "offset": {
+            "minimum": 0.0,
+            "title": "Offset",
+            "type": "integer"
+          },
+          "total": {
+            "minimum": 0.0,
+            "title": "Total",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "batch_id",
+          "items",
+          "total",
+          "offset",
+          "limit"
+        ],
+        "title": "EffectiveReviewListResponse",
+        "type": "object"
+      },
+      "EffectiveReviewResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "review": {
+            "$ref": "#/components/schemas/EffectiveReview"
+          }
+        },
+        "required": [
+          "review"
+        ],
+        "title": "EffectiveReviewResponse",
+        "type": "object"
+      },
       "ErrorEnvelope": {
         "additionalProperties": false,
         "properties": {
@@ -1293,6 +1951,181 @@
         "title": "IngestionSummary",
         "type": "object"
       },
+      "InvestigationEligibility": {
+        "additionalProperties": false,
+        "description": "Deterministic eligibility decision for one settlement.",
+        "properties": {
+          "batch_id": {
+            "title": "Batch Id",
+            "type": "string"
+          },
+          "current_state": {
+            "$ref": "#/components/schemas/ResolutionState"
+          },
+          "eligible": {
+            "title": "Eligible",
+            "type": "boolean"
+          },
+          "explanation": {
+            "maxLength": 500,
+            "title": "Explanation",
+            "type": "string"
+          },
+          "provider_available": {
+            "default": true,
+            "title": "Provider Available",
+            "type": "boolean"
+          },
+          "reason_codes": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/ReasonCode"
+            },
+            "title": "Reason Codes",
+            "type": "array"
+          },
+          "settlement_id": {
+            "title": "Settlement Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "batch_id",
+          "settlement_id",
+          "eligible",
+          "current_state",
+          "explanation"
+        ],
+        "title": "InvestigationEligibility",
+        "type": "object"
+      },
+      "InvestigationExportResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "audit_events": {
+            "items": {
+              "$ref": "#/components/schemas/AgentAuditEvent"
+            },
+            "title": "Audit Events",
+            "type": "array"
+          },
+          "batch_id": {
+            "title": "Batch Id",
+            "type": "string"
+          },
+          "investigations": {
+            "items": {
+              "$ref": "#/components/schemas/AgentRun"
+            },
+            "title": "Investigations",
+            "type": "array"
+          },
+          "operational": {
+            "$ref": "#/components/schemas/OperationalMeasurements"
+          },
+          "provider_provenance": {
+            "$ref": "#/components/schemas/ProviderProvenance"
+          }
+        },
+        "required": [
+          "batch_id",
+          "provider_provenance",
+          "investigations",
+          "audit_events",
+          "operational"
+        ],
+        "title": "InvestigationExportResponse",
+        "type": "object"
+      },
+      "InvestigationListResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "batch_id": {
+            "title": "Batch Id",
+            "type": "string"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/AgentRun"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "limit": {
+            "exclusiveMinimum": 0.0,
+            "title": "Limit",
+            "type": "integer"
+          },
+          "next_offset": {
+            "anyOf": [
+              {
+                "minimum": 0.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Next Offset"
+          },
+          "offset": {
+            "minimum": 0.0,
+            "title": "Offset",
+            "type": "integer"
+          },
+          "total": {
+            "minimum": 0.0,
+            "title": "Total",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "batch_id",
+          "items",
+          "total",
+          "offset",
+          "limit"
+        ],
+        "title": "InvestigationListResponse",
+        "type": "object"
+      },
+      "InvestigationResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "eligibility": {
+            "$ref": "#/components/schemas/InvestigationEligibility"
+          },
+          "run": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AgentRun"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "eligibility"
+        ],
+        "title": "InvestigationResponse",
+        "type": "object"
+      },
+      "InvestigationStatus": {
+        "description": "String values used by the append-only run repository.",
+        "enum": [
+          "created",
+          "running",
+          "completed",
+          "abstained",
+          "rejected",
+          "failed",
+          "cancelled"
+        ],
+        "title": "InvestigationStatus",
+        "type": "string"
+      },
       "LedgerEvidenceAssignment": {
         "additionalProperties": false,
         "properties": {
@@ -1370,6 +2203,125 @@
         "title": "Money",
         "type": "object"
       },
+      "OperationalMeasurements": {
+        "additionalProperties": false,
+        "properties": {
+          "accepted_verification_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Accepted Verification Count",
+            "type": "integer"
+          },
+          "ai_false_clear_count": {
+            "anyOf": [
+              {
+                "minimum": 0.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ai False Clear Count"
+          },
+          "ai_false_clear_value_subunits": {
+            "anyOf": [
+              {
+                "minimum": 0.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ai False Clear Value Subunits"
+          },
+          "cancellation_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Cancellation Count",
+            "type": "integer"
+          },
+          "eligible_case_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Eligible Case Count",
+            "type": "integer"
+          },
+          "invoked_case_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Invoked Case Count",
+            "type": "integer"
+          },
+          "model_abstention_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Model Abstention Count",
+            "type": "integer"
+          },
+          "model_latency_ms": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Model Latency Ms",
+            "type": "integer"
+          },
+          "provider_unavailable_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Provider Unavailable Count",
+            "type": "integer"
+          },
+          "run_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Run Count",
+            "type": "integer"
+          },
+          "schema_failure_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Schema Failure Count",
+            "type": "integer"
+          },
+          "timeout_or_budget_exhaustion_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Timeout Or Budget Exhaustion Count",
+            "type": "integer"
+          },
+          "tool_call_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Tool Call Count",
+            "type": "integer"
+          },
+          "total_latency_ms": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Total Latency Ms",
+            "type": "integer"
+          },
+          "verifier_rejection_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Verifier Rejection Count",
+            "type": "integer"
+          }
+        },
+        "title": "OperationalMeasurements",
+        "type": "object"
+      },
+      "ProviderProvenance": {
+        "description": "Server-owned origin of an investigation model invocation.",
+        "enum": [
+          "disabled",
+          "ollama",
+          "scripted_test"
+        ],
+        "title": "ProviderProvenance",
+        "type": "string"
+      },
       "ReasonCode": {
         "description": "Stable machine-readable explanations for future runtime decisions.",
         "enum": [
@@ -1406,7 +2358,9 @@
           "unrelated_bank_record",
           "ledger_evidence_reused",
           "ledger_evidence_ambiguous",
-          "stronger_candidate_selected"
+          "stronger_candidate_selected",
+          "agent_verified",
+          "agent_verification_rejected"
         ],
         "title": "ReasonCode",
         "type": "string"
@@ -2009,6 +2963,172 @@
         ],
         "title": "SourceUploadResponse",
         "type": "object"
+      },
+      "StructuredEvidenceHypothesis": {
+        "additionalProperties": false,
+        "description": "Narrow settlement-to-bank proposal returned by an untrusted model.",
+        "properties": {
+          "abstention_alternative": {
+            "maxLength": 300,
+            "minLength": 1,
+            "title": "Abstention Alternative",
+            "type": "string"
+          },
+          "cited_source_record_ids": {
+            "items": {
+              "type": "string"
+            },
+            "minItems": 1,
+            "title": "Cited Source Record Ids",
+            "type": "array"
+          },
+          "evidence_claim": {
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "Evidence Claim",
+            "type": "string"
+          },
+          "expected_balance_account_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Expected Balance Account Id"
+          },
+          "expected_currency": {
+            "$ref": "#/components/schemas/Currency"
+          },
+          "expected_direction": {
+            "$ref": "#/components/schemas/BankDirection"
+          },
+          "expected_signed_amount_subunits": {
+            "title": "Expected Signed Amount Subunits",
+            "type": "integer"
+          },
+          "hypothesis_kind": {
+            "const": "settlement_to_bank",
+            "title": "Hypothesis Kind",
+            "type": "string"
+          },
+          "proposed_bank_source_record_id": {
+            "title": "Proposed Bank Source Record Id",
+            "type": "string"
+          },
+          "settlement_id": {
+            "title": "Settlement Id",
+            "type": "string"
+          },
+          "timing_claim": {
+            "$ref": "#/components/schemas/TimingClaim"
+          }
+        },
+        "required": [
+          "settlement_id",
+          "proposed_bank_source_record_id",
+          "cited_source_record_ids",
+          "hypothesis_kind",
+          "evidence_claim",
+          "expected_signed_amount_subunits",
+          "expected_currency",
+          "expected_direction",
+          "timing_claim",
+          "abstention_alternative"
+        ],
+        "title": "StructuredEvidenceHypothesis",
+        "type": "object"
+      },
+      "TimingClaim": {
+        "additionalProperties": false,
+        "properties": {
+          "end": {
+            "format": "date-time",
+            "title": "End",
+            "type": "string"
+          },
+          "explanation": {
+            "maxLength": 300,
+            "title": "Explanation",
+            "type": "string"
+          },
+          "start": {
+            "format": "date-time",
+            "title": "Start",
+            "type": "string"
+          }
+        },
+        "required": [
+          "start",
+          "end",
+          "explanation"
+        ],
+        "title": "TimingClaim",
+        "type": "object"
+      },
+      "ToolRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "arguments": {
+            "additionalProperties": true,
+            "title": "Arguments",
+            "type": "object"
+          },
+          "tool_name": {
+            "title": "Tool Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "tool_name"
+        ],
+        "title": "ToolRequest",
+        "type": "object"
+      },
+      "ToolResult": {
+        "additionalProperties": false,
+        "properties": {
+          "payload": {
+            "additionalProperties": true,
+            "title": "Payload",
+            "type": "object"
+          },
+          "reason_code": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reason Code"
+          },
+          "source_record_ids": {
+            "default": [],
+            "items": {
+              "type": "string"
+            },
+            "title": "Source Record Ids",
+            "type": "array"
+          },
+          "success": {
+            "title": "Success",
+            "type": "boolean"
+          },
+          "tool_name": {
+            "title": "Tool Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "tool_name",
+          "success"
+        ],
+        "title": "ToolResult",
+        "type": "object"
       }
     }
   },
@@ -2254,6 +3374,91 @@
           }
         },
         "summary": "Get the policy-derived close-readiness assessment",
+        "tags": [
+          "batches"
+        ]
+      }
+    },
+    "/api/v1/batches/{batch_id}/effective-review": {
+      "get": {
+        "operationId": "listEffectiveReviews",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "batch_id",
+            "required": true,
+            "schema": {
+              "title": "Batch Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "minimum": 0,
+              "title": "Offset",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 50,
+              "maximum": 100,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EffectiveReviewListResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "The requested batch or settlement was not found."
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "The requested lifecycle transition or source replacement is not valid."
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "The request or source failed explicit validation."
+          }
+        },
+        "summary": "Get effective review projections for a batch",
         "tags": [
           "batches"
         ]
@@ -2532,6 +3737,68 @@
         ]
       }
     },
+    "/api/v1/batches/{batch_id}/exports/investigations": {
+      "get": {
+        "operationId": "exportInvestigations",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "batch_id",
+            "required": true,
+            "schema": {
+              "title": "Batch Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvestigationExportResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "The requested batch or settlement was not found."
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "The requested lifecycle transition or source replacement is not valid."
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "The request or source failed explicit validation."
+          }
+        },
+        "summary": "Download bounded investigation history and audit events",
+        "tags": [
+          "batches"
+        ]
+      }
+    },
     "/api/v1/batches/{batch_id}/exports/reconciliation-result": {
       "get": {
         "operationId": "exportReconciliationResult",
@@ -2589,6 +3856,91 @@
           }
         },
         "summary": "Download the complete canonical reconciliation result",
+        "tags": [
+          "batches"
+        ]
+      }
+    },
+    "/api/v1/batches/{batch_id}/investigations": {
+      "get": {
+        "operationId": "listBatchInvestigations",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "batch_id",
+            "required": true,
+            "schema": {
+              "title": "Batch Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "minimum": 0,
+              "title": "Offset",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 50,
+              "maximum": 100,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvestigationListResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "The requested batch or settlement was not found."
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "The requested lifecycle transition or source replacement is not valid."
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "The request or source failed explicit validation."
+          }
+        },
+        "summary": "List append-only investigations for a batch",
         "tags": [
           "batches"
         ]
@@ -2869,6 +4221,312 @@
           }
         },
         "summary": "Get one settlement by its source identifier",
+        "tags": [
+          "batches"
+        ]
+      }
+    },
+    "/api/v1/batches/{batch_id}/settlements/{settlement_id}/effective-review": {
+      "get": {
+        "operationId": "getEffectiveReview",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "batch_id",
+            "required": true,
+            "schema": {
+              "title": "Batch Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "settlement_id",
+            "required": true,
+            "schema": {
+              "title": "Settlement Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EffectiveReviewResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "The requested batch or settlement was not found."
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "The requested lifecycle transition or source replacement is not valid."
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "The request or source failed explicit validation."
+          }
+        },
+        "summary": "Get base and verifier-owned effective review state",
+        "tags": [
+          "batches"
+        ]
+      }
+    },
+    "/api/v1/batches/{batch_id}/settlements/{settlement_id}/investigations": {
+      "get": {
+        "operationId": "listSettlementInvestigations",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "batch_id",
+            "required": true,
+            "schema": {
+              "title": "Batch Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "settlement_id",
+            "required": true,
+            "schema": {
+              "title": "Settlement Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "minimum": 0,
+              "title": "Offset",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 50,
+              "maximum": 100,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvestigationListResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "The requested batch or settlement was not found."
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "The requested lifecycle transition or source replacement is not valid."
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "The request or source failed explicit validation."
+          }
+        },
+        "summary": "List append-only investigations for one settlement",
+        "tags": [
+          "batches"
+        ]
+      },
+      "post": {
+        "description": "Invokes the configured local provider only for a deterministic needs_review settlement. The provider can propose or abstain; only the verifier can create an effective decision.",
+        "operationId": "runInvestigation",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "batch_id",
+            "required": true,
+            "schema": {
+              "title": "Batch Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "settlement_id",
+            "required": true,
+            "schema": {
+              "title": "Settlement Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvestigationResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "The requested batch or settlement was not found."
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "The requested lifecycle transition or source replacement is not valid."
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "The request or source failed explicit validation."
+          }
+        },
+        "summary": "Run one bounded investigation for an eligible settlement",
+        "tags": [
+          "batches"
+        ]
+      }
+    },
+    "/api/v1/batches/{batch_id}/settlements/{settlement_id}/investigations/eligibility": {
+      "get": {
+        "operationId": "getInvestigationEligibility",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "batch_id",
+            "required": true,
+            "schema": {
+              "title": "Batch Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "settlement_id",
+            "required": true,
+            "schema": {
+              "title": "Settlement Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvestigationEligibility"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "The requested batch or settlement was not found."
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "The requested lifecycle transition or source replacement is not valid."
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "The request or source failed explicit validation."
+          }
+        },
+        "summary": "Get server-owned investigation eligibility",
         "tags": [
           "batches"
         ]

@@ -135,19 +135,26 @@ It must not be exposed as a production financial control endpoint.
 
 ## Phase 7 frontend boundary
 
-The React client is a read-only review surface over the Phase 6 API. It has no
-manual clear, override, money movement, journal-posting, AI, authentication, or
-tenancy controls. The run button is enabled only when the API reports `ready`,
+The React client is a read-only review surface over the Phase 6 and Phase 8 API.
+It has no manual clear, override, money movement, journal-posting,
+authentication, or tenancy controls. The investigation button is shown only for
+an API-eligible `needs_review` settlement with `provider_available=true`. The run button is enabled only when the API reports both conditions,
 and navigation to review begins only after the API reports a completed result.
+Accepted decisions disable further invocation. Critical UTR-collision cases do
+not expose an actionable investigation control. Public HTTP cancellation is not
+claimed; the backend only supports internal per-run cancellation at its
+orchestration boundary.
 Uploads retain independent status and show stable API error codes; a conflict or
 immutable-source response cannot be rendered as a successful replacement.
 
 The browser does not persist uploaded bytes or complete results in localStorage,
 does not log source content, and does not reinterpret server exports. Proposed
 and rejected evidence are labelled separately from verified evidence. Filenames,
-explanations, identifiers, and raw values are treated as untrusted text. A
-same-origin production build and a narrow local Vite proxy keep the API boundary
-explicit; neither creates authentication or production tenancy.
+explanations, identifiers, and raw values are treated as untrusted text. The
+investigation panel shows read-only traces and verifier results while keeping
+base and effective close assessments separate. A same-origin production build
+and a narrow local Vite proxy keep the API boundary explicit; neither creates
+authentication or production tenancy.
 
 ## Human review
 

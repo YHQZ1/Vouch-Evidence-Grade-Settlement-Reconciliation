@@ -1,9 +1,9 @@
-import type { Page } from "../types/api";
+import type { Page } from '../types/api';
 
 export class PaginationError extends Error {
   constructor(message: string) {
     super(message);
-    this.name = "PaginationError";
+    this.name = 'PaginationError';
   }
 }
 
@@ -27,7 +27,9 @@ export async function fetchAllPages<T>(
     seenOffsets.add(offset);
     const page = await fetchPage(offset);
     if (page.offset !== offset) {
-      throw new PaginationError(`${label} returned page offset ${page.offset}; expected ${offset}.`);
+      throw new PaginationError(
+        `${label} returned page offset ${page.offset}; expected ${offset}.`,
+      );
     }
     expectedBatchId ??= page.batch_id;
     if (page.batch_id !== expectedBatchId) {
@@ -47,15 +49,21 @@ export async function fetchAllPages<T>(
     }
     if (page.next_offset == null) {
       if (items.length !== expectedTotal) {
-        throw new PaginationError(`${label} ended with ${items.length} records; API declared ${expectedTotal}.`);
+        throw new PaginationError(
+          `${label} ended with ${items.length} records; API declared ${expectedTotal}.`,
+        );
       }
       return { batch_id: page.batch_id, items, total: items.length };
     }
     if (!Number.isInteger(page.next_offset) || page.next_offset <= offset) {
-      throw new PaginationError(`${label} returned invalid next_offset ${page.next_offset}.`);
+      throw new PaginationError(
+        `${label} returned invalid next_offset ${page.next_offset}.`,
+      );
     }
     offset = page.next_offset;
   }
 
-  throw new PaginationError(`${label} pagination exceeded the ${maxPages}-page safety bound.`);
+  throw new PaginationError(
+    `${label} pagination exceeded the ${maxPages}-page safety bound.`,
+  );
 }

@@ -34,9 +34,8 @@ The model is outside the financial authority boundary. It may inspect a curated
 evidence package and return a hypothesis, but it cannot mutate source records,
 post financial entries, or independently clear a case.
 
-The model adapter and investigation-agent path shown below are Phase 8 design
-placeholders. The current Phase 7 runtime does not invoke AI; it ends at the
-deterministic verifier, close-readiness policy, and exception review surface.
+The Phase 8 investigation-agent path is explicit and opt-in. The deterministic
+engine remains authoritative; an agent run is a separate append-only projection.
 
 ## Phase 7 frontend composition
 
@@ -175,7 +174,7 @@ An exception is a first-class record containing its current state, materiality,
 age, candidate links, failed controls, evidence package, investigation history,
 and recommended next action.
 
-### Investigation agent (planned after Phase 2)
+### Investigation agent
 
 The agent operates under a fixed step budget with read-only tools such as:
 
@@ -189,7 +188,34 @@ The agent operates under a fixed step budget with read-only tools such as:
 
 Raw narration and notes are explicitly marked as untrusted data. The agent cannot
 execute arbitrary code, issue network calls, or select records outside the current
-case's evidence boundary.
+case's evidence boundary. The local Ollama-compatible adapter is behind an
+`InvestigationModel` protocol, has bounded response/time/token limits, and is
+disabled unless explicitly configured.
+
+The request boundary runs provider calls behind an absolute per-run deadline and
+one bounded provider slot. A late provider result is discarded. Repository
+finalization atomically commits the run, single-use bank-evidence reservation,
+optional decision, and audit event; active ownership is keyed by
+`(batch_id, settlement_id) -> run_id`, so stale cleanup cannot release a newer
+run. The summary tool observes no source records; acceptance requires observed
+and cited candidate, aggregate members, linked ledger, settlement-posting, and
+timing evidence. Effective review is projected across the full batch before
+close readiness is recomputed.
+
+The optional Ollama adapter accepts only credential-free HTTP endpoints whose
+host is a loopback IP literal validated with `ipaddress`; hostnames, paths,
+queries, fragments, malformed ports, proxies, and redirects are rejected. The
+initial prompt body is checked against the request byte limit before connection.
+Evaluation reports keep AI applicability separate from zero false clears:
+disabled or scripted-only artifacts produce `not_applicable`, while a real local
+model invocation is required before the gate can pass or fail. Imported agent
+runs and audit events are bound to the evaluated source fingerprints, fixed
+clock, settlement identities, and one-to-one batch/run lineage before labels are
+loaded. The export also records server-owned provider provenance (`disabled`,
+`ollama`, or `scripted_test`); model names cannot spoof AI applicability. Any
+accepted imported run is replayed through the deterministic verifier from its
+retained tool observations and must match its canonical values, reason codes,
+citations, tool-call count, and `agent_verified` audit event.
 
 ### Hypothesis verifier
 
@@ -309,9 +335,9 @@ synchronous and always receives the batch's explicit evaluation clock.
 
 ## Deployment shape
 
-Phase 6 runs locally as a FastAPI application with an in-memory batch repository.
-The React interface, durable SQLite adapter, and optional local
-Ollama-compatible model endpoint remain later-phase components. No networked
-queue, cache, graph database, or external model is required. A future SQLite
-adapter remains compatible with the repository boundary recorded in ADR 0004
-and ADR 0008.
+Phase 8 still runs locally as a FastAPI application with separate in-memory
+batch and investigation repositories. Investigation history is lost on restart
+by design. The optional Ollama-compatible endpoint is loopback-only and there is
+no cloud fallback. No networked queue, cache, graph database, or external model
+is required. A future SQLite adapter remains compatible with the repository
+boundaries recorded in ADR 0004 and ADR 0008.

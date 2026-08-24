@@ -140,16 +140,22 @@ review interface with every material exception and decision explanation visible.
 **Outcome:** The ambiguous tail receives useful investigation without expanding
 the model's financial authority.
 
-- [ ] Provider-isolated local model adapter
-- [ ] Read-only investigation tools
-- [ ] Structured hypothesis contract
-- [ ] Step, time, and evidence-scope limits
-- [ ] Deterministic hypothesis verifier
-- [ ] Invalid-output, prompt-injection, and model-offline tests
-- [ ] Agent audit and latency metrics
+- [x] Provider-isolated local model adapter
+- [x] Read-only investigation tools
+- [x] Structured hypothesis contract
+- [x] Step, time, and evidence-scope limits
+- [x] Deterministic hypothesis verifier
+- [x] Invalid-output, prompt-injection, and model-offline tests
+- [x] Agent audit and latency metrics
+- [x] Atomic evidence reservation and finalization rollback paths
+- [x] Server-owned eligibility, complete history pagination, and disabled-state UI
+- [x] Evaluation-only agent metrics with explicit denominators and zero-false-clear gate
 
-**Exit gate:** The agent resolves at least one seeded ambiguous case through
-verified evidence and safely abstains or is rejected on another.
+**Exit gate:** The agent resolves the eligible seeded missing-reference
+ambiguity through verified evidence and safely rejects the seeded
+UTR-conflict/amount-date collision. The latter remains ineligible because the
+higher-authority UTR conflict dominates the collision, and the verifier also
+requires uniqueness.
 
 ## Submission readiness — final release checklist
 

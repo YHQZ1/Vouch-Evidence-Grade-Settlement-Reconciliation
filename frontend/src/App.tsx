@@ -1,12 +1,12 @@
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import { Layout } from "./components/Layout";
-import { BatchSetupPage } from "./features/batch/BatchSetupPage";
-import { OverviewPage } from "./features/overview/OverviewPage";
-import { SettlementsPage } from "./features/settlements/SettlementsPage";
-import { SettlementDetailPage } from "./features/settlements/SettlementDetailPage";
-import { ExceptionsPage } from "./features/exceptions/ExceptionsPage";
-import "./styles.css";
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { Layout } from './components/Layout';
+import { BatchSetupPage } from './features/batch/BatchSetupPage';
+import { OverviewPage } from './features/overview/OverviewPage';
+import { SettlementsPage } from './features/settlements/SettlementsPage';
+import { SettlementDetailPage } from './features/settlements/SettlementDetailPage';
+import { ExceptionsPage } from './features/exceptions/ExceptionsPage';
+import './styles.css';
 
 const queryClient = new QueryClient({
   defaultOptions: {

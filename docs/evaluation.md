@@ -244,5 +244,60 @@ the CLI with a non-zero exit code. AI invalid-output and abstention gates are
 reported as `not_applicable`/deferred and do not claim to pass in Phase 5.
 
 Phase 5 does not change Phase 4 rules based on held-out labels and does not add
-APIs, persistence, frontend work, AI, production credentials, money movement,
-or external integrations.
+APIs, persistence, frontend work, or production credentials, money movement, or
+external integrations.
+
+## Phase 8 investigation evaluation
+
+The deterministic `BatchResult`, frozen source files, held-out labels, and
+AI-disabled evaluation artifacts remain unchanged. Optional investigation runs
+are evaluated separately and are never mixed into deterministic runtime
+latency. Their operational counters contain eligible and invoked case counts,
+accepted verification and rejection counts, model abstentions, schema failures,
+provider-unavailable and timeout/budget failures, tool-call count, and
+model/total latency. The invocation ratio keeps its eligible-case denominator
+explicit, and cancellation is counted separately while included in the bounded
+timeout/budget/cancellation total. Correctness scoring is evaluation-only and
+joins persisted runs to expected bank relationships and blocking labels after
+runtime artifacts are written; it reports integer-subunit AI false-clear count
+and value plus a zero-false-clear release gate. The gate is explicitly
+`not_applicable` when there are no real local-model invocations, including
+disabled and scripted-test-only runs; a zero-false-clear result is never a
+passed AI gate without applicable local-model evidence.
+
+The scripted adapter is test-only and must not be reported as model performance.
+Runtime exports carry server-owned `provider_provenance` (`disabled`, `ollama`,
+or `scripted_test`); model-name substrings are never used to classify a run.
+If no intentionally selected local model run is persisted, the report must say
+AI is disabled or unavailable. Runtime code never opens labels; the
+agent-scoring adapter follows the existing persist-runtime-then-open-labels
+sequence. The current frozen held-out run has no real local-model investigation;
+AI-specific performance is therefore disabled/not applicable, not a claim about
+the scripted test adapter.
+
+The evaluation-only command is:
+
+```text
+python -m evaluation agent-evaluate --dataset held-out \
+  --runtime-export /path/to/runtime-agent-export.json \
+  --output-dir /path/to/agent-evaluation
+```
+
+It writes a separate runtime export, machine metrics, human summary, and
+artifact manifest. The eligible denominator is the complete deterministic
+`needs_review` population, invocation counts are unique settlement identities,
+and repeated accepted attempts cannot double-count a false clear or its
+absolute integer-subunit value. Before labels are opened, every run and audit is
+bound to the evaluated dataset's exact source fingerprints and fixed evaluation
+clock; settlement, eligibility, verification, batch, and audit identities must
+agree. Missing, foreign, duplicate, or inconsistent lineage is rejected. Runs
+outside that population are rejected unless they are explicitly classified as
+ineligible attempts.
+An accepted run must also contain the complete verifier proof: successful
+observations from every required tool, observed and cited evidence covering the
+aggregate, proposed bank record, linked ledger evidence, and settlement posting,
+matching hypothesis and verification citations, canonical amount/currency/
+direction values, completed status, verifier reason codes, an exact tool-call
+count, and a matching `agent_verified` audit event. The evaluator reconstructs
+the evidence scope and replays deterministic verification before labels are
+loaded; missing or tampered proof is rejected.

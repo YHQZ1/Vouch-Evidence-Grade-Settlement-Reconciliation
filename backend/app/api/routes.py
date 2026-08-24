@@ -17,10 +17,15 @@ from app.api.contracts import (
     BatchResponse,
     CloseReadinessResponse,
     CreateBatchRequest,
+    EffectiveReviewListResponse,
+    EffectiveReviewResponse,
     ErrorEnvelope,
     ExceptionExportResponse,
     ExceptionListResponse,
     FailureResponse,
+    InvestigationExportResponse,
+    InvestigationListResponse,
+    InvestigationResponse,
     ReconciliationRunResponse,
     SettlementListResponse,
     SourceResponse,
@@ -33,10 +38,12 @@ from app.application.batch_workflow import (
     BatchWorkflowService,
     WorkflowError,
 )
+from app.application.investigation import InvestigationWorkflowService
 from app.core.config import Settings
-from app.domain import BatchResult
+from app.domain import BatchResult, InvestigationEligibility
 from app.domain.common import SourceKind
 from app.domain.reconciliation import SettlementResult
+from app.infrastructure.investigation_model import DisabledInvestigationModel
 
 _ERROR_DESCRIPTIONS = {
     404: "The requested batch or settlement was not found.",
@@ -205,7 +212,11 @@ async def _read_bounded_body(request: Request, maximum: int) -> bytes:
     return b"".join(chunks)
 
 
-def create_api_router(settings: Settings, workflow: BatchWorkflowService) -> APIRouter:
+def create_api_router(
+    settings: Settings,
+    workflow: BatchWorkflowService,
+    investigation: InvestigationWorkflowService | None = None,
+) -> APIRouter:
     """Create routes bound to explicit settings and an injected workflow."""
     router = APIRouter()
 
@@ -224,6 +235,11 @@ def create_api_router(settings: Settings, workflow: BatchWorkflowService) -> API
         )
 
     api = APIRouter(prefix="/api/v1", tags=["batches"])
+    if investigation is None:
+        investigation = InvestigationWorkflowService(
+            workflow.repository,
+            model=DisabledInvestigationModel(),
+        )
 
     @api.post(
         "/batches",
@@ -538,6 +554,143 @@ def create_api_router(settings: Settings, workflow: BatchWorkflowService) -> API
                 {"batch_id": batch_id, "audit_events": result.audit_events}
             ),
         )
+
+    @api.post(
+        "/batches/{batch_id}/settlements/{settlement_id}/investigations",
+        response_model=InvestigationResponse,
+        operation_id="runInvestigation",
+        summary="Run one bounded investigation for an eligible settlement",
+        description=(
+            "Invokes the configured local provider only for a deterministic "
+            "needs_review settlement. The provider can propose or abstain; "
+            "only the verifier can create an effective decision."
+        ),
+        responses=_error_responses(404, 409, 422),
+    )
+    def run_investigation(batch_id: str, settlement_id: str) -> InvestigationResponse:
+        eligibility = investigation.eligibility(batch_id, settlement_id)
+        run = investigation.investigate(batch_id, settlement_id)
+        return InvestigationResponse(eligibility=eligibility, run=run)
+
+    @api.get(
+        "/batches/{batch_id}/settlements/{settlement_id}/investigations/eligibility",
+        response_model=InvestigationEligibility,
+        operation_id="getInvestigationEligibility",
+        summary="Get server-owned investigation eligibility",
+        responses=_error_responses(404, 409, 422),
+    )
+    def get_investigation_eligibility(
+        batch_id: str, settlement_id: str
+    ) -> InvestigationEligibility:
+        return investigation.eligibility(batch_id, settlement_id)
+
+    @api.get(
+        "/batches/{batch_id}/settlements/{settlement_id}/investigations",
+        response_model=InvestigationListResponse,
+        operation_id="listSettlementInvestigations",
+        summary="List append-only investigations for one settlement",
+        responses=_error_responses(404, 409, 422),
+    )
+    def list_settlement_investigations(
+        batch_id: str,
+        settlement_id: str,
+        offset: int = Query(0, ge=0),
+        limit: int = Query(
+            min(50, settings.max_page_size), ge=1, le=settings.max_page_size
+        ),
+    ) -> InvestigationListResponse:
+        items_all = investigation.list_runs(batch_id, settlement_id)
+        items, next_offset = _page(items_all, offset, limit)
+        return InvestigationListResponse(
+            batch_id=batch_id,
+            items=items,
+            total=len(items_all),
+            offset=offset,
+            limit=limit,
+            next_offset=next_offset,
+        )
+
+    @api.get(
+        "/batches/{batch_id}/investigations",
+        response_model=InvestigationListResponse,
+        operation_id="listBatchInvestigations",
+        summary="List append-only investigations for a batch",
+        responses=_error_responses(404, 409, 422),
+    )
+    def list_batch_investigations(
+        batch_id: str,
+        offset: int = Query(0, ge=0),
+        limit: int = Query(
+            min(50, settings.max_page_size), ge=1, le=settings.max_page_size
+        ),
+    ) -> InvestigationListResponse:
+        items_all = investigation.list_runs(batch_id)
+        items, next_offset = _page(items_all, offset, limit)
+        return InvestigationListResponse(
+            batch_id=batch_id,
+            items=items,
+            total=len(items_all),
+            offset=offset,
+            limit=limit,
+            next_offset=next_offset,
+        )
+
+    @api.get(
+        "/batches/{batch_id}/settlements/{settlement_id}/effective-review",
+        response_model=EffectiveReviewResponse,
+        operation_id="getEffectiveReview",
+        summary="Get base and verifier-owned effective review state",
+        responses=_error_responses(404, 409, 422),
+    )
+    def get_effective_review(
+        batch_id: str, settlement_id: str
+    ) -> EffectiveReviewResponse:
+        return EffectiveReviewResponse(
+            review=investigation.effective_review(batch_id, settlement_id)
+        )
+
+    @api.get(
+        "/batches/{batch_id}/effective-review",
+        response_model=EffectiveReviewListResponse,
+        operation_id="listEffectiveReviews",
+        summary="Get effective review projections for a batch",
+        responses=_error_responses(404, 409, 422),
+    )
+    def list_effective_reviews(
+        batch_id: str,
+        offset: int = Query(0, ge=0),
+        limit: int = Query(
+            min(50, settings.max_page_size), ge=1, le=settings.max_page_size
+        ),
+    ) -> EffectiveReviewListResponse:
+        _completed_result(workflow, batch_id)
+        all_items = tuple(
+            sorted(
+                investigation.effective_reviews(batch_id),
+                key=lambda item: item.settlement_id,
+            )
+        )
+        items, next_offset = _page(all_items, offset, limit)
+        return EffectiveReviewListResponse(
+            batch_id=batch_id,
+            items=items,
+            total=len(all_items),
+            offset=offset,
+            limit=limit,
+            next_offset=next_offset,
+        )
+
+    @api.get(
+        "/batches/{batch_id}/exports/investigations",
+        response_model=InvestigationExportResponse,
+        operation_id="exportInvestigations",
+        response_class=JSONResponse,
+        summary="Download bounded investigation history and audit events",
+        responses=_error_responses(404, 409, 422),
+    )
+    def export_investigations(batch_id: str) -> Response:
+        payload = investigation.export(batch_id)
+        return _export_response(batch_id, "investigations", _canonical_json(payload))
 
     router.include_router(api)
     return router

@@ -7,7 +7,9 @@ immutable source lineage, raw evidence, integer currency-subunit arithmetic,
 gateway/bank/ledger records, policy inputs, and a shared reason-code vocabulary.
 The generator lives in `synthetic_data` outside the runtime `app` package and is
 not included in the application wheel. Phase 4 reconciliation is in-memory and
-has no persistence, AI, or external integrations. Evaluation lives in
+has no durable persistence or external integrations. The bounded Phase 8 AI
+adapter is disabled by default, remains process-local, and uses atomic
+single-use bank-evidence reservations plus per-run deadlines. Evaluation lives in
 `backend/evaluation/` and is not included in the runtime wheel.
 
 ## Requirements
@@ -80,8 +82,9 @@ python -m ruff check .
 python -m ruff format --check .
 ```
 
-Authentication, durable persistence, queues, AI, and frontend work remain
-deferred to later phases. The Phase 4 runtime CLI is:
+Authentication, durable persistence, queues, and production integrations remain
+deferred to later phases. Optional local model access is loopback-only and
+never required for tests. The runtime CLI is:
 
 ```bash
 python -m app.cli reconcile --help
@@ -118,4 +121,7 @@ The harness saves `runtime-result.json` before loading labels and emits
 `metrics.json`, `summary.md`, and `operational.json`. Demonstration evaluation
 is supported for development; held-out output is the only accuracy-claim
 dataset. Phase 6 APIs are available under `/api/v1`; durable persistence,
-frontend work, AI, and production integrations remain excluded.
+frontend work, AI, and production integrations remain excluded from the
+deterministic evaluation artifacts. Agent operational metrics are an
+evaluation-only adapter; no real local-model performance is reported unless a
+separate local run is explicitly persisted.

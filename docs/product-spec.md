@@ -97,7 +97,9 @@ policy-derived close readiness, settlement evidence flow, every material
 exception, audit explanation, and canonical exports. It preserves API reason
 codes and evidence statuses and presents exact integer-subunit amounts. It does
 not provide manual clear/override controls, accounting writes, money movement,
-AI actions, authentication, or durable browser persistence.
+authentication, or durable browser persistence. Its Phase 8 investigation panel
+is explicit, read-only, limited to eligible `needs_review` cases, and cannot
+create an effective state without deterministic verification.
 
 ## Resolution states
 
@@ -165,6 +167,14 @@ universal accounting rules.
 - **FR-204:** Pass every hypothesis through deterministic verification.
 - **FR-205:** Mark a case `needs_review` when the model is unavailable, invalid,
   contradictory, or unsupported by evidence.
+- **FR-206:** Never invoke AI for auto-cleared, explained, pending, critical, or
+  excluded cases.
+- **FR-207:** Retain base and effective verifier-owned states separately and
+  export append-only investigation history without hidden model reasoning.
+- **FR-208:** Expose server-owned eligibility and provider availability; never
+  offer an action for a critical UTR-collision case or an accepted settlement.
+- **FR-209:** Reserve accepted bank evidence atomically and single-use across
+  the entire batch, including deterministic evidence already consumed.
 
 ### Reporting and audit
 

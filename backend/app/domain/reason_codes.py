@@ -44,6 +44,8 @@ class ReasonCode(StrEnum):
     LEDGER_EVIDENCE_REUSED = "ledger_evidence_reused"
     LEDGER_EVIDENCE_AMBIGUOUS = "ledger_evidence_ambiguous"
     STRONGER_CANDIDATE_SELECTED = "stronger_candidate_selected"
+    AGENT_VERIFIED = "agent_verified"
+    AGENT_VERIFICATION_REJECTED = "agent_verification_rejected"
 
 
 REASON_CODE_DESCRIPTIONS: dict[ReasonCode, str] = {
@@ -128,6 +130,12 @@ REASON_CODE_DESCRIPTIONS: dict[ReasonCode, str] = {
     ),
     ReasonCode.STRONGER_CANDIDATE_SELECTED: (
         "A stronger deterministic candidate was selected instead."
+    ),
+    ReasonCode.AGENT_VERIFIED: (
+        "A bounded agent hypothesis passed deterministic verification."
+    ),
+    ReasonCode.AGENT_VERIFICATION_REJECTED: (
+        "A bounded agent hypothesis failed deterministic verification."
     ),
 }
 

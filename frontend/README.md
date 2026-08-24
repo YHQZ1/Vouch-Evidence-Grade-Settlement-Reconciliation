@@ -1,7 +1,7 @@
 # Vouch review interface
 
-Phase 7 is a review-only React interface for the Phase 6 FastAPI batch API. It
-does not reconcile, clear exceptions, post journals, move money, invoke AI, or
+Phase 8 extends the review-only React interface for the Phase 6 FastAPI batch API.
+It does not reconcile, clear exceptions, post journals, move money, invoke AI, or
 persist source bytes in the browser. The backend remains the sole authority for
 financial decisions.
 
@@ -36,6 +36,8 @@ API paths.
 | `npm run api:generate` | Regenerate the OpenAPI snapshot and `src/types/generated.ts` |
 | `npm run api:check` | Fail when either generated contract artifact is stale or consumed routes/schemas are missing |
 | `npm run e2e` | Playwright against real FastAPI + Vite servers |
+| `npm run format` | Format handwritten frontend code with Prettier |
+| `npm run format:check` | Verify Prettier formatting, including generated TypeScript |
 
 `src/types/openapi.json` and `src/types/generated.ts` are generated from
 `backend.app.main:app`. `src/types/api.ts` only aliases generated schemas and
@@ -58,7 +60,8 @@ interface remains deterministic and offline-safe.
 - `/batches/:batchId/settlements` — URL-preserved search and filters.
 - `/batches/:batchId/settlements/:settlementId` — signed-net arithmetic,
   Razorpay → Bank → Ledger evidence, controls, candidates, exceptions, and
-  decision provenance.
+  decision provenance, plus an explicit Phase 8 investigation panel only when
+  server-owned eligibility and provider availability allow it.
 - `/batches/:batchId/exceptions` — deterministic materiality-ranked queue.
 
 The code is split into feature modules under `src/features`, shared accessible
@@ -88,6 +91,12 @@ The API is process-local by design. A backend restart removes batches, so a stal
 deep link shows recovery guidance rather than an empty workspace. The frontend
 has no authentication or tenancy boundary and must not be deployed as a
 production financial control endpoint without a new architecture decision.
+
+The investigation panel fetches complete bounded history, keeps base and
+effective projections separate, exposes no hidden model reasoning or manual
+clear/override action, and treats export failures as retryable UI errors. The
+default-disabled provider is shown as read-only; an accepted decision disables
+repeat invocation.
 
 ## Demonstration
 

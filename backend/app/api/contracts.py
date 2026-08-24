@@ -7,6 +7,14 @@ from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
+from app.domain.investigation import (
+    AgentAuditEvent,
+    AgentRun,
+    EffectiveReview,
+    InvestigationEligibility,
+    OperationalMeasurements,
+    ProviderProvenance,
+)
 from app.domain.reconciliation import (
     AuditEvent,
     CloseAssessment,
@@ -149,6 +157,41 @@ class AuditEventExportResponse(ImmutableModel):
     audit_events: tuple[AuditEvent, ...]
 
 
+class InvestigationListResponse(ImmutableModel):
+    batch_id: str
+    items: tuple[AgentRun, ...]
+    total: int = Field(ge=0)
+    offset: int = Field(ge=0)
+    limit: int = Field(gt=0)
+    next_offset: int | None = Field(default=None, ge=0)
+
+
+class InvestigationResponse(ImmutableModel):
+    eligibility: InvestigationEligibility
+    run: AgentRun | None = None
+
+
+class InvestigationExportResponse(ImmutableModel):
+    batch_id: str
+    provider_provenance: ProviderProvenance
+    investigations: tuple[AgentRun, ...]
+    audit_events: tuple[AgentAuditEvent, ...]
+    operational: OperationalMeasurements
+
+
+class EffectiveReviewResponse(ImmutableModel):
+    review: EffectiveReview
+
+
+class EffectiveReviewListResponse(ImmutableModel):
+    batch_id: str
+    items: tuple[EffectiveReview, ...]
+    total: int = Field(ge=0)
+    offset: int = Field(ge=0)
+    limit: int = Field(gt=0)
+    next_offset: int | None = Field(default=None, ge=0)
+
+
 __all__ = [
     "AuditEventListResponse",
     "BatchLinks",
@@ -159,7 +202,12 @@ __all__ = [
     "ErrorEnvelope",
     "ExceptionExportResponse",
     "ExceptionListResponse",
+    "EffectiveReviewResponse",
+    "EffectiveReviewListResponse",
     "FailureResponse",
+    "InvestigationExportResponse",
+    "InvestigationListResponse",
+    "InvestigationResponse",
     "ReconciliationRunResponse",
     "SettlementListResponse",
     "SourceResponse",

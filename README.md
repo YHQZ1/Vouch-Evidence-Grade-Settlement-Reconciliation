@@ -6,13 +6,13 @@ Vouch is an evidence-grade finance controller for reconciling Razorpay settlemen
 activity across gateway reports, bank statements, and accounting ledgers. It
 reconstructs each settlement, verifies the corresponding cash and ledger
 movements, and reports whether the settlement close is ready or blocked. A
-bounded AI investigation path is planned for Phase 8 and is not part of the
-current runtime.
+bounded AI investigation path is available as an explicit, local-only Phase 8
+workflow and is disabled by default.
 
 > **Project status:** Phase 7 React review and close-readiness interface is
 > complete over the Phase 6 FastAPI boundary. Phase 4 reconciliation and Phase 5
-> reports remain separate from the runtime engine; Phase 8 AI-specific gates are
-> planned and not implemented. All examples and evaluation data are synthetic.
+> reports remain separate from the runtime engine; Phase 8 investigations are
+> append-only and verifier-owned. All examples and evaluation data are synthetic.
 
 ## The problem
 
@@ -39,8 +39,8 @@ For each settlement, Vouch is designed to:
    fields;
 3. verify the bank credit using UTR, amount, timing, and uniqueness controls;
 4. verify related ledger journals and the Razorpay clearing-account movement;
-5. reserve only the unresolved tail for the planned bounded AI agent;
-6. require any future AI hypothesis to pass deterministic verification;
+5. reserve only the unresolved tail for the bounded AI investigation agent;
+6. require every AI hypothesis to pass deterministic verification;
 7. rank exceptions by materiality and operational urgency; and
 8. issue an auditable `READY`, `READY_WITH_EXCEPTIONS`, or `BLOCKED` decision.
 
@@ -74,9 +74,8 @@ flowchart LR
     G --> K[Proof packet and audit export]
 ```
 
-The investigation-agent branch in this conceptual flow is a Phase 8 design
-placeholder; the current Phase 7 product ends at deterministic verification,
-exceptions, and review.
+The investigation-agent branch is an explicit Phase 8 action from an eligible
+settlement review. It never runs merely because a result page is opened.
 
 ## Initial scope
 
@@ -93,7 +92,10 @@ Included:
 - optional balance-account partitioning;
 - materiality-aware exceptions;
 - a frozen held-out synthetic evaluation batch; and
-- a documented, provider-isolated AI investigation path planned for Phase 8.
+- a documented, provider-isolated AI investigation path with safe disabled and
+  offline behavior.
+- atomic single-use evidence reservations, per-run deadlines, and server-owned
+  eligibility/effective-state projections.
 
 Not included in the first release:
 

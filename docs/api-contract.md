@@ -34,6 +34,13 @@ informational UTC metadata and do not affect reconciliation.
 | `GET /api/v1/batches/{batch_id}/exports/reconciliation-result` | `200` | Canonical JSON result download |
 | `GET /api/v1/batches/{batch_id}/exports/exceptions` | `200` | Canonical JSON exception download |
 | `GET /api/v1/batches/{batch_id}/exports/audit-events` | `200` | Canonical JSON audit download |
+| `POST /api/v1/batches/{batch_id}/settlements/{settlement_id}/investigations` | `200` | Explicitly invoke one bounded investigation |
+| `GET /api/v1/batches/{batch_id}/settlements/{settlement_id}/investigations/eligibility` | `200` | Server-owned eligibility and provider availability |
+| `GET /api/v1/batches/{batch_id}/settlements/{settlement_id}/investigations` | `200` | Paginated append-only investigation history |
+| `GET /api/v1/batches/{batch_id}/investigations` | `200` | Paginated batch investigation history |
+| `GET /api/v1/batches/{batch_id}/settlements/{settlement_id}/effective-review` | `200` | Base and latest verifier-owned effective state |
+| `GET /api/v1/batches/{batch_id}/effective-review` | `200` | Deterministic effective-review projections |
+| `GET /api/v1/batches/{batch_id}/exports/investigations` | `200` | Canonical investigation and agent-audit export |
 
 List endpoints use bounded `offset`/`limit` pagination. The default limit is
 `min(50, VOUCH_MAX_PAGE_SIZE)` and the maximum is 100 by default. Results are
@@ -68,10 +75,10 @@ Stable codes include:
 | Status | Codes |
 | --- | --- |
 | `404` | `BATCH_NOT_FOUND`, `SETTLEMENT_NOT_FOUND` |
-| `409` | `BATCH_INCOMPLETE`, `RUN_ALREADY_IN_PROGRESS`, `INVALID_LIFECYCLE`, `SOURCE_CONFLICT`, `SOURCES_IMMUTABLE`, `RESULT_UNAVAILABLE` |
+| `409` | `BATCH_INCOMPLETE`, `RUN_ALREADY_IN_PROGRESS`, `INVESTIGATION_ALREADY_IN_PROGRESS`, `INVESTIGATION_UNAVAILABLE`, `EVIDENCE_ALREADY_CONSUMED`, `INVESTIGATION_FINALIZATION_FAILED`, `INVESTIGATION_SCOPE_FAILED`, `INVALID_LIFECYCLE`, `SOURCE_CONFLICT`, `SOURCES_IMMUTABLE`, `RESULT_UNAVAILABLE` |
 | `413` | `UPLOAD_TOO_LARGE` |
 | `415` | `UNSUPPORTED_CONTENT_TYPE` |
-| `422` | `INVALID_REQUEST`, `INVALID_EVALUATION_CLOCK`, `INVALID_FILENAME`, `INVALID_SOURCE`, `UNSUPPORTED_SOURCE_KIND` |
+| `422` | `INVALID_REQUEST`, `INVALID_EVALUATION_CLOCK`, `INVALID_FILENAME`, `INVALID_SOURCE`, `UNSUPPORTED_SOURCE_KIND`, `INELIGIBLE_INVESTIGATION` |
 
 Internal exception text, stack traces, temporary paths, labels, and ground truth
 are not returned. JSON exports use sorted keys, compact separators, UTF-8, safe
@@ -83,6 +90,23 @@ exception export is `{ "batch_id": "...", "exceptions": [...] }`; the audit
 export is `{ "batch_id": "...", "audit_events": [...] }`. These shapes are
 also declared in OpenAPI.
 
+Investigation POST is never implicit. It returns a retained `AgentRun` even
+when the provider is disabled, offline, timed out, malformed, or rejected by
+the verifier. Only an accepted verifier result creates an effective
+`cleared_with_explanation` projection; it never rewrites `BatchResult` or
+creates `auto_cleared`. Investigation collections use the same bounded
+`offset`/`limit` pagination. The investigation export contains only structured
+hypotheses, evidence claims, tool traces, safe failure metadata, and verifier
+results; it never contains hidden model reasoning. Both each run and the export
+envelope expose server-owned `provider_provenance` (`disabled`, `ollama`, or
+`scripted_test`); configured model names are descriptive only.
+
+The eligibility response is authoritative for the UI: `eligible` reflects the
+deterministic settlement gate and `provider_available` reflects whether a local
+provider is configured. A disabled provider is not actionable. Investigation
+history is fetched to a validated terminal page before the UI treats the latest
+run as current. There is no public cancellation endpoint.
+
 ## Security and persistence limitations
 
 Phase 6 has no authentication, authorization, tenancy, rate limiting, durable
@@ -90,3 +114,20 @@ retention, or production deployment boundary. The process-local repository is
 for the local demonstration only; restart loses all batches. The API performs no
 money movement or accounting writes, and no credentials or external services
 are configured.
+
+Phase 8 local model configuration is opt-in: `VOUCH_AI_ENABLED=false` is the
+default. Enabling it requires `VOUCH_AI_PROVIDER=ollama`, an explicit
+`VOUCH_AI_MODEL`, and a credential-free loopback HTTP endpoint. There is no cloud
+fallback. The optional endpoint is expected at `http://127.0.0.1:11434`; no
+Ollama installation or model download is part of the repository.
+
+Optional local demo command, when an Ollama-compatible endpoint is already
+running, is:
+
+```bash
+VOUCH_AI_ENABLED=true VOUCH_AI_PROVIDER=ollama VOUCH_AI_MODEL=llama3.2:3b \
+  python -m uvicorn app.main:app
+```
+
+Without that endpoint, the same server command with default settings returns a
+retained `AI_DISABLED` abstention for an eligible investigation.
