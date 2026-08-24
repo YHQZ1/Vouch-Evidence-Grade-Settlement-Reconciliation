@@ -1,0 +1,76 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans:
+    ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  --font-serif: Georgia, "Times New Roman", serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --color-ink: #14212b;
+  --color-muted: #56636c;
+  --color-paper: #f7f5ef;
+  --color-panel: #fffdfa;
+  --color-line: #dedbd2;
+  --color-teal: #0b6b68;
+  --color-teal-dark: #084f4d;
+  --color-coral: #9c2f21;
+  --color-amber: #855006;
+  --color-sage: #3b634f;
+}
+
+@layer base {
+  :root {
+    color: var(--color-ink);
+    background: var(--color-paper);
+  }
+  * {
+    box-sizing: border-box;
+  }
+  html {
+    background: var(--color-paper);
+  }
+  body {
+    margin: 0;
+    min-width: 320px;
+    background: var(--color-paper);
+    font-family: var(--font-sans);
+  }
+  button,
+  input,
+  select {
+    font: inherit;
+  }
+  button:disabled {
+    opacity: 1;
+    color: var(--color-ink);
+    background-color: var(--color-paper);
+  }
+  button,
+  a,
+  input,
+  select {
+    outline-offset: 3px;
+  }
+  button:focus-visible,
+  a:focus-visible,
+  input:focus-visible,
+  select:focus-visible {
+    outline: 3px solid #e39b36;
+    outline-offset: 3px;
+  }
+  ::selection {
+    color: white;
+    background: var(--color-teal);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}

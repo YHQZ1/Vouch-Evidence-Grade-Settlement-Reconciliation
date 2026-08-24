@@ -46,3 +46,6 @@ tmp/
 .idea/
 .vscode/
 *.swp
+# Frontend build and browser-test artifacts
+frontend/dist/
+frontend/test-results/

@@ -5,13 +5,14 @@
 Vouch is an evidence-grade finance controller for reconciling Razorpay settlement
 activity across gateway reports, bank statements, and accounting ledgers. It
 reconstructs each settlement, verifies the corresponding cash and ledger
-movements, investigates ambiguous exceptions through a bounded AI agent, and
-reports whether the settlement close is ready or blocked.
+movements, and reports whether the settlement close is ready or blocked. A
+bounded AI investigation path is planned for Phase 8 and is not part of the
+current runtime.
 
-> **Project status:** Phase 6 FastAPI application contracts are complete. Phase 4
-> reconciliation and Phase 5 reports remain separate from the runtime engine;
-> AI-specific gates remain deferred to Phase 8. All examples and evaluation
-> data are synthetic.
+> **Project status:** Phase 7 React review and close-readiness interface is
+> complete over the Phase 6 FastAPI boundary. Phase 4 reconciliation and Phase 5
+> reports remain separate from the runtime engine; Phase 8 AI-specific gates are
+> planned and not implemented. All examples and evaluation data are synthetic.
 
 ## The problem
 
@@ -38,8 +39,8 @@ For each settlement, Vouch is designed to:
    fields;
 3. verify the bank credit using UTR, amount, timing, and uniqueness controls;
 4. verify related ledger journals and the Razorpay clearing-account movement;
-5. investigate only the unresolved tail with a bounded AI agent;
-6. reject any AI hypothesis that cannot pass deterministic verification;
+5. reserve only the unresolved tail for the planned bounded AI agent;
+6. require any future AI hypothesis to pass deterministic verification;
 7. rank exceptions by materiality and operational urgency; and
 8. issue an auditable `READY`, `READY_WITH_EXCEPTIONS`, or `BLOCKED` decision.
 
@@ -73,6 +74,10 @@ flowchart LR
     G --> K[Proof packet and audit export]
 ```
 
+The investigation-agent branch in this conceptual flow is a Phase 8 design
+placeholder; the current Phase 7 product ends at deterministic verification,
+exceptions, and review.
+
 ## Initial scope
 
 The first release covers one end-to-end finance-operations loop: closing a batch
@@ -88,7 +93,7 @@ Included:
 - optional balance-account partitioning;
 - materiality-aware exceptions;
 - a frozen held-out synthetic evaluation batch; and
-- a local, provider-isolated AI investigation path.
+- a documented, provider-isolated AI investigation path planned for Phase 8.
 
 Not included in the first release:
 
@@ -115,7 +120,8 @@ cd backend
 python -m app.cli reconcile --help
 ```
 
-The complete frozen demonstration can also be run through the local API. Start
+The complete frozen demonstration can also be run through the local API and the
+Phase 7 review interface. Start
 the server, create a batch with an explicit clock, upload the four raw inputs,
 run reconciliation, and fetch the result:
 
@@ -164,7 +170,7 @@ disabled model counters are kept in `operational.json`.
 ```text
 vouch/
 ├── backend/                  # Domain contracts, Phase 3 generator, future reconciliation engine and API
-├── frontend/                 # Future review and close-readiness interface
+├── frontend/                 # Phase 7 React review and close-readiness interface
 ├── data/                     # Frozen synthetic inputs, fixtures, manifests, and labels
 ├── docs/
 │   ├── adr/                  # Architecture decision records

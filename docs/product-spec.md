@@ -89,6 +89,16 @@ policy rather than model judgment.
 The operator exports a reconciliation report, exception report, and machine-
 readable audit record containing source lineage and input fingerprints.
 
+### 7. Review through the Phase 7 interface
+
+The review-only React interface exposes the complete lifecycle without adding a
+second decision authority: an explicit clock and four immutable source slots,
+policy-derived close readiness, settlement evidence flow, every material
+exception, audit explanation, and canonical exports. It preserves API reason
+codes and evidence statuses and presents exact integer-subunit amounts. It does
+not provide manual clear/override controls, accounting writes, money movement,
+AI actions, authentication, or durable browser persistence.
+
 ## Resolution states
 
 | State                      | Meaning                                                                            | Close treatment                          |

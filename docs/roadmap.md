@@ -125,12 +125,12 @@ authentication, and asynchronous execution remain outside this phase.
 **Outcome:** A reviewer can inspect evidence, understand exceptions, and review
 close readiness through an accessible interface backed by the API.
 
-- [ ] Close-readiness overview
-- [ ] Settlement evidence view
-- [ ] Materiality-ranked exception queue
-- [ ] Audit explanation drawer
-- [ ] Accessible status and error presentation
-- [ ] API integration, loading states, and safe failure states
+- [x] Close-readiness overview
+- [x] Settlement evidence view
+- [x] Materiality-ranked exception queue
+- [x] Audit explanation drawer
+- [x] Accessible status and error presentation
+- [x] API integration, loading states, and safe failure states
 
 **Exit gate:** The complete deterministic demo can be performed through the
 review interface with every material exception and decision explanation visible.

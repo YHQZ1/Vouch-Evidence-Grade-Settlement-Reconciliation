@@ -1,0 +1,3018 @@
+{
+  "components": {
+    "schemas": {
+      "AccountingControlResult": {
+        "additionalProperties": false,
+        "properties": {
+          "candidate_ledger_source_record_ids": {
+            "default": [],
+            "items": {
+              "type": "string"
+            },
+            "title": "Candidate Ledger Source Record Ids",
+            "type": "array"
+          },
+          "clearing_residual": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "complete_evidence": {
+            "default": false,
+            "title": "Complete Evidence",
+            "type": "boolean"
+          },
+          "duplicate_line_ids": {
+            "default": [],
+            "items": {
+              "type": "string"
+            },
+            "title": "Duplicate Line Ids",
+            "type": "array"
+          },
+          "fee_booking_mismatch": {
+            "default": false,
+            "title": "Fee Booking Mismatch",
+            "type": "boolean"
+          },
+          "fee_tax_mismatch": {
+            "default": false,
+            "title": "Fee Tax Mismatch",
+            "type": "boolean"
+          },
+          "journal_ids": {
+            "default": [],
+            "items": {
+              "type": "string"
+            },
+            "title": "Journal Ids",
+            "type": "array"
+          },
+          "journal_unbalanced_ids": {
+            "default": [],
+            "items": {
+              "type": "string"
+            },
+            "title": "Journal Unbalanced Ids",
+            "type": "array"
+          },
+          "linked_ledger_source_record_ids": {
+            "default": [],
+            "items": {
+              "type": "string"
+            },
+            "title": "Linked Ledger Source Record Ids",
+            "type": "array"
+          },
+          "missing_gateway_entity_ids": {
+            "default": [],
+            "items": {
+              "type": "string"
+            },
+            "title": "Missing Gateway Entity Ids",
+            "type": "array"
+          },
+          "missing_settlement_posting": {
+            "default": false,
+            "title": "Missing Settlement Posting",
+            "type": "boolean"
+          },
+          "movement_evidence": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/LedgerEvidenceAssignment"
+            },
+            "title": "Movement Evidence",
+            "type": "array"
+          },
+          "reasons": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/ReasonCode"
+            },
+            "title": "Reasons",
+            "type": "array"
+          },
+          "settlement_id": {
+            "title": "Settlement Id",
+            "type": "string"
+          },
+          "settlement_posting_journal_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Settlement Posting Journal Id"
+          },
+          "settlement_posting_source_record_ids": {
+            "default": [],
+            "items": {
+              "type": "string"
+            },
+            "title": "Settlement Posting Source Record Ids",
+            "type": "array"
+          },
+          "tax_booking_mismatch": {
+            "default": false,
+            "title": "Tax Booking Mismatch",
+            "type": "boolean"
+          },
+          "unknown_account_codes": {
+            "default": [],
+            "items": {
+              "type": "string"
+            },
+            "title": "Unknown Account Codes",
+            "type": "array"
+          }
+        },
+        "required": [
+          "settlement_id",
+          "clearing_residual"
+        ],
+        "title": "AccountingControlResult",
+        "type": "object"
+      },
+      "ApiError": {
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "title": "Code",
+            "type": "string"
+          },
+          "details": {
+            "default": [],
+            "items": {
+              "additionalProperties": {
+                "type": "string"
+              },
+              "type": "object"
+            },
+            "title": "Details",
+            "type": "array"
+          },
+          "message": {
+            "title": "Message",
+            "type": "string"
+          }
+        },
+        "required": [
+          "code",
+          "message"
+        ],
+        "title": "ApiError",
+        "type": "object"
+      },
+      "AuditEvent": {
+        "additionalProperties": false,
+        "properties": {
+          "audit_id": {
+            "title": "Audit Id",
+            "type": "string"
+          },
+          "batch_id": {
+            "title": "Batch Id",
+            "type": "string"
+          },
+          "calculated_values": {
+            "items": {
+              "$ref": "#/components/schemas/CalculatedValue"
+            },
+            "title": "Calculated Values",
+            "type": "array"
+          },
+          "candidate_accepted": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Candidate Accepted"
+          },
+          "candidate_score": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Candidate Score"
+          },
+          "candidate_signals": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/CandidateSignal"
+            },
+            "title": "Candidate Signals",
+            "type": "array"
+          },
+          "cited_source_record_ids": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Cited Source Record Ids",
+            "type": "array"
+          },
+          "decision_type": {
+            "title": "Decision Type",
+            "type": "string"
+          },
+          "evaluation_clock": {
+            "format": "date-time",
+            "title": "Evaluation Clock",
+            "type": "string"
+          },
+          "input_fingerprints": {
+            "default": [],
+            "items": {
+              "type": "string"
+            },
+            "title": "Input Fingerprints",
+            "type": "array"
+          },
+          "policy_version": {
+            "title": "Policy Version",
+            "type": "string"
+          },
+          "prior_state": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ResolutionState"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "reason_codes": {
+            "items": {
+              "$ref": "#/components/schemas/ReasonCode"
+            },
+            "title": "Reason Codes",
+            "type": "array"
+          },
+          "resulting_state": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ResolutionState"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "rule_id": {
+            "title": "Rule Id",
+            "type": "string"
+          },
+          "rule_version": {
+            "title": "Rule Version",
+            "type": "string"
+          },
+          "schema_version": {
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "sequence_number": {
+            "minimum": 1.0,
+            "title": "Sequence Number",
+            "type": "integer"
+          },
+          "settlement_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Settlement Id"
+          }
+        },
+        "required": [
+          "audit_id",
+          "batch_id",
+          "settlement_id",
+          "decision_type",
+          "prior_state",
+          "resulting_state",
+          "reason_codes",
+          "cited_source_record_ids",
+          "calculated_values",
+          "rule_id",
+          "rule_version",
+          "policy_version",
+          "schema_version",
+          "evaluation_clock",
+          "sequence_number"
+        ],
+        "title": "AuditEvent",
+        "type": "object"
+      },
+      "AuditEventExportResponse": {
+        "additionalProperties": false,
+        "description": "Canonical JSON shape emitted by the audit-event export endpoint.",
+        "properties": {
+          "audit_events": {
+            "items": {
+              "$ref": "#/components/schemas/AuditEvent"
+            },
+            "title": "Audit Events",
+            "type": "array"
+          },
+          "batch_id": {
+            "title": "Batch Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "batch_id",
+          "audit_events"
+        ],
+        "title": "AuditEventExportResponse",
+        "type": "object"
+      },
+      "AuditEventListResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "batch_id": {
+            "title": "Batch Id",
+            "type": "string"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/AuditEvent"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "limit": {
+            "exclusiveMinimum": 0.0,
+            "title": "Limit",
+            "type": "integer"
+          },
+          "next_offset": {
+            "anyOf": [
+              {
+                "minimum": 0.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Next Offset"
+          },
+          "offset": {
+            "minimum": 0.0,
+            "title": "Offset",
+            "type": "integer"
+          },
+          "total": {
+            "minimum": 0.0,
+            "title": "Total",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "batch_id",
+          "items",
+          "total",
+          "offset",
+          "limit"
+        ],
+        "title": "AuditEventListResponse",
+        "type": "object"
+      },
+      "BatchLinks": {
+        "additionalProperties": false,
+        "properties": {
+          "audit_events": {
+            "title": "Audit Events",
+            "type": "string"
+          },
+          "audit_events_export": {
+            "title": "Audit Events Export",
+            "type": "string"
+          },
+          "close_readiness": {
+            "title": "Close Readiness",
+            "type": "string"
+          },
+          "exceptions": {
+            "title": "Exceptions",
+            "type": "string"
+          },
+          "exceptions_export": {
+            "title": "Exceptions Export",
+            "type": "string"
+          },
+          "reconciliation_export": {
+            "title": "Reconciliation Export",
+            "type": "string"
+          },
+          "result": {
+            "title": "Result",
+            "type": "string"
+          },
+          "run": {
+            "title": "Run",
+            "type": "string"
+          },
+          "self": {
+            "title": "Self",
+            "type": "string"
+          },
+          "settlements": {
+            "title": "Settlements",
+            "type": "string"
+          }
+        },
+        "required": [
+          "self",
+          "run",
+          "result",
+          "settlements",
+          "exceptions",
+          "close_readiness",
+          "audit_events",
+          "reconciliation_export",
+          "exceptions_export",
+          "audit_events_export"
+        ],
+        "title": "BatchLinks",
+        "type": "object"
+      },
+      "BatchResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "batch_id": {
+            "title": "Batch Id",
+            "type": "string"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "evaluation_clock": {
+            "format": "date-time",
+            "title": "Evaluation Clock",
+            "type": "string"
+          },
+          "failure": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/FailureResponse"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "lifecycle_sequence": {
+            "exclusiveMinimum": 0.0,
+            "title": "Lifecycle Sequence",
+            "type": "integer"
+          },
+          "links": {
+            "$ref": "#/components/schemas/BatchLinks"
+          },
+          "required_sources": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Required Sources",
+            "type": "array"
+          },
+          "result_available": {
+            "title": "Result Available",
+            "type": "boolean"
+          },
+          "result_batch_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Result Batch Id"
+          },
+          "sources": {
+            "items": {
+              "$ref": "#/components/schemas/SourceResponse"
+            },
+            "title": "Sources",
+            "type": "array"
+          },
+          "status": {
+            "enum": [
+              "awaiting_sources",
+              "ready",
+              "running",
+              "completed",
+              "failed"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          }
+        },
+        "required": [
+          "batch_id",
+          "evaluation_clock",
+          "status",
+          "required_sources",
+          "sources",
+          "result_available",
+          "created_at",
+          "updated_at",
+          "lifecycle_sequence",
+          "links"
+        ],
+        "title": "BatchResponse",
+        "type": "object"
+      },
+      "BatchResult": {
+        "additionalProperties": false,
+        "properties": {
+          "accepted_evidence_links": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/EvidenceLink"
+            },
+            "title": "Accepted Evidence Links",
+            "type": "array"
+          },
+          "accounting_controls": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/AccountingControlResult"
+            },
+            "title": "Accounting Controls",
+            "type": "array"
+          },
+          "audit_events": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/AuditEvent"
+            },
+            "title": "Audit Events",
+            "type": "array"
+          },
+          "batch_id": {
+            "title": "Batch Id",
+            "type": "string"
+          },
+          "close_readiness": {
+            "$ref": "#/components/schemas/CloseAssessment"
+          },
+          "decisions": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/SettlementDecision"
+            },
+            "title": "Decisions",
+            "type": "array"
+          },
+          "evaluation_clock": {
+            "format": "date-time",
+            "title": "Evaluation Clock",
+            "type": "string"
+          },
+          "exceptions": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/ExceptionRecord"
+            },
+            "title": "Exceptions",
+            "type": "array"
+          },
+          "excluded_records": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/ExcludedRecord"
+            },
+            "title": "Excluded Records",
+            "type": "array"
+          },
+          "explained_value_subunits": {
+            "default": 0,
+            "title": "Explained Value Subunits",
+            "type": "integer"
+          },
+          "ingestion": {
+            "items": {
+              "$ref": "#/components/schemas/IngestionSummary"
+            },
+            "title": "Ingestion",
+            "type": "array"
+          },
+          "pending_value_subunits": {
+            "default": 0,
+            "title": "Pending Value Subunits",
+            "type": "integer"
+          },
+          "policy_version": {
+            "title": "Policy Version",
+            "type": "string"
+          },
+          "proposed_evidence_links": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/EvidenceLink"
+            },
+            "title": "Proposed Evidence Links",
+            "type": "array"
+          },
+          "rejected_candidates": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/CandidateBankLink"
+            },
+            "title": "Rejected Candidates",
+            "type": "array"
+          },
+          "rejected_source_rows": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/RejectedSourceRow"
+            },
+            "title": "Rejected Source Rows",
+            "type": "array"
+          },
+          "rule_version": {
+            "title": "Rule Version",
+            "type": "string"
+          },
+          "schema_version": {
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "settlement_aggregates": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/SettlementAggregate"
+            },
+            "title": "Settlement Aggregates",
+            "type": "array"
+          },
+          "settlements": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/SettlementResult"
+            },
+            "title": "Settlements",
+            "type": "array"
+          },
+          "source_fingerprints": {
+            "items": {
+              "$ref": "#/components/schemas/SourceFingerprint"
+            },
+            "title": "Source Fingerprints",
+            "type": "array"
+          },
+          "unresolved_value_subunits": {
+            "default": 0,
+            "title": "Unresolved Value Subunits",
+            "type": "integer"
+          },
+          "verified_value_subunits": {
+            "default": 0,
+            "title": "Verified Value Subunits",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "batch_id",
+          "source_fingerprints",
+          "schema_version",
+          "rule_version",
+          "policy_version",
+          "evaluation_clock",
+          "ingestion",
+          "close_readiness"
+        ],
+        "title": "BatchResult",
+        "type": "object"
+      },
+      "CalculatedValue": {
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "value": {
+            "title": "Value",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "value"
+        ],
+        "title": "CalculatedValue",
+        "type": "object"
+      },
+      "CandidateBankLink": {
+        "additionalProperties": false,
+        "properties": {
+          "accepted": {
+            "title": "Accepted",
+            "type": "boolean"
+          },
+          "bank_row_id": {
+            "title": "Bank Row Id",
+            "type": "string"
+          },
+          "bank_source_record_id": {
+            "title": "Bank Source Record Id",
+            "type": "string"
+          },
+          "rejection_reasons": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/ReasonCode"
+            },
+            "title": "Rejection Reasons",
+            "type": "array"
+          },
+          "score": {
+            "default": 0,
+            "title": "Score",
+            "type": "integer"
+          },
+          "settlement_aggregate_id": {
+            "title": "Settlement Aggregate Id",
+            "type": "string"
+          },
+          "settlement_id": {
+            "title": "Settlement Id",
+            "type": "string"
+          },
+          "signals": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/CandidateSignal"
+            },
+            "title": "Signals",
+            "type": "array"
+          }
+        },
+        "required": [
+          "settlement_aggregate_id",
+          "settlement_id",
+          "bank_source_record_id",
+          "bank_row_id",
+          "accepted"
+        ],
+        "title": "CandidateBankLink",
+        "type": "object"
+      },
+      "CandidateSignal": {
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "satisfied": {
+            "title": "Satisfied",
+            "type": "boolean"
+          },
+          "value": {
+            "title": "Value",
+            "type": "string"
+          },
+          "weight": {
+            "default": 0,
+            "title": "Weight",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "name",
+          "value",
+          "satisfied"
+        ],
+        "title": "CandidateSignal",
+        "type": "object"
+      },
+      "CloseAssessment": {
+        "additionalProperties": false,
+        "properties": {
+          "batch_total_abs_value_subunits": {
+            "default": 0,
+            "title": "Batch Total Abs Value Subunits",
+            "type": "integer"
+          },
+          "blocking_exception_ids": {
+            "default": [],
+            "items": {
+              "type": "string"
+            },
+            "title": "Blocking Exception Ids",
+            "type": "array"
+          },
+          "explained_value_subunits": {
+            "default": 0,
+            "title": "Explained Value Subunits",
+            "type": "integer"
+          },
+          "pending_value_subunits": {
+            "default": 0,
+            "title": "Pending Value Subunits",
+            "type": "integer"
+          },
+          "permitted_exception_ids": {
+            "default": [],
+            "items": {
+              "type": "string"
+            },
+            "title": "Permitted Exception Ids",
+            "type": "array"
+          },
+          "readiness": {
+            "$ref": "#/components/schemas/CloseReadiness"
+          },
+          "unresolved_value_subunits": {
+            "default": 0,
+            "title": "Unresolved Value Subunits",
+            "type": "integer"
+          },
+          "verified_value_subunits": {
+            "default": 0,
+            "title": "Verified Value Subunits",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "readiness"
+        ],
+        "title": "CloseAssessment",
+        "type": "object"
+      },
+      "CloseReadiness": {
+        "enum": [
+          "READY",
+          "READY_WITH_EXCEPTIONS",
+          "BLOCKED"
+        ],
+        "title": "CloseReadiness",
+        "type": "string"
+      },
+      "CloseReadinessResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "assessment": {
+            "$ref": "#/components/schemas/CloseAssessment"
+          },
+          "batch_id": {
+            "title": "Batch Id",
+            "type": "string"
+          },
+          "result_batch_id": {
+            "title": "Result Batch Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "batch_id",
+          "result_batch_id",
+          "assessment"
+        ],
+        "title": "CloseReadinessResponse",
+        "type": "object"
+      },
+      "CreateBatchRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "evaluation_clock": {
+            "format": "date-time",
+            "title": "Evaluation Clock",
+            "type": "string"
+          }
+        },
+        "required": [
+          "evaluation_clock"
+        ],
+        "title": "CreateBatchRequest",
+        "type": "object"
+      },
+      "Currency": {
+        "description": "Valid currency codes usable by the value object.",
+        "enum": [
+          "INR",
+          "USD"
+        ],
+        "title": "Currency",
+        "type": "string"
+      },
+      "ErrorEnvelope": {
+        "additionalProperties": false,
+        "properties": {
+          "error": {
+            "$ref": "#/components/schemas/ApiError"
+          }
+        },
+        "required": [
+          "error"
+        ],
+        "title": "ErrorEnvelope",
+        "type": "object"
+      },
+      "EvidenceLink": {
+        "additionalProperties": false,
+        "properties": {
+          "calculated_values": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/CalculatedValue"
+            },
+            "title": "Calculated Values",
+            "type": "array"
+          },
+          "candidate_score": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Candidate Score"
+          },
+          "candidate_signals": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/CandidateSignal"
+            },
+            "title": "Candidate Signals",
+            "type": "array"
+          },
+          "gateway_source_record_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Gateway Source Record Id"
+          },
+          "journal_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Journal Id"
+          },
+          "link_id": {
+            "title": "Link Id",
+            "type": "string"
+          },
+          "reason_codes": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/ReasonCode"
+            },
+            "title": "Reason Codes",
+            "type": "array"
+          },
+          "relationship_type": {
+            "title": "Relationship Type",
+            "type": "string"
+          },
+          "source_record_ids": {
+            "items": {
+              "type": "string"
+            },
+            "minItems": 1,
+            "title": "Source Record Ids",
+            "type": "array"
+          },
+          "status": {
+            "$ref": "#/components/schemas/EvidenceLinkStatus"
+          }
+        },
+        "required": [
+          "link_id",
+          "relationship_type",
+          "status",
+          "source_record_ids"
+        ],
+        "title": "EvidenceLink",
+        "type": "object"
+      },
+      "EvidenceLinkStatus": {
+        "enum": [
+          "verified",
+          "proposed",
+          "rejected"
+        ],
+        "title": "EvidenceLinkStatus",
+        "type": "string"
+      },
+      "ExceptionExportResponse": {
+        "additionalProperties": false,
+        "description": "Canonical JSON shape emitted by the exception export endpoint.",
+        "properties": {
+          "batch_id": {
+            "title": "Batch Id",
+            "type": "string"
+          },
+          "exceptions": {
+            "items": {
+              "$ref": "#/components/schemas/ExceptionRecord"
+            },
+            "title": "Exceptions",
+            "type": "array"
+          }
+        },
+        "required": [
+          "batch_id",
+          "exceptions"
+        ],
+        "title": "ExceptionExportResponse",
+        "type": "object"
+      },
+      "ExceptionListResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "batch_id": {
+            "title": "Batch Id",
+            "type": "string"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/ExceptionRecord"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "limit": {
+            "exclusiveMinimum": 0.0,
+            "title": "Limit",
+            "type": "integer"
+          },
+          "next_offset": {
+            "anyOf": [
+              {
+                "minimum": 0.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Next Offset"
+          },
+          "offset": {
+            "minimum": 0.0,
+            "title": "Offset",
+            "type": "integer"
+          },
+          "total": {
+            "minimum": 0.0,
+            "title": "Total",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "batch_id",
+          "items",
+          "total",
+          "offset",
+          "limit"
+        ],
+        "title": "ExceptionListResponse",
+        "type": "object"
+      },
+      "ExceptionRecord": {
+        "additionalProperties": false,
+        "properties": {
+          "blocking": {
+            "title": "Blocking",
+            "type": "boolean"
+          },
+          "exception_id": {
+            "title": "Exception Id",
+            "type": "string"
+          },
+          "explanation": {
+            "title": "Explanation",
+            "type": "string"
+          },
+          "material": {
+            "title": "Material",
+            "type": "boolean"
+          },
+          "reason_code": {
+            "$ref": "#/components/schemas/ReasonCode"
+          },
+          "settlement_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Settlement Id"
+          },
+          "source_record_ids": {
+            "default": [],
+            "items": {
+              "type": "string"
+            },
+            "title": "Source Record Ids",
+            "type": "array"
+          },
+          "value_subunits": {
+            "default": 0,
+            "title": "Value Subunits",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "exception_id",
+          "settlement_id",
+          "reason_code",
+          "blocking",
+          "material",
+          "explanation"
+        ],
+        "title": "ExceptionRecord",
+        "type": "object"
+      },
+      "ExcludedRecord": {
+        "additionalProperties": false,
+        "properties": {
+          "explanation": {
+            "title": "Explanation",
+            "type": "string"
+          },
+          "reason_code": {
+            "$ref": "#/components/schemas/ReasonCode"
+          },
+          "source_kind": {
+            "$ref": "#/components/schemas/SourceKind"
+          },
+          "source_record_id": {
+            "title": "Source Record Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "source_record_id",
+          "source_kind",
+          "reason_code",
+          "explanation"
+        ],
+        "title": "ExcludedRecord",
+        "type": "object"
+      },
+      "FailureResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "title": "Code",
+            "type": "string"
+          },
+          "message": {
+            "title": "Message",
+            "type": "string"
+          },
+          "sequence": {
+            "exclusiveMinimum": 0.0,
+            "title": "Sequence",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "code",
+          "message",
+          "sequence"
+        ],
+        "title": "FailureResponse",
+        "type": "object"
+      },
+      "HealthResponse": {
+        "description": "Stable response contract for service health checks.",
+        "properties": {
+          "api_version": {
+            "title": "Api Version",
+            "type": "string"
+          },
+          "service": {
+            "title": "Service",
+            "type": "string"
+          },
+          "status": {
+            "const": "ok",
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "service",
+          "status",
+          "api_version"
+        ],
+        "title": "HealthResponse",
+        "type": "object"
+      },
+      "IngestionSummary": {
+        "additionalProperties": false,
+        "properties": {
+          "accepted_row_count": {
+            "title": "Accepted Row Count",
+            "type": "integer"
+          },
+          "duplicate_identifier_count": {
+            "default": 0,
+            "title": "Duplicate Identifier Count",
+            "type": "integer"
+          },
+          "fatal_error": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Fatal Error"
+          },
+          "rejected_row_count": {
+            "title": "Rejected Row Count",
+            "type": "integer"
+          },
+          "row_count": {
+            "title": "Row Count",
+            "type": "integer"
+          },
+          "source_kind": {
+            "$ref": "#/components/schemas/SourceKind"
+          },
+          "source_name": {
+            "title": "Source Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "source_kind",
+          "source_name",
+          "row_count",
+          "accepted_row_count",
+          "rejected_row_count"
+        ],
+        "title": "IngestionSummary",
+        "type": "object"
+      },
+      "LedgerEvidenceAssignment": {
+        "additionalProperties": false,
+        "properties": {
+          "gateway_entity_id": {
+            "title": "Gateway Entity Id",
+            "type": "string"
+          },
+          "gateway_source_record_id": {
+            "title": "Gateway Source Record Id",
+            "type": "string"
+          },
+          "journal_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Journal Id"
+          },
+          "ledger_line_ids": {
+            "default": [],
+            "items": {
+              "type": "string"
+            },
+            "title": "Ledger Line Ids",
+            "type": "array"
+          },
+          "ledger_source_record_ids": {
+            "default": [],
+            "items": {
+              "type": "string"
+            },
+            "title": "Ledger Source Record Ids",
+            "type": "array"
+          },
+          "reason_codes": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/ReasonCode"
+            },
+            "title": "Reason Codes",
+            "type": "array"
+          },
+          "status": {
+            "$ref": "#/components/schemas/EvidenceLinkStatus"
+          }
+        },
+        "required": [
+          "gateway_source_record_id",
+          "gateway_entity_id",
+          "status"
+        ],
+        "title": "LedgerEvidenceAssignment",
+        "type": "object"
+      },
+      "Money": {
+        "additionalProperties": false,
+        "description": "An integer amount in one currency's smallest unit.\n\nSigned values are allowed because financial movements need both directions.\nIndividual source debit/credit fields use\nnon-negative integers and expose this value object through derived\nproperties on their records.",
+        "properties": {
+          "currency": {
+            "$ref": "#/components/schemas/Currency"
+          },
+          "subunits": {
+            "title": "Subunits",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "currency",
+          "subunits"
+        ],
+        "title": "Money",
+        "type": "object"
+      },
+      "ReasonCode": {
+        "description": "Stable machine-readable explanations for future runtime decisions.",
+        "enum": [
+          "exact_evidence_verified",
+          "fee_tax_netted",
+          "refund_netted",
+          "utr_missing",
+          "utr_conflicting_or_malformed",
+          "pending_within_sla",
+          "overdue_bank_credit_missing",
+          "bank_candidate_ambiguity",
+          "ledger_line_missing",
+          "ledger_line_duplicated",
+          "journal_unbalanced",
+          "fee_booking_mismatch",
+          "tax_booking_mismatch",
+          "ledger_account_role_mismatch",
+          "ledger_direction_mismatch",
+          "balance_account_conflict",
+          "malformed_source_record",
+          "duplicate_business_identifier",
+          "unknown_account_role",
+          "wrong_direction",
+          "currency_mismatch",
+          "amount_mismatch",
+          "outside_timing_window",
+          "conflicting_reference",
+          "insufficient_uniqueness",
+          "record_already_consumed",
+          "missing_bank_credit",
+          "clearing_residual",
+          "required_ledger_evidence_missing",
+          "out_of_scope",
+          "unrelated_bank_record",
+          "ledger_evidence_reused",
+          "ledger_evidence_ambiguous",
+          "stronger_candidate_selected"
+        ],
+        "title": "ReasonCode",
+        "type": "string"
+      },
+      "ReconciliationRunResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "batch_id": {
+            "title": "Batch Id",
+            "type": "string"
+          },
+          "failure": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/FailureResponse"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "links": {
+            "$ref": "#/components/schemas/BatchLinks"
+          },
+          "result_available": {
+            "title": "Result Available",
+            "type": "boolean"
+          },
+          "result_batch_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Result Batch Id"
+          },
+          "status": {
+            "enum": [
+              "awaiting_sources",
+              "ready",
+              "running",
+              "completed",
+              "failed"
+            ],
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "batch_id",
+          "status",
+          "result_available",
+          "links"
+        ],
+        "title": "ReconciliationRunResponse",
+        "type": "object"
+      },
+      "RejectedSourceRow": {
+        "additionalProperties": false,
+        "properties": {
+          "lineage": {
+            "$ref": "#/components/schemas/SourceLineage"
+          },
+          "raw_values": {
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "title": "Raw Values",
+            "type": "object"
+          },
+          "reason_code": {
+            "$ref": "#/components/schemas/ReasonCode"
+          },
+          "source_kind": {
+            "$ref": "#/components/schemas/SourceKind"
+          },
+          "validation_reason": {
+            "title": "Validation Reason",
+            "type": "string"
+          }
+        },
+        "required": [
+          "lineage",
+          "raw_values",
+          "source_kind",
+          "reason_code",
+          "validation_reason"
+        ],
+        "title": "RejectedSourceRow",
+        "type": "object"
+      },
+      "ResolutionState": {
+        "enum": [
+          "auto_cleared",
+          "cleared_with_explanation",
+          "pending_within_sla",
+          "needs_review",
+          "critical_exception",
+          "excluded"
+        ],
+        "title": "ResolutionState",
+        "type": "string"
+      },
+      "SettlementAggregate": {
+        "additionalProperties": false,
+        "properties": {
+          "aggregate_id": {
+            "title": "Aggregate Id",
+            "type": "string"
+          },
+          "balance_account_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Balance Account Id"
+          },
+          "currency": {
+            "$ref": "#/components/schemas/Currency"
+          },
+          "gross_activity_subunits": {
+            "title": "Gross Activity Subunits",
+            "type": "integer"
+          },
+          "latest_settled_at": {
+            "format": "date-time",
+            "title": "Latest Settled At",
+            "type": "string"
+          },
+          "member_entity_ids": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Member Entity Ids",
+            "type": "array"
+          },
+          "member_source_record_ids": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Member Source Record Ids",
+            "type": "array"
+          },
+          "normalized_utrs": {
+            "default": [],
+            "items": {
+              "type": "string"
+            },
+            "title": "Normalized Utrs",
+            "type": "array"
+          },
+          "settlement_id": {
+            "title": "Settlement Id",
+            "type": "string"
+          },
+          "signed_net": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "total_credit_subunits": {
+            "title": "Total Credit Subunits",
+            "type": "integer"
+          },
+          "total_debit_subunits": {
+            "title": "Total Debit Subunits",
+            "type": "integer"
+          },
+          "total_fee_subunits": {
+            "title": "Total Fee Subunits",
+            "type": "integer"
+          },
+          "total_tax_subunits": {
+            "title": "Total Tax Subunits",
+            "type": "integer"
+          },
+          "utr_conflict": {
+            "default": false,
+            "title": "Utr Conflict",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "aggregate_id",
+          "settlement_id",
+          "balance_account_id",
+          "currency",
+          "member_source_record_ids",
+          "member_entity_ids",
+          "total_debit_subunits",
+          "total_credit_subunits",
+          "gross_activity_subunits",
+          "signed_net",
+          "total_fee_subunits",
+          "total_tax_subunits",
+          "latest_settled_at"
+        ],
+        "title": "SettlementAggregate",
+        "type": "object"
+      },
+      "SettlementDecision": {
+        "additionalProperties": false,
+        "properties": {
+          "aggregate_id": {
+            "title": "Aggregate Id",
+            "type": "string"
+          },
+          "batch_id": {
+            "title": "Batch Id",
+            "type": "string"
+          },
+          "calculated_values": {
+            "items": {
+              "$ref": "#/components/schemas/CalculatedValue"
+            },
+            "title": "Calculated Values",
+            "type": "array"
+          },
+          "cited_source_record_ids": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Cited Source Record Ids",
+            "type": "array"
+          },
+          "decision_id": {
+            "title": "Decision Id",
+            "type": "string"
+          },
+          "evaluation_clock": {
+            "format": "date-time",
+            "title": "Evaluation Clock",
+            "type": "string"
+          },
+          "input_fingerprints": {
+            "default": [],
+            "items": {
+              "type": "string"
+            },
+            "title": "Input Fingerprints",
+            "type": "array"
+          },
+          "policy_version": {
+            "title": "Policy Version",
+            "type": "string"
+          },
+          "reason_codes": {
+            "items": {
+              "$ref": "#/components/schemas/ReasonCode"
+            },
+            "title": "Reason Codes",
+            "type": "array"
+          },
+          "rule_id": {
+            "title": "Rule Id",
+            "type": "string"
+          },
+          "rule_version": {
+            "title": "Rule Version",
+            "type": "string"
+          },
+          "schema_version": {
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "sequence_number": {
+            "minimum": 1.0,
+            "title": "Sequence Number",
+            "type": "integer"
+          },
+          "settlement_id": {
+            "title": "Settlement Id",
+            "type": "string"
+          },
+          "state": {
+            "$ref": "#/components/schemas/ResolutionState"
+          }
+        },
+        "required": [
+          "decision_id",
+          "batch_id",
+          "aggregate_id",
+          "settlement_id",
+          "state",
+          "reason_codes",
+          "cited_source_record_ids",
+          "calculated_values",
+          "rule_id",
+          "rule_version",
+          "policy_version",
+          "schema_version",
+          "evaluation_clock",
+          "sequence_number"
+        ],
+        "title": "SettlementDecision",
+        "type": "object"
+      },
+      "SettlementListResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "batch_id": {
+            "title": "Batch Id",
+            "type": "string"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/SettlementResult"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "limit": {
+            "exclusiveMinimum": 0.0,
+            "title": "Limit",
+            "type": "integer"
+          },
+          "next_offset": {
+            "anyOf": [
+              {
+                "minimum": 0.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Next Offset"
+          },
+          "offset": {
+            "minimum": 0.0,
+            "title": "Offset",
+            "type": "integer"
+          },
+          "total": {
+            "minimum": 0.0,
+            "title": "Total",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "batch_id",
+          "items",
+          "total",
+          "offset",
+          "limit"
+        ],
+        "title": "SettlementListResponse",
+        "type": "object"
+      },
+      "SettlementResult": {
+        "additionalProperties": false,
+        "properties": {
+          "accepted_evidence_links": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/EvidenceLink"
+            },
+            "title": "Accepted Evidence Links",
+            "type": "array"
+          },
+          "accounting_control": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AccountingControlResult"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "aggregate": {
+            "$ref": "#/components/schemas/SettlementAggregate"
+          },
+          "decision": {
+            "$ref": "#/components/schemas/SettlementDecision"
+          },
+          "exceptions": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/ExceptionRecord"
+            },
+            "title": "Exceptions",
+            "type": "array"
+          },
+          "proposed_evidence_links": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/EvidenceLink"
+            },
+            "title": "Proposed Evidence Links",
+            "type": "array"
+          },
+          "reason_codes": {
+            "items": {
+              "$ref": "#/components/schemas/ReasonCode"
+            },
+            "title": "Reason Codes",
+            "type": "array"
+          },
+          "rejected_candidates": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/CandidateBankLink"
+            },
+            "title": "Rejected Candidates",
+            "type": "array"
+          },
+          "state": {
+            "$ref": "#/components/schemas/ResolutionState"
+          },
+          "unresolved_value_subunits": {
+            "default": 0,
+            "title": "Unresolved Value Subunits",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "aggregate",
+          "state",
+          "reason_codes",
+          "decision"
+        ],
+        "title": "SettlementResult",
+        "type": "object"
+      },
+      "SourceFingerprint": {
+        "additionalProperties": false,
+        "properties": {
+          "byte_count": {
+            "title": "Byte Count",
+            "type": "integer"
+          },
+          "sha256": {
+            "title": "Sha256",
+            "type": "string"
+          },
+          "source_kind": {
+            "$ref": "#/components/schemas/SourceKind"
+          },
+          "source_name": {
+            "title": "Source Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "source_kind",
+          "source_name",
+          "sha256",
+          "byte_count"
+        ],
+        "title": "SourceFingerprint",
+        "type": "object"
+      },
+      "SourceKind": {
+        "description": "Supported source systems.",
+        "enum": [
+          "gateway",
+          "bank",
+          "ledger",
+          "policy"
+        ],
+        "title": "SourceKind",
+        "type": "string"
+      },
+      "SourceLineage": {
+        "additionalProperties": false,
+        "description": "Stable identity and schema metadata for one source row.",
+        "properties": {
+          "schema_version": {
+            "const": "v1",
+            "default": "v1",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "source_fingerprint": {
+            "title": "Source Fingerprint",
+            "type": "string"
+          },
+          "source_kind": {
+            "$ref": "#/components/schemas/SourceKind"
+          },
+          "source_name": {
+            "title": "Source Name",
+            "type": "string"
+          },
+          "source_record_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Record Id"
+          },
+          "source_row_number": {
+            "minimum": 1.0,
+            "title": "Source Row Number",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "source_kind",
+          "source_name",
+          "source_fingerprint",
+          "source_row_number"
+        ],
+        "title": "SourceLineage",
+        "type": "object"
+      },
+      "SourceResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "byte_count": {
+            "minimum": 0.0,
+            "title": "Byte Count",
+            "type": "integer"
+          },
+          "content_type": {
+            "title": "Content Type",
+            "type": "string"
+          },
+          "filename": {
+            "title": "Filename",
+            "type": "string"
+          },
+          "sequence": {
+            "exclusiveMinimum": 0.0,
+            "title": "Sequence",
+            "type": "integer"
+          },
+          "sha256": {
+            "title": "Sha256",
+            "type": "string"
+          },
+          "source_kind": {
+            "title": "Source Kind",
+            "type": "string"
+          }
+        },
+        "required": [
+          "source_kind",
+          "filename",
+          "content_type",
+          "sha256",
+          "byte_count",
+          "sequence"
+        ],
+        "title": "SourceResponse",
+        "type": "object"
+      },
+      "SourceUploadResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "batch_id": {
+            "title": "Batch Id",
+            "type": "string"
+          },
+          "idempotent": {
+            "title": "Idempotent",
+            "type": "boolean"
+          },
+          "links": {
+            "$ref": "#/components/schemas/BatchLinks"
+          },
+          "source": {
+            "$ref": "#/components/schemas/SourceResponse"
+          },
+          "status": {
+            "enum": [
+              "awaiting_sources",
+              "ready",
+              "running",
+              "completed",
+              "failed"
+            ],
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "batch_id",
+          "source",
+          "status",
+          "idempotent",
+          "links"
+        ],
+        "title": "SourceUploadResponse",
+        "type": "object"
+      }
+    }
+  },
+  "info": {
+    "title": "vouch-backend",
+    "version": "v1"
+  },
+  "openapi": "3.1.0",
+  "paths": {
+    "/api/v1/batches": {
+      "post": {
+        "description": "Creates a process-local batch with an explicit evaluation clock.",
+        "operationId": "createBatch",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateBatchRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BatchResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "The request or source failed explicit validation."
+          }
+        },
+        "summary": "Create an empty reconciliation batch",
+        "tags": [
+          "batches"
+        ]
+      }
+    },
+    "/api/v1/batches/{batch_id}": {
+      "get": {
+        "operationId": "getBatch",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "batch_id",
+            "required": true,
+            "schema": {
+              "title": "Batch Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BatchResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "The requested batch or settlement was not found."
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "The request or source failed explicit validation."
+          }
+        },
+        "summary": "Get batch lifecycle and source readiness",
+        "tags": [
+          "batches"
+        ]
+      }
+    },
+    "/api/v1/batches/{batch_id}/audit-events": {
+      "get": {
+        "operationId": "listAuditEvents",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "batch_id",
+            "required": true,
+            "schema": {
+              "title": "Batch Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "minimum": 0,
+              "title": "Offset",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 50,
+              "maximum": 100,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuditEventListResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "The requested batch or settlement was not found."
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "The requested lifecycle transition or source replacement is not valid."
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "The request or source failed explicit validation."
+          }
+        },
+        "summary": "List append-only audit events in sequence order",
+        "tags": [
+          "batches"
+        ]
+      }
+    },
+    "/api/v1/batches/{batch_id}/close-readiness": {
+      "get": {
+        "operationId": "getCloseReadiness",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "batch_id",
+            "required": true,
+            "schema": {
+              "title": "Batch Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CloseReadinessResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "The requested batch or settlement was not found."
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "The requested lifecycle transition or source replacement is not valid."
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "The request or source failed explicit validation."
+          }
+        },
+        "summary": "Get the policy-derived close-readiness assessment",
+        "tags": [
+          "batches"
+        ]
+      }
+    },
+    "/api/v1/batches/{batch_id}/exceptions": {
+      "get": {
+        "operationId": "listExceptions",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "batch_id",
+            "required": true,
+            "schema": {
+              "title": "Batch Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "minimum": 0,
+              "title": "Offset",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 50,
+              "maximum": 100,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "material",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Material"
+            }
+          },
+          {
+            "in": "query",
+            "name": "blocking",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Blocking"
+            }
+          },
+          {
+            "in": "query",
+            "name": "reason_code",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Reason Code"
+            }
+          },
+          {
+            "in": "query",
+            "name": "settlement_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Settlement Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExceptionListResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "The requested batch or settlement was not found."
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "The requested lifecycle transition or source replacement is not valid."
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "The request or source failed explicit validation."
+          }
+        },
+        "summary": "List deterministic exceptions with optional filters",
+        "tags": [
+          "batches"
+        ]
+      }
+    },
+    "/api/v1/batches/{batch_id}/exports/audit-events": {
+      "get": {
+        "operationId": "exportAuditEvents",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "batch_id",
+            "required": true,
+            "schema": {
+              "title": "Batch Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuditEventExportResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "The requested batch or settlement was not found."
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "The requested lifecycle transition or source replacement is not valid."
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "The request or source failed explicit validation."
+          }
+        },
+        "summary": "Download append-only audit events as canonical JSON",
+        "tags": [
+          "batches"
+        ]
+      }
+    },
+    "/api/v1/batches/{batch_id}/exports/exceptions": {
+      "get": {
+        "operationId": "exportExceptions",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "batch_id",
+            "required": true,
+            "schema": {
+              "title": "Batch Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExceptionExportResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "The requested batch or settlement was not found."
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "The requested lifecycle transition or source replacement is not valid."
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "The request or source failed explicit validation."
+          }
+        },
+        "summary": "Download deterministic exceptions as canonical JSON",
+        "tags": [
+          "batches"
+        ]
+      }
+    },
+    "/api/v1/batches/{batch_id}/exports/reconciliation-result": {
+      "get": {
+        "operationId": "exportReconciliationResult",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "batch_id",
+            "required": true,
+            "schema": {
+              "title": "Batch Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BatchResult"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "The requested batch or settlement was not found."
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "The requested lifecycle transition or source replacement is not valid."
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "The request or source failed explicit validation."
+          }
+        },
+        "summary": "Download the complete canonical reconciliation result",
+        "tags": [
+          "batches"
+        ]
+      }
+    },
+    "/api/v1/batches/{batch_id}/reconciliation-runs": {
+      "post": {
+        "operationId": "runReconciliation",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "batch_id",
+            "required": true,
+            "schema": {
+              "title": "Batch Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReconciliationRunResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "The requested batch or settlement was not found."
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "The requested lifecycle transition or source replacement is not valid."
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "The request or source failed explicit validation."
+          }
+        },
+        "summary": "Run deterministic reconciliation synchronously",
+        "tags": [
+          "batches"
+        ]
+      }
+    },
+    "/api/v1/batches/{batch_id}/result": {
+      "get": {
+        "operationId": "getReconciliationResult",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "batch_id",
+            "required": true,
+            "schema": {
+              "title": "Batch Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BatchResult"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "The requested batch or settlement was not found."
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "The requested lifecycle transition or source replacement is not valid."
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "The request or source failed explicit validation."
+          }
+        },
+        "summary": "Get the immutable complete reconciliation result",
+        "tags": [
+          "batches"
+        ]
+      }
+    },
+    "/api/v1/batches/{batch_id}/settlements": {
+      "get": {
+        "operationId": "listSettlements",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "batch_id",
+            "required": true,
+            "schema": {
+              "title": "Batch Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "minimum": 0,
+              "title": "Offset",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 50,
+              "maximum": 100,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SettlementListResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "The requested batch or settlement was not found."
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "The requested lifecycle transition or source replacement is not valid."
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "The request or source failed explicit validation."
+          }
+        },
+        "summary": "List settlements in deterministic order",
+        "tags": [
+          "batches"
+        ]
+      }
+    },
+    "/api/v1/batches/{batch_id}/settlements/{settlement_id}": {
+      "get": {
+        "operationId": "getSettlement",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "batch_id",
+            "required": true,
+            "schema": {
+              "title": "Batch Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "settlement_id",
+            "required": true,
+            "schema": {
+              "title": "Settlement Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SettlementResult"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "The requested batch or settlement was not found."
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "The requested lifecycle transition or source replacement is not valid."
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "The request or source failed explicit validation."
+          }
+        },
+        "summary": "Get one settlement by its source identifier",
+        "tags": [
+          "batches"
+        ]
+      }
+    },
+    "/api/v1/batches/{batch_id}/sources/{source_kind}": {
+      "put": {
+        "description": "Send the bounded raw file as the request body. Set X-Source-Filename to preserve the source filename as metadata.",
+        "operationId": "putBatchSource",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "batch_id",
+            "required": true,
+            "schema": {
+              "title": "Batch Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "source_kind",
+            "required": true,
+            "schema": {
+              "title": "Source Kind",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "format": "binary",
+                "type": "string"
+              }
+            },
+            "text/csv": {
+              "schema": {
+                "format": "binary",
+                "type": "string"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SourceUploadResponse"
+                }
+              }
+            },
+            "description": "Identical upload retry; no replacement occurred."
+          },
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SourceUploadResponse"
+                }
+              }
+            },
+            "description": "New source stored."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "The requested batch or settlement was not found."
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "The requested lifecycle transition or source replacement is not valid."
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "The source payload exceeds the configured limit."
+          },
+          "415": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "The source content type is not supported."
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "The request or source failed explicit validation."
+          }
+        },
+        "summary": "Upload or retry one immutable batch source",
+        "tags": [
+          "batches"
+        ]
+      }
+    },
+    "/healthz": {
+      "get": {
+        "operationId": "healthz",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Check service health",
+        "tags": [
+          "health"
+        ]
+      }
+    }
+  }
+}

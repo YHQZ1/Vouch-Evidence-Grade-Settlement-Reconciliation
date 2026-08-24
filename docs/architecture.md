@@ -34,6 +34,30 @@ The model is outside the financial authority boundary. It may inspect a curated
 evidence package and return a hypothesis, but it cannot mutate source records,
 post financial entries, or independently clear a case.
 
+The model adapter and investigation-agent path shown below are Phase 8 design
+placeholders. The current Phase 7 runtime does not invoke AI; it ends at the
+deterministic verifier, close-readiness policy, and exception review surface.
+
+## Phase 7 frontend composition
+
+The Phase 7 client is a Vite-served React application with React Router routes
+for batch setup, overview, settlements, settlement evidence, and exceptions.
+TanStack Query owns server-state caching and passes abort signals to the typed
+API client. The client renders the immutable Phase 6 result; it does not import
+reconciliation policy or calculate decisions. The audit drawer follows bounded
+`next_offset` pagination and the export buttons download the canonical API
+response using the server's filename.
+
+Vite proxies `/api`, `/healthz`, and `/openapi.json` in local development only.
+Production requests are same-origin. Tailwind CSS v4 is integrated through the
+official Vite plugin; the root stylesheet contains the Tailwind import, CSS-first
+tokens, and global accessibility/reduced-motion rules, while components carry
+static utility classes. The generated OpenAPI snapshot and generated TypeScript
+contract are checked together, so Phase 6 drift fails the frontend contract
+check. The frontend is intentionally not a persistence,
+authentication, authorization, or tenancy layer; process-local batch loss after
+backend restart is surfaced as a recovery state.
+
 ## Logical components
 
 ```mermaid
@@ -44,8 +68,8 @@ flowchart LR
     Graph[Evidence graph builder]
     Rules[Deterministic control engine]
     Cases[Exception case manager]
-    Agent[Investigation agent]
-    Verify[Hypothesis verifier]
+    Agent[Investigation agent / Phase 8]
+    Verify[Hypothesis verifier / Phase 8]
     Policy[Close-readiness policy]
     Eval[Evaluation harness]
     UI[Review interface]

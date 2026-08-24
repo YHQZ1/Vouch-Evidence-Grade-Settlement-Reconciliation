@@ -133,6 +133,22 @@ The Phase 6 repository is process-local and has no authentication,
 authorization, tenancy, rate limiting, durable retention, or restart recovery.
 It must not be exposed as a production financial control endpoint.
 
+## Phase 7 frontend boundary
+
+The React client is a read-only review surface over the Phase 6 API. It has no
+manual clear, override, money movement, journal-posting, AI, authentication, or
+tenancy controls. The run button is enabled only when the API reports `ready`,
+and navigation to review begins only after the API reports a completed result.
+Uploads retain independent status and show stable API error codes; a conflict or
+immutable-source response cannot be rendered as a successful replacement.
+
+The browser does not persist uploaded bytes or complete results in localStorage,
+does not log source content, and does not reinterpret server exports. Proposed
+and rejected evidence are labelled separately from verified evidence. Filenames,
+explanations, identifiers, and raw values are treated as untrusted text. A
+same-origin production build and a narrow local Vite proxy keep the API boundary
+explicit; neither creates authentication or production tenancy.
+
 ## Human review
 
 Human review is not a mechanism for silently overriding evidence. A future manual

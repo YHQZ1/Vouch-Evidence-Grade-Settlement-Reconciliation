@@ -22,6 +22,7 @@ correctness, trust boundaries, data model, dependencies, or deployment shape.
 | [0006](0006-phase4-deterministic-reconciliation.md) | Use conservative deterministic evidence precedence and policy close readiness | Accepted |
 | [0007](0007-phase5-evaluation-isolation-and-deterministic-reports.md) | Isolate evaluation and publish deterministic reports | Accepted |
 | [0008](0008-fastapi-batch-boundary.md) | Expose deterministic reconciliation through a synchronous batch API | Accepted |
+| [0009](0009-phase7-evidence-first-react-review-interface.md) | Build a review-only evidence-first React interface | Accepted |
 
 ## Creating an ADR
 
