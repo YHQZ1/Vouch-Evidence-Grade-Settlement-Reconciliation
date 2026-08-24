@@ -115,6 +115,18 @@ AI abstention/failure rates. The primary safety objective is **zero incorrect
 auto-clears on the frozen held-out batch**. No performance number will be claimed
 until it is reproduced by the evaluation harness.
 
+## Run with Docker Compose
+
+The fastest way to run the complete frontend and backend locally is Docker Compose:
+
+```bash
+docker compose up --build
+```
+
+Open [http://localhost:5173](http://localhost:5173). The complete setup,
+configuration options, logs, rebuild commands, and local-only limitations are in
+[docs/run-with-docker.md](docs/run-with-docker.md).
+
 ## Deterministic runtime
 
 The framework-independent service is available without the API or persistence:
