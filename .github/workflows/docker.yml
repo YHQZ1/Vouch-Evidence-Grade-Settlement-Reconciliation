@@ -1,0 +1,45 @@
+name: Container smoke checks
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  compose:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Validate Compose configuration
+        run: docker compose config --quiet
+
+      - name: Build images
+        run: docker compose build
+
+      - name: Start services
+        run: docker compose up -d
+
+      - name: Wait for healthy services
+        shell: bash
+        run: |
+          set -euo pipefail
+          for attempt in {1..30}; do
+            if curl --fail --silent http://127.0.0.1:8000/healthz >/dev/null \
+              && curl --fail --silent http://127.0.0.1:5173/healthz >/dev/null \
+              && curl --fail --silent http://127.0.0.1:5173/openapi.json >/dev/null; then
+              exit 0
+            fi
+            sleep 2
+          done
+          docker compose ps
+          docker compose logs
+          exit 1
+
+      - name: Verify container health state
+        run: docker compose ps
+
+      - name: Stop services
+        if: always()
+        run: docker compose down --volumes
