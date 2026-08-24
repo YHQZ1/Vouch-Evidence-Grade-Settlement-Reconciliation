@@ -3,7 +3,6 @@ import {
   Check,
   FileJson,
   FileSpreadsheet,
-  Fingerprint,
   LoaderCircle,
   LockKeyhole,
 } from 'lucide-react';
@@ -11,9 +10,10 @@ import { useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ApiRequestError, api } from '../../lib/api';
 import { formatBytes } from '../../lib/format';
+import { rememberBatchRef } from '../../lib/batch-ref';
 import { SOURCE_LABELS } from '../../lib/labels';
 import type { BatchResponse, SourceKind, SourceResponse } from '../../types/api';
-import { Button, CopyValue } from '../../components/ui';
+import { Button, CopyValue, VouchMark } from '../../components/ui';
 
 const PRESET = '2026-08-31T18:30:00Z';
 type Slot = {
@@ -58,6 +58,9 @@ export function BatchSetupPage() {
     [slots],
   );
   const uploading = Object.values(slots).some((slot) => slot.status === 'uploading');
+  const uploadedCount = Object.values(slots).filter(
+    (slot) => slot.status === 'uploaded',
+  ).length;
   const canRun = batch?.status === 'ready' && allUploaded && !running && !uploading;
 
   async function createBatch() {
@@ -164,7 +167,7 @@ export function BatchSetupPage() {
         );
         return;
       }
-      navigate(`/batches/${batchId}/overview`);
+      navigate(`/batches/${rememberBatchRef(batchId)}/overview`);
     } catch (error) {
       setMessage(
         error instanceof ApiRequestError
@@ -177,119 +180,236 @@ export function BatchSetupPage() {
   }
 
   return (
-    <main className="mx-auto max-w-6xl" id="main-content">
-      <div className="mb-8 max-w-3xl">
-        <div className="mb-5 flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-teal">
-          <span className="grid h-7 w-7 place-items-center rounded-full bg-teal text-white">
-            V
-          </span>{' '}
-          Evidence ledger / Phase 7
-        </div>
-        <h1 className="font-serif text-4xl leading-tight sm:text-6xl">
-          Prove the batch before the books close.
-        </h1>
-        <p className="mt-5 max-w-2xl text-base leading-7 text-muted">
-          Load the four source records that explain how Razorpay activity moved through
-          the bank and ledger. Vouch keeps the evidence immutable and puts deterministic
-          controls in charge.
-        </p>
-      </div>
+    <main className="w-full px-4 py-8 sm:px-6 sm:py-10 lg:px-8" id="main-content">
       <section
-        className="border border-line bg-panel p-5 sm:p-7"
+        className="mb-8 grid items-center gap-10 border-b border-line pb-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(360px,0.95fr)] lg:gap-16"
+        aria-labelledby="intro-title"
+      >
+        <div>
+          <div className="mb-6 flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.16em] text-teal">
+            <VouchMark className="h-12 w-12" />
+            <span className="text-xl font-medium tracking-[0.14em]">Vouch</span>
+          </div>
+          <h1
+            id="intro-title"
+            className="max-w-2xl font-sans font-light tracking-tight text-4xl leading-[1.08] sm:text-6xl"
+          >
+            Reconcile a payment batch before the books close.
+          </h1>
+          <p className="mt-5 max-w-xl text-base leading-7 text-muted">
+            Vouch checks one payment event across your gateway, bank and ledger files.
+            It links the evidence, flags what conflicts or is still missing, and shows
+            the reason behind every decision.
+          </p>
+          <div className="mt-8 grid gap-4 sm:grid-cols-2" aria-label="How to use Vouch">
+            <div className="flex items-baseline gap-3">
+              <span className="shrink-0 font-mono text-xs leading-6 text-teal">01</span>
+              <div>
+                <h2 className="text-sm font-semibold leading-6">Set the clock</h2>
+                <p className="mt-1 text-sm leading-6 text-muted">
+                  Choose the evaluation time used for SLA and timing checks.
+                </p>
+              </div>
+            </div>
+            <div className="flex items-baseline gap-3">
+              <span className="shrink-0 font-mono text-xs leading-6 text-teal">02</span>
+              <div>
+                <h2 className="text-sm font-semibold leading-6">Upload four sources</h2>
+                <p className="mt-1 text-sm leading-6 text-muted">
+                  Add gateway, bank, ledger and policy CSV/JSON files.
+                </p>
+              </div>
+            </div>
+            <div className="flex items-baseline gap-3">
+              <span className="shrink-0 font-mono text-xs leading-6 text-teal">03</span>
+              <div>
+                <h2 className="text-sm font-semibold leading-6">Run the controls</h2>
+                <p className="mt-1 text-sm leading-6 text-muted">
+                  Vouch matches records without changing your original files.
+                </p>
+              </div>
+            </div>
+            <div className="flex items-baseline gap-3">
+              <span className="shrink-0 font-mono text-xs leading-6 text-teal">04</span>
+              <div>
+                <h2 className="text-sm font-semibold leading-6">Review and export</h2>
+                <p className="mt-1 text-sm leading-6 text-muted">
+                  Inspect proof, resolve exceptions, then export the audit trail.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <figure
+          className="relative min-h-[320px] overflow-hidden border-l border-line px-5 py-8 sm:px-8"
+          aria-labelledby="flow-title"
+        >
+          <div className="relative flex h-full min-h-[260px] flex-col justify-between">
+            <figcaption
+              id="flow-title"
+              className="text-xs font-semibold uppercase tracking-[0.16em] text-muted"
+            >
+              One event / three proofs
+            </figcaption>
+            <svg
+              className="absolute inset-x-0 top-1/2 h-28 w-full -translate-y-1/2"
+              viewBox="0 0 520 120"
+              fill="none"
+              role="img"
+              aria-label="Gateway activity flows to bank movement and ledger posting"
+            >
+              <path
+                d="M92 60H218M302 60H428"
+                stroke="var(--color-teal)"
+                strokeWidth="2"
+                strokeDasharray="5 7"
+              />
+              <path
+                d="m205 52 13 8-13 8M415 52l13 8-13 8"
+                stroke="var(--color-teal)"
+                strokeWidth="2"
+                strokeLinecap="square"
+                strokeLinejoin="miter"
+              />
+              <circle cx="64" cy="60" r="28" fill="var(--color-teal-dark)" />
+              <circle cx="260" cy="60" r="28" fill="var(--color-electric)" />
+              <circle cx="456" cy="60" r="28" fill="var(--color-teal-dark)" />
+              <path d="M52 48h14l10 10-10 10H52l10-10-10-10Z" fill="white" />
+              <path
+                d="M248 48h14l10 10-10 10h-14l10-10-10-10Z"
+                fill="var(--color-teal-dark)"
+              />
+              <path d="M444 48h14l10 10-10 10h-14l10-10-10-10Z" fill="white" />
+            </svg>
+            <div className="relative grid grid-cols-3 gap-2 text-center text-xs">
+              <div>
+                <p className="font-semibold text-ink">Gateway</p>
+                <p className="mt-1 text-muted">what was charged</p>
+              </div>
+              <div>
+                <p className="font-semibold text-ink">Bank</p>
+                <p className="mt-1 text-muted">what arrived</p>
+              </div>
+              <div>
+                <p className="font-semibold text-ink">Ledger</p>
+                <p className="mt-1 text-muted">what was posted</p>
+              </div>
+            </div>
+          </div>
+        </figure>
+      </section>
+      <section
+        className="border-y border-line py-8 sm:py-10"
         aria-labelledby="clock-title"
       >
-        <div className="flex items-start justify-between gap-5">
+        <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(420px,0.9fr)] lg:items-end lg:gap-14">
           <div>
             <p className="mb-2 text-[11px] font-bold uppercase tracking-[0.16em] text-teal">
               Step 01 / Scope
             </p>
-            <h2 id="clock-title" className="font-serif text-2xl">
+            <h2
+              id="clock-title"
+              className="font-sans font-light tracking-tight text-2xl sm:text-3xl"
+            >
               Set the evaluation clock
             </h2>
-            <p className="mt-2 text-sm leading-6 text-muted">
+            <p className="mt-2 max-w-xl text-sm leading-6 text-muted">
               The clock is part of the proof. It fixes timing decisions and makes the
               run reproducible.
             </p>
           </div>
-          <LockKeyhole size={22} className="text-teal" aria-hidden="true" />
-        </div>
-        <div className="mt-6 grid gap-3 lg:grid-cols-[1fr_auto_auto] lg:items-end">
-          <label className="block text-sm font-bold" htmlFor="clock">
-            Evaluation clock{' '}
-            <span className="ml-1 text-xs font-normal text-coral">required</span>
-            <input
-              className="mt-2 block w-full rounded-sm border border-line bg-paper px-3 py-2.5 font-mono text-sm"
-              id="clock"
-              type="datetime-local"
-              value={clock.slice(0, 16)}
-              onChange={(event) => setClock(`${event.target.value}:00Z`)}
-            />
-          </label>
-          <button
-            className="rounded-sm border border-line px-3 py-2.5 text-left text-xs text-muted hover:border-teal hover:text-teal"
-            type="button"
-            onClick={() => setClock(PRESET)}
-          >
-            <span className="block font-mono">{PRESET}</span>
-            <span>Frozen demonstration preset</span>
-          </button>
-          {batch ? (
-            <Button
-              variant="secondary"
-              disabled={uploading || running}
-              onClick={startNewBatch}
+          <div className="grid gap-4 sm:grid-cols-[minmax(280px,360px)_minmax(170px,auto)] sm:items-end">
+            <label className="block text-sm font-semibold" htmlFor="clock">
+              Evaluation clock
+              <span className="ml-1 text-xs font-normal text-coral">required</span>
+              <input
+                className="mt-2 block h-12 w-full rounded-sm border border-line bg-paper px-3 font-mono text-sm shadow-none"
+                id="clock"
+                type="datetime-local"
+                value={clock.slice(0, 16)}
+                onChange={(event) => setClock(`${event.target.value}:00Z`)}
+              />
+            </label>
+            {batch ? (
+              <Button
+                className="h-12 min-w-[170px] whitespace-nowrap"
+                variant="secondary"
+                disabled={uploading || running}
+                onClick={startNewBatch}
+              >
+                Start a new batch
+              </Button>
+            ) : (
+              <Button
+                className="h-12 min-w-[170px] whitespace-nowrap"
+                disabled={creating || !clock}
+                onClick={() => void createBatch()}
+              >
+                {creating ? (
+                  <>
+                    <LoaderCircle className="animate-spin" size={16} /> Creating
+                  </>
+                ) : (
+                  'Create batch'
+                )}
+              </Button>
+            )}
+            <button
+              className="text-left text-xs text-muted underline decoration-line underline-offset-4 hover:text-teal sm:col-span-2"
+              type="button"
+              onClick={() => setClock(PRESET)}
             >
-              Start a new batch
-            </Button>
-          ) : (
-            <Button disabled={creating || !clock} onClick={() => void createBatch()}>
-              {creating ? (
-                <>
-                  <LoaderCircle className="animate-spin" size={16} /> Creating
-                </>
-              ) : (
-                'Create batch'
-              )}
-            </Button>
-          )}
+              Frozen demonstration preset: <span className="font-mono">{PRESET}</span>
+            </button>
+          </div>
         </div>
       </section>
       {batch && (
         <section
-          className="mt-5 border border-line bg-panel p-5 sm:p-7"
+          className="mt-8 border-y border-line py-8 sm:py-10"
           aria-labelledby="sources-title"
         >
-          <div className="flex items-start justify-between gap-5">
+          <div className="flex flex-col gap-5 border-b border-line pb-6 sm:flex-row sm:items-end sm:justify-between">
             <div>
               <p className="mb-2 text-[11px] font-bold uppercase tracking-[0.16em] text-teal">
                 Step 02 / Evidence
               </p>
-              <h2 id="sources-title" className="font-serif text-2xl">
+              <h2
+                id="sources-title"
+                className="font-sans font-light tracking-tight text-2xl sm:text-3xl"
+              >
                 Attach immutable source records
               </h2>
-              <p className="mt-2 text-sm leading-6 text-muted">
-                Each slot uploads independently. A conflicting replacement remains
-                visibly rejected.
+              <p className="mt-2 max-w-2xl text-sm leading-6 text-muted">
+                Upload the original gateway, bank, ledger and policy files. Vouch
+                fingerprints every upload, preserves the raw bytes, and will not let a
+                conflicting replacement overwrite evidence.
               </p>
             </div>
-            <Fingerprint size={22} className="text-teal" aria-hidden="true" />
+            <div className="shrink-0 font-mono text-sm text-muted">
+              <span className="font-semibold text-teal">{uploadedCount}/4</span> sources
+              uploaded
+            </div>
           </div>
-          <div className="mt-6 grid gap-3 md:grid-cols-2">
-            {(['gateway', 'bank', 'ledger', 'policy'] as SourceKind[]).map((kind) => (
-              <SourceSlot
-                key={kind}
-                kind={kind}
-                slot={slots[kind]}
-                inputRef={(element) => {
-                  inputRefs.current[kind] = element;
-                }}
-                onChoose={(file) => choose(kind, file)}
-                onRetry={() =>
-                  slots[kind].file &&
-                  void upload(kind, slots[kind].file!, batch.batch_id)
-                }
-              />
-            ))}
+          <div className="mt-6 grid gap-4 md:grid-cols-2">
+            {(['gateway', 'bank', 'ledger', 'policy'] as SourceKind[]).map(
+              (kind, index) => (
+                <SourceSlot
+                  key={kind}
+                  kind={kind}
+                  index={index + 1}
+                  slot={slots[kind]}
+                  inputRef={(element) => {
+                    inputRefs.current[kind] = element;
+                  }}
+                  onChoose={(file) => choose(kind, file)}
+                  onRetry={() =>
+                    slots[kind].file &&
+                    void upload(kind, slots[kind].file!, batch.batch_id)
+                  }
+                />
+              ),
+            )}
           </div>
           <div className="mt-6 flex flex-col justify-between gap-4 border-t border-line pt-5 sm:flex-row sm:items-end">
             <div>
@@ -345,12 +465,14 @@ export function BatchSetupPage() {
 
 function SourceSlot({
   kind,
+  index,
   slot,
   inputRef,
   onChoose,
   onRetry,
 }: {
   kind: SourceKind;
+  index: number;
   slot: Slot;
   inputRef: (element: HTMLInputElement | null) => void;
   onChoose: (file: File | undefined) => void;
@@ -370,8 +492,13 @@ function SourceSlot({
       className={`flex min-h-48 flex-col justify-between border p-4 ${SLOT_CLASSES[slot.status]}`}
     >
       <div className="flex gap-3">
-        <div className="grid h-9 w-9 shrink-0 place-items-center rounded bg-teal/10 text-teal">
-          <Icon size={20} aria-hidden="true" />
+        <div className="flex w-10 shrink-0 flex-col items-center gap-2">
+          <span className="font-mono text-xs font-semibold text-teal">
+            {String(index).padStart(2, '0')}
+          </span>
+          <div className="grid h-9 w-9 place-items-center rounded bg-teal/10 text-teal">
+            <Icon size={20} aria-hidden="true" />
+          </div>
         </div>
         <div className="min-w-0">
           <h3 className="font-bold">{SOURCE_LABELS[kind]}</h3>

@@ -1,27 +1,22 @@
-import { ArrowRight, CircleAlert, FileText, Gauge, ShieldCheck } from 'lucide-react';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import type { ResolutionState } from '../../types/api';
 import { useResult } from '../../lib/queries';
-import { formatBytes, formatDate, formatSubunits } from '../../lib/format';
+import { resolveBatchId } from '../../lib/batch-ref';
+import { formatDate, formatSubunits } from '../../lib/format';
 import { READINESS_LABELS } from '../../lib/labels';
-import {
-  CopyValue,
-  ErrorState,
-  Loading,
-  ReadinessBanner,
-  StateBadge,
-} from '../../components/ui';
+import { ErrorState, Loading, ReadinessBanner, StateBadge } from '../../components/ui';
 
-const METRIC_CLASSES = {
-  verified: 'border-sage/40 bg-sage/5',
-  explained: 'border-teal/40 bg-teal/5',
-  pending: 'border-amber/40 bg-amber/5',
-  unresolved: 'border-coral/40 bg-coral/5',
-  total: 'border-line bg-panel',
+const METRIC_TITLE_CLASSES = {
+  verified: 'text-sage',
+  explained: 'text-teal',
+  pending: 'text-amber',
+  unresolved: 'text-coral',
+  total: 'text-muted',
 } as const;
 
 export function OverviewPage() {
-  const { batchId } = useParams();
+  const { batchId: batchRef } = useParams();
+  const batchId = resolveBatchId(batchRef);
   const query = useResult(batchId);
   if (query.isLoading) return <Loading />;
   if (query.isError || !query.data)
@@ -41,6 +36,7 @@ export function OverviewPage() {
   }, {});
   const blocking = result.exceptions.filter((item) => item.blocking).length;
   const permitted = result.exceptions.filter((item) => !item.blocking).length;
+  const totalSettlements = result.settlements.length;
   const metrics = [
     ['Verified value', readiness.verified_value_subunits, 'verified'],
     ['Explained value', readiness.explained_value_subunits, 'explained'],
@@ -50,66 +46,66 @@ export function OverviewPage() {
   ] as const;
   return (
     <div id="main-content" className="space-y-5">
-      <PageHeader
-        eyebrow="Close readiness"
-        title="Can this batch close?"
-        description={`A deterministic assessment of ${result.settlements.length} settlements at ${formatDate(result.evaluation_clock)}.`}
-        action={
-          <Link
-            className="inline-flex items-center gap-2 rounded-sm border border-line bg-panel px-4 py-2.5 text-sm font-bold text-teal hover:border-teal"
-            to={`/batches/${batchId}/exceptions`}
-          >
-            Review exceptions <ArrowRight size={16} />
-          </Link>
-        }
-      />
-      <ReadinessBanner
-        readiness={readiness.readiness}
-        counts={`${blocking} blocking · ${permitted} permitted exceptions`}
-      />
-      <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-5">
+      <div className="grid gap-8 border-b border-line pb-8 lg:grid-cols-[minmax(0,1fr)_minmax(300px,0.42fr)] lg:items-end lg:gap-12">
+        <PageHeader
+          eyebrow="Close readiness"
+          title="Can this batch close?"
+          description={`A deterministic assessment of ${result.settlements.length} settlements at ${formatDate(result.evaluation_clock)}.`}
+        />
+        <ReadinessBanner
+          readiness={readiness.readiness}
+          counts={`${blocking} blocking · ${permitted} permitted exceptions`}
+        />
+      </div>
+      <div className="grid gap-y-8 sm:grid-cols-2 xl:grid-cols-5 xl:divide-x xl:divide-line">
         {metrics.map(([label, value, kind]) => (
-          <div className={`border p-4 ${METRIC_CLASSES[kind]}`} key={label}>
-            <span className="text-xs font-bold uppercase tracking-[0.1em] text-muted">
+          <div
+            className="flex min-w-0 flex-col px-5 py-1 first:pl-0 xl:last:pr-0"
+            key={label}
+          >
+            <span
+              className={`text-xs font-bold uppercase tracking-[0.1em] ${METRIC_TITLE_CLASSES[kind]}`}
+            >
               {label}
             </span>
-            <strong className="mt-3 block font-serif text-2xl">
+            <strong className="mt-3 block truncate font-mono text-2xl font-medium leading-none tracking-[-0.04em]">
               {formatSubunits(value)}
             </strong>
-            <small className="mt-1 block text-xs text-muted">
-              {kind === 'unresolved' ? 'requires attention' : 'integer subunits · INR'}
-            </small>
           </div>
         ))}
       </div>
-      <section className="grid gap-5 xl:grid-cols-[1.15fr_0.85fr]">
-        <div className="border border-line bg-panel p-5 sm:p-7">
-          <PanelHeading eyebrow="What the controls say" title="Resolution coverage">
-            <Gauge size={20} aria-hidden="true" />
-          </PanelHeading>
-          <div className="mt-6 space-y-4">
+      <section className="grid gap-8 border-t border-line pt-8 xl:grid-cols-[1.15fr_0.85fr]">
+        <div className="py-1 sm:py-2">
+          <PanelHeading eyebrow="What the controls say" title="Resolution coverage" />
+          <p className="mt-3 max-w-xl text-sm leading-6 text-muted">
+            Each bar shows how settlements resolved after gateway, bank and ledger
+            evidence were compared. A longer bar means more settlements share that
+            outcome.
+          </p>
+          <div className="mt-6 space-y-5">
             {Object.entries(stateCounts)
               .sort()
               .map(([state, count]) => (
-                <div
-                  className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3"
-                  key={state}
-                >
-                  <StateBadge state={state as ResolutionState} />
-                  <strong>{count}</strong>
-                  <div className="col-span-2 h-2 overflow-hidden rounded-full bg-paper">
+                <div key={state}>
+                  <div className="flex items-center justify-between gap-3">
+                    <StateBadge state={state as ResolutionState} />
+                    <span className="font-mono text-sm text-muted">
+                      {count} / {totalSettlements} ·{' '}
+                      {Math.round((count / Math.max(1, totalSettlements)) * 100)}%
+                    </span>
+                  </div>
+                  <div className="mt-2 h-1.5 overflow-hidden bg-paper">
                     <div
-                      className="h-full rounded-full bg-teal"
+                      className="h-full bg-teal"
                       style={{
-                        width: `${(count / Math.max(1, result.settlements.length)) * 100}%`,
+                        width: `${(count / Math.max(1, totalSettlements)) * 100}%`,
                       }}
                     />
                   </div>
                 </div>
               ))}
           </div>
-          <div className="mt-7 flex gap-3 border-t border-line pt-5 text-sm">
-            <CircleAlert size={18} className="shrink-0 text-teal" aria-hidden="true" />
+          <div className="mt-7 border-t border-line pt-5 text-sm">
             <div>
               <strong>
                 {readiness.readiness === 'BLOCKED'
@@ -125,60 +121,51 @@ export function OverviewPage() {
             </div>
           </div>
         </div>
-        <div className="border border-line bg-panel p-5 sm:p-7">
-          <PanelHeading eyebrow="Provenance" title="Inputs and rules">
-            <FileText size={20} aria-hidden="true" />
-          </PanelHeading>
-          <dl className="mt-6 space-y-4">
-            {[
-              <div key="clock">
-                <dt className="text-xs text-muted">Evaluation clock</dt>
-                <dd className="mt-1 font-mono text-xs">{result.evaluation_clock}</dd>
-              </div>,
-              <div key="versions">
-                <dt className="text-xs text-muted">Schema / rule</dt>
-                <dd className="mt-1 font-mono text-xs">
-                  {result.schema_version} / {result.rule_version}
-                </dd>
-              </div>,
-              <div key="policy">
-                <dt className="text-xs text-muted">Policy</dt>
-                <dd className="mt-1 font-mono text-xs">{result.policy_version}</dd>
-              </div>,
-              ...result.source_fingerprints.map((source) => (
-                <div key={source.source_kind}>
-                  <dt className="text-xs text-muted">
-                    {source.source_name}
-                    <small className="ml-2">{formatBytes(source.byte_count)}</small>
-                  </dt>
-                  <dd className="mt-1">
-                    <CopyValue
-                      value={source.sha256}
-                      label={`Copy ${source.source_name} fingerprint`}
-                    />
-                  </dd>
-                </div>
-              )),
-            ]}
+        <div className="py-1 sm:py-2">
+          <PanelHeading eyebrow="Provenance" title="Inputs and rules" />
+          <p className="mt-3 text-sm leading-6 text-muted">
+            The run is reproducible because the clock, schema and close policy are fixed
+            alongside the source files.
+          </p>
+          <dl className="mt-6 grid gap-4 sm:grid-cols-2">
+            <div>
+              <dt className="text-xs text-muted">Evaluation clock</dt>
+              <dd className="mt-1 font-mono text-xs">{result.evaluation_clock}</dd>
+            </div>
+            <div>
+              <dt className="text-xs text-muted">Schema / rule</dt>
+              <dd className="mt-1 font-mono text-xs">
+                {result.schema_version} / {result.rule_version}
+              </dd>
+            </div>
+            <div className="sm:col-span-2">
+              <dt className="text-xs text-muted">Policy</dt>
+              <dd className="mt-1 font-mono text-xs">{result.policy_version}</dd>
+            </div>
           </dl>
         </div>
       </section>
-      <section className="border border-line bg-panel p-5 sm:p-7">
-        <PanelHeading eyebrow="Source intake" title="Every source row accounted for">
-          <ShieldCheck size={20} aria-hidden="true" />
-        </PanelHeading>
-        <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+      <section className="border-t border-line pt-8" aria-labelledby="intake-title">
+        <PanelHeading eyebrow="Source intake" title="Every source row accounted for" />
+        <p id="intake-title" className="mt-3 max-w-2xl text-sm leading-6 text-muted">
+          Accepted rows are available to the reconciliation controls; rejected rows stay
+          visible so the evidence trail is complete.
+        </p>
+        <div className="mt-5 divide-y divide-line border-y border-line">
           {result.ingestion.map((item) => (
-            <div className="border border-line bg-paper p-4" key={item.source_kind}>
-              <strong className="block">{item.source_name}</strong>
-              <span className="mt-2 block text-sm">
-                {item.accepted_row_count} accepted / {item.row_count} rows
+            <div
+              className="grid gap-2 py-4 sm:grid-cols-[minmax(180px,1.2fr)_minmax(160px,1fr)_minmax(120px,auto)] sm:items-center"
+              key={item.source_kind}
+            >
+              <strong>{item.source_name}</strong>
+              <span className="font-mono text-sm text-muted">
+                {item.accepted_row_count} / {item.row_count} passed
               </span>
-              <small className="mt-1 block text-xs text-muted">
-                {item.rejected_row_count
-                  ? `${item.rejected_row_count} rejected evidence rows`
-                  : 'No rejected rows'}
-              </small>
+              <span
+                className={`text-sm ${item.rejected_row_count ? 'text-coral' : 'text-sage'}`}
+              >
+                {item.rejected_row_count ? `${item.rejected_row_count} rejected` : '—'}
+              </span>
             </div>
           ))}
         </div>
@@ -204,7 +191,9 @@ function PageHeader({
         <p className="mb-2 text-[11px] font-bold uppercase tracking-[0.16em] text-teal">
           {eyebrow}
         </p>
-        <h1 className="font-serif text-4xl sm:text-5xl">{title}</h1>
+        <h1 className="font-sans font-light tracking-tight text-4xl sm:text-5xl">
+          {title}
+        </h1>
         <p className="mt-3 max-w-2xl text-sm leading-6 text-muted">{description}</p>
       </div>
       {action}
@@ -218,7 +207,7 @@ function PanelHeading({
 }: {
   eyebrow: string;
   title: string;
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }) {
   return (
     <div className="flex items-start justify-between gap-4">
@@ -226,9 +215,9 @@ function PanelHeading({
         <p className="mb-1 text-[11px] font-bold uppercase tracking-[0.16em] text-teal">
           {eyebrow}
         </p>
-        <h2 className="font-serif text-2xl">{title}</h2>
+        <h2 className="font-sans font-light tracking-tight text-2xl">{title}</h2>
       </div>
-      <span className="text-teal">{children}</span>
+      {children ? <span className="text-teal">{children}</span> : null}
     </div>
   );
 }

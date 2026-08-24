@@ -24,10 +24,12 @@ import {
 import { formatSubunits } from '../../lib/format';
 import { reasonLabel } from '../../lib/labels';
 import { useSettlement } from '../../lib/queries';
+import { resolveBatchId } from '../../lib/batch-ref';
 import { InvestigationPanel } from './InvestigationPanel';
 
 export function SettlementDetailPage() {
-  const { batchId, settlementId } = useParams();
+  const { batchId: batchRef, settlementId } = useParams();
+  const batchId = resolveBatchId(batchRef);
   const navigate = useNavigate();
   const query = useSettlement(batchId, settlementId);
   if (query.isLoading) return <Loading />;
@@ -51,7 +53,7 @@ export function SettlementDetailPage() {
       <button
         className="inline-flex items-center gap-2 text-sm font-bold text-teal hover:underline"
         type="button"
-        onClick={() => navigate(`/batches/${batchId}/settlements`)}
+        onClick={() => navigate(`/batches/${batchRef}/settlements`)}
       >
         <ArrowLeft size={16} /> Settlements
       </button>
@@ -60,7 +62,9 @@ export function SettlementDetailPage() {
           <p className="mb-2 text-[11px] font-bold uppercase tracking-[0.16em] text-teal">
             Settlement evidence
           </p>
-          <h1 className="font-serif text-4xl sm:text-5xl">{aggregate.settlement_id}</h1>
+          <h1 className="font-sans font-light tracking-tight text-4xl sm:text-5xl">
+            {aggregate.settlement_id}
+          </h1>
           <p className="mt-3 text-sm text-muted">
             {aggregate.balance_account_id ?? 'No balance-account partition'} · settled{' '}
             {new Date(aggregate.latest_settled_at).toLocaleDateString('en-IN', {
@@ -68,7 +72,7 @@ export function SettlementDetailPage() {
             })}
           </p>
         </div>
-        <div className="flex flex-wrap items-center gap-2">
+        <div className="flex flex-wrap items-center gap-4">
           <StateBadge state={item.state} />
           <AuditDrawer
             batchId={batchId!}
@@ -100,8 +104,16 @@ export function SettlementDetailPage() {
             <span className="text-xs font-bold uppercase tracking-[0.1em] text-muted">
               {label}
             </span>
-            <strong className="mt-3 block font-serif text-2xl">{value}</strong>
-            {note && <small className="mt-1 block text-xs text-muted">{note}</small>}
+            <strong className="financial-number mt-3 block whitespace-nowrap text-xl font-normal tracking-tight sm:text-2xl">
+              {value}
+            </strong>
+            {note && (
+              <small
+                className={`mt-1 block text-xs text-muted ${label === 'Fee / tax' ? 'financial-number' : ''}`}
+              >
+                {note}
+              </small>
+            )}
           </div>
         ))}
       </div>
@@ -190,6 +202,11 @@ export function SettlementDetailPage() {
             signals, and decision citations. Expand a row for the complete evidence
             record.
           </p>
+          <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2 border-y border-line py-3 text-xs">
+            <span className="font-bold text-sage">Verified · accepted evidence</span>
+            <span className="font-bold text-amber">Proposed · not yet accepted</span>
+            <span className="font-bold text-coral">Rejected · candidate ruled out</span>
+          </div>
           <div className="mt-5 space-y-3">
             {item.accepted_evidence_links.map((link) => (
               <EvidenceCard key={link.link_id} link={link} status="verified" />
@@ -424,8 +441,9 @@ function EvidenceCard({
     <details className="border border-line bg-paper">
       <summary className="cursor-pointer list-none p-4 hover:bg-white">
         <div className="flex flex-wrap items-center gap-2">
-          <EvidenceBadge status={status} />
-          <strong className="capitalize">
+          <strong
+            className={`capitalize ${status === 'verified' ? 'text-sage' : 'text-amber'}`}
+          >
             {link.relationship_type.replaceAll('_', ' ')}
           </strong>
           <span className="font-mono text-xs text-muted">{link.link_id}</span>
@@ -505,11 +523,10 @@ function EvidenceCard({
 }
 function CandidateCard({ candidate }: { candidate: CandidateBankLink }) {
   return (
-    <details className="border border-coral/30 bg-coral/5">
+    <details className="border border-line bg-paper">
       <summary className="cursor-pointer list-none p-4">
         <div className="flex flex-wrap items-center gap-2">
-          <EvidenceBadge status="rejected" />
-          <strong>Rejected bank candidate</strong>
+          <strong className="text-coral">Bank candidate</strong>
           <span className="font-mono text-xs text-muted">score {candidate.score}</span>
         </div>
         <p className="mt-2 text-sm text-muted">
@@ -581,7 +598,7 @@ function PanelHeading({
         <p className="mb-1 text-[11px] font-bold uppercase tracking-[0.16em] text-teal">
           {eyebrow}
         </p>
-        <h2 className="font-serif text-2xl">{title}</h2>
+        <h2 className="font-sans font-light tracking-tight text-2xl">{title}</h2>
       </div>
       <span className="text-teal">{children}</span>
     </div>

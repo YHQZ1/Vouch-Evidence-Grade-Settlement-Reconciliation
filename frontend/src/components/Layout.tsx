@@ -5,26 +5,18 @@ import {
   PanelLeftClose,
   ScrollText,
   ShieldCheck,
-  UploadCloud,
   Download,
 } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { NavLink, Outlet, useNavigate, useParams } from 'react-router-dom';
 import { ApiRequestError, downloadExport } from '../lib/api';
 import { useBatch } from '../lib/queries';
-import { Button, CopyValue, ErrorState, Loading } from './ui';
-import type { BatchResponse } from '../types/api';
-
-const LIFECYCLE_CLASSES: Record<BatchResponse['status'], string> = {
-  awaiting_sources: 'bg-amber/10 text-amber',
-  ready: 'bg-teal/10 text-teal',
-  running: 'bg-amber/10 text-amber',
-  completed: 'bg-sage/10 text-sage',
-  failed: 'bg-coral/10 text-coral',
-};
+import { resolveBatchId } from '../lib/batch-ref';
+import { Button, ErrorState, Loading, VouchMark } from './ui';
 
 export function Layout() {
-  const { batchId } = useParams();
+  const { batchId: batchRef } = useParams();
+  const batchId = resolveBatchId(batchRef);
   const navigate = useNavigate();
   const { data: batch, isLoading, isError, error, refetch } = useBatch(batchId);
   const [open, setOpen] = useState(false);
@@ -76,14 +68,14 @@ export function Layout() {
     );
   const isReview = batch.status === 'completed';
   const nav = [
-    { to: `/batches/${batchId}/overview`, label: 'Overview', icon: LayoutDashboard },
-    { to: `/batches/${batchId}/settlements`, label: 'Settlements', icon: ScrollText },
-    { to: `/batches/${batchId}/exceptions`, label: 'Exceptions', icon: FileWarning },
+    { to: `/batches/${batchRef}/overview`, label: 'Overview', icon: LayoutDashboard },
+    { to: `/batches/${batchRef}/settlements`, label: 'Settlements', icon: ScrollText },
+    { to: `/batches/${batchRef}/exceptions`, label: 'Exceptions', icon: FileWarning },
   ];
   return (
     <div className="min-h-screen bg-paper text-ink">
       <SkipLink />
-      <header className="sticky top-0 z-30 flex min-h-16 items-center gap-3 border-b border-line bg-panel/95 px-4 backdrop-blur sm:px-6">
+      <header className="sticky top-0 z-30 flex min-h-16 items-center gap-3 border-b border-line bg-panel/95 px-4  sm:px-6">
         <button
           ref={menuButtonRef}
           className="rounded-sm p-2 text-teal hover:bg-teal/10 lg:hidden"
@@ -96,26 +88,15 @@ export function Layout() {
           {open ? <PanelLeftClose /> : <Menu />}
         </button>
         <button
-          className="flex items-center gap-2 font-serif text-2xl font-bold"
+          className="flex items-center gap-2 font-sans font-light tracking-tight text-2xl font-bold"
           type="button"
           onClick={() => navigate('/')}
         >
-          <span className="grid h-8 w-8 place-items-center rounded-full bg-teal font-sans text-sm text-white">
-            V
-          </span>
+          <VouchMark className="h-8 w-8" />
           <span>Vouch</span>
         </button>
-        <div className="hidden items-center gap-3 text-xs sm:flex">
-          <span className="font-mono text-muted">{batch.batch_id}</span>
-          <span
-            className={`rounded-full px-2 py-1 font-bold capitalize ${LIFECYCLE_CLASSES[batch.status]}`}
-          >
-            {batch.status.replaceAll('_', ' ')}
-          </span>
-        </div>
         <div className="ml-auto flex items-center gap-2 text-xs text-muted">
-          <span className="hidden md:inline">Evidence review workspace</span>
-          <span className="font-mono sm:hidden">{batch.batch_id.slice(0, 14)}…</span>
+          <span className="hidden md:inline">Evidence Review Workspace</span>
         </div>
       </header>
       <div className="flex min-h-[calc(100vh-4rem)]">
@@ -126,17 +107,6 @@ export function Layout() {
           {...(sidebarClosed ? { inert: '' } : {})}
           className={`fixed inset-y-16 left-0 z-20 w-72 border-r border-line bg-panel p-5 transition-transform lg:sticky lg:top-16 lg:block lg:h-[calc(100vh-4rem)] lg:translate-x-0 ${open ? 'translate-x-0' : '-translate-x-full'}`}
         >
-          <div className="mb-7 border-b border-line pb-5">
-            <p className="mb-2 text-[11px] font-bold uppercase tracking-[0.16em] text-teal">
-              Evaluation clock
-            </p>
-            <p className="break-all font-mono text-xs">{batch.evaluation_clock}</p>
-            <p className="mt-2 text-sm text-muted">
-              {batch.status === 'completed'
-                ? 'Result available'
-                : 'Sources in progress'}
-            </p>
-          </div>
           <nav aria-label="Batch review">
             <p className="mb-2 text-[11px] font-bold uppercase tracking-[0.16em] text-muted">
               Review workspace
@@ -156,28 +126,11 @@ export function Layout() {
               </NavLink>
             ))}
           </nav>
-          <div className="mt-8 border-t border-line pt-5">
+          <div className="mt-4 border-t border-line pt-5">
             <p className="mb-3 text-[11px] font-bold uppercase tracking-[0.16em] text-muted">
               Exports
             </p>
             <ExportActions batchId={batch.batch_id} enabled={isReview} />
-            <p className="mt-5 text-xs leading-5 text-muted">
-              Process-local workspace. Batches disappear after a backend restart.
-            </p>
-          </div>
-          <div className="mt-5 border-t border-line pt-5">
-            <p className="mb-3 text-[11px] font-bold uppercase tracking-[0.16em] text-muted">
-              Source evidence
-            </p>
-            <div className="space-y-1">
-              {batch.sources.map((source) => (
-                <CopyValue
-                  key={source.source_kind}
-                  value={source.sha256}
-                  label={`Copy ${source.filename} fingerprint`}
-                />
-              ))}
-            </div>
           </div>
         </aside>
         {open && (
@@ -189,14 +142,6 @@ export function Layout() {
           />
         )}
         <main className="min-w-0 flex-1">
-          <div className="border-b border-line bg-panel px-4 py-3 text-xs text-muted sm:px-7 lg:hidden">
-            <UploadCloud
-              size={15}
-              className="mr-1 inline text-teal"
-              aria-hidden="true"
-            />
-            Batch <span className="font-mono">{batch.batch_id}</span>
-          </div>
           {!isReview && (
             <div className="mx-4 mt-5 flex items-start gap-2 border border-amber/30 bg-amber/10 p-3 text-sm text-amber sm:mx-7">
               <ShieldCheck size={16} aria-hidden="true" />
@@ -204,7 +149,7 @@ export function Layout() {
               reconciliation.
             </div>
           )}
-          <div className="mx-auto max-w-[1500px] p-4 sm:p-7">
+          <div className="mx-auto w-full p-4 sm:p-7">
             <Outlet context={{ batch }} />
           </div>
         </main>

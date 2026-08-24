@@ -1,12 +1,14 @@
-import { Search, SlidersHorizontal } from 'lucide-react';
+import { ChevronDown, Search } from 'lucide-react';
 import { Link, useParams, useSearchParams } from 'react-router-dom';
 import { useSettlements } from '../../lib/queries';
-import { formatSubunits } from '../../lib/format';
-import { reasonLabel } from '../../lib/labels';
+import { resolveBatchId } from '../../lib/batch-ref';
+import { formatDate, formatSubunits } from '../../lib/format';
+import { reasonLabel, STATE_LABELS } from '../../lib/labels';
 import { EmptyState, ErrorState, Loading, StateBadge } from '../../components/ui';
 
 export function SettlementsPage() {
-  const { batchId } = useParams();
+  const { batchId: batchRef } = useParams();
+  const batchId = resolveBatchId(batchRef);
   const [params, setParams] = useSearchParams();
   const query = useSettlements(batchId);
   if (query.isLoading) return <Loading />;
@@ -26,11 +28,32 @@ export function SettlementsPage() {
     setParams(next);
   };
   const items = query.data.items.filter((item) => {
-    const needle = search.toLowerCase();
+    const needle = search.trim().toLowerCase();
+    const compactNeedle = needle.replace(/[\s,₹]/g, '');
+    const searchableText = [
+      item.aggregate.settlement_id,
+      item.aggregate.aggregate_id,
+      item.aggregate.balance_account_id ?? '',
+      ...item.aggregate.normalized_utrs,
+      ...item.aggregate.member_source_record_ids,
+      ...item.aggregate.member_entity_ids,
+      ...item.reason_codes,
+      ...item.reason_codes.map(reasonLabel),
+      ...item.exceptions.flatMap((exception) => [
+        exception.reason_code,
+        reasonLabel(exception.reason_code),
+      ]),
+      STATE_LABELS[item.state],
+      item.state,
+      formatSubunits(item.aggregate.signed_net.subunits),
+    ]
+      .join(' ')
+      .toLowerCase();
+    const compactSearchableText = searchableText.replace(/[\s,₹]/g, '');
     const matchesSearch =
       !needle ||
-      item.aggregate.settlement_id.toLowerCase().includes(needle) ||
-      (item.aggregate.balance_account_id ?? '').toLowerCase().includes(needle);
+      searchableText.includes(needle) ||
+      compactSearchableText.includes(compactNeedle);
     const hasException = item.exceptions.length > 0;
     return (
       matchesSearch &&
@@ -45,15 +68,10 @@ export function SettlementsPage() {
           <p className="mb-2 text-[11px] font-bold uppercase tracking-[0.16em] text-teal">
             Evidence review / {query.data.total} total
           </p>
-          <h1 className="font-serif text-4xl sm:text-5xl">Settlements</h1>
-          <p className="mt-3 max-w-2xl text-sm leading-6 text-muted">
-            Search the deterministic settlement ledger. Each row retains its signed net
-            and evidence state.
-          </p>
+          <h1 className="font-sans font-light tracking-tight text-4xl sm:text-5xl">
+            Settlements
+          </h1>
         </div>
-        <span className="flex items-center gap-2 text-xs text-muted">
-          <SlidersHorizontal size={16} aria-hidden="true" /> URL filters are shareable
-        </span>
       </div>
       <div className="flex flex-col gap-3 border border-line bg-panel p-4 lg:flex-row lg:items-end">
         <label className="min-w-0 flex-1 text-xs font-bold uppercase tracking-[0.1em] text-muted">
@@ -91,7 +109,7 @@ export function SettlementsPage() {
           value={exception}
           onChange={(value) => setFilter('exception', value)}
           options={[
-            ['', 'Any'],
+            ['', 'Exceptions'],
             ['yes', 'With exceptions'],
             ['no', 'No exceptions'],
           ]}
@@ -110,12 +128,12 @@ export function SettlementsPage() {
               <tr>
                 {[
                   'Settlement',
+                  'Settled at',
                   'Signed net',
                   'State',
                   'Reasons',
-                  'Bank / ledger',
+                  'Evidence checks',
                   'Unresolved',
-                  '',
                 ].map((heading) => (
                   <th
                     className="border-b border-line px-4 py-3 font-bold"
@@ -134,8 +152,8 @@ export function SettlementsPage() {
                 >
                   <td className="px-4 py-4">
                     <Link
-                      className="font-mono text-xs font-bold text-teal hover:underline"
-                      to={`/batches/${batchId}/settlements/${encodeURIComponent(item.aggregate.settlement_id)}`}
+                      className="font-mono text-xs font-medium text-teal hover:underline"
+                      to={`/batches/${batchRef}/settlements/${encodeURIComponent(item.aggregate.settlement_id)}`}
                     >
                       {item.aggregate.settlement_id}
                     </Link>
@@ -143,7 +161,10 @@ export function SettlementsPage() {
                       {item.aggregate.balance_account_id ?? '—'}
                     </small>
                   </td>
-                  <td className="whitespace-nowrap px-4 py-4 font-mono font-bold">
+                  <td className="whitespace-nowrap px-4 py-4 text-sm text-muted">
+                    {formatDate(item.aggregate.latest_settled_at)}
+                  </td>
+                  <td className="whitespace-nowrap px-4 py-4 font-mono font-medium">
                     {formatSubunits(item.aggregate.signed_net.subunits)}
                   </td>
                   <td className="px-4 py-4">
@@ -193,16 +214,6 @@ export function SettlementsPage() {
                   <td className="whitespace-nowrap px-4 py-4 font-mono">
                     {formatSubunits(item.unresolved_value_subunits)}
                   </td>
-                  <td className="px-4 py-4">
-                    {item.exceptions.length > 0 && (
-                      <span
-                        className="grid h-6 w-6 place-items-center rounded-full bg-coral/10 font-bold text-coral"
-                        title="Exceptions present"
-                      >
-                        !
-                      </span>
-                    )}
-                  </td>
                 </tr>
               ))}
             </tbody>
@@ -225,10 +236,10 @@ function FilterSelect({
   options: readonly (readonly [string, string])[];
 }) {
   return (
-    <label className="text-xs font-bold uppercase tracking-[0.1em] text-muted">
-      {label}
+    <label className="relative block w-44">
+      <span className="sr-only">{label}</span>
       <select
-        className="mt-2 block rounded-sm border border-line bg-paper px-3 py-2.5 text-sm font-normal normal-case tracking-normal text-ink"
+        className="block h-11 w-full appearance-none rounded-sm border border-line bg-paper px-3 pr-10 text-sm font-normal text-ink"
         value={value}
         onChange={(event) => onChange(event.target.value)}
       >
@@ -238,6 +249,11 @@ function FilterSelect({
           </option>
         ))}
       </select>
+      <ChevronDown
+        className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-muted"
+        size={16}
+        aria-hidden="true"
+      />
     </label>
   );
 }

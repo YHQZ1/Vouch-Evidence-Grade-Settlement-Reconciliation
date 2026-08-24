@@ -9,7 +9,9 @@ movements, and reports whether the settlement close is ready or blocked. A
 bounded AI investigation path is available as an explicit, local-only Phase 8
 workflow and is disabled by default.
 
-> **Project status:** Phase 7 React review and close-readiness interface is
+> **Project status:** Phase 8 bounded investigation agent and React review
+> interface are implemented; the current UI also includes the finance-first
+> Vouch visual system.
 > complete over the Phase 6 FastAPI boundary. Phase 4 reconciliation and Phase 5
 > reports remain separate from the runtime engine; Phase 8 investigations are
 > append-only and verifier-owned. All examples and evaluation data are synthetic.
@@ -46,15 +48,15 @@ For each settlement, Vouch is designed to:
 
 ## Trust model
 
-| Principle | Vouch's position |
-| --- | --- |
-| Financial truth | Derived from source evidence and deterministic invariants |
-| Fuzzy matching | Candidate generation only; never proof by itself |
-| AI authority | May investigate and propose; cannot directly clear a record |
-| Uncertainty | Explicit abstention and honest exception reporting |
-| Money representation | Integer currency subunits; never binary floating point |
-| Auditability | Source lineage, rule versions, input fingerprints, and decision history |
-| Ground truth | Available only to the evaluation harness, never the runtime engine |
+| Principle            | Vouch's position                                                        |
+| -------------------- | ----------------------------------------------------------------------- |
+| Financial truth      | Derived from source evidence and deterministic invariants               |
+| Fuzzy matching       | Candidate generation only; never proof by itself                        |
+| AI authority         | May investigate and propose; cannot directly clear a record             |
+| Uncertainty          | Explicit abstention and honest exception reporting                      |
+| Money representation | Integer currency subunits; never binary floating point                  |
+| Auditability         | Source lineage, rule versions, input fingerprints, and decision history |
+| Ground truth         | Available only to the evaluation harness, never the runtime engine      |
 
 ## Intended workflow
 

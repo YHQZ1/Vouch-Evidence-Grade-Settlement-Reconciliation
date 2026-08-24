@@ -304,7 +304,10 @@ function PanelTitle({
         <p className="mb-1 text-[11px] font-bold uppercase tracking-[0.16em] text-teal">
           {eyebrow}
         </p>
-        <h2 className="font-serif text-2xl" id="investigation-title">
+        <h2
+          className="font-sans font-light tracking-tight text-2xl"
+          id="investigation-title"
+        >
           {title}
         </h2>
       </div>

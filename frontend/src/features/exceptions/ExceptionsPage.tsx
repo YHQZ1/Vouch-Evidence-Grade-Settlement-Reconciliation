@@ -1,13 +1,15 @@
-import { ArrowRight, CircleAlert, Filter } from 'lucide-react';
+import { ArrowRight, ChevronDown, CircleAlert, Search } from 'lucide-react';
 import { Link, useParams, useSearchParams } from 'react-router-dom';
 import { AuditDrawer } from '../../components/AuditDrawer';
 import { CopyList, EmptyState, ErrorState, Loading } from '../../components/ui';
 import { formatSubunits } from '../../lib/format';
 import { reasonLabel } from '../../lib/labels';
 import { useExceptions } from '../../lib/queries';
+import { resolveBatchId } from '../../lib/batch-ref';
 
 export function ExceptionsPage() {
-  const { batchId } = useParams();
+  const { batchId: batchRef } = useParams();
+  const batchId = resolveBatchId(batchRef);
   const [params, setParams] = useSearchParams();
   const query = useExceptions(batchId);
   if (query.isLoading) return <Loading />;
@@ -21,16 +23,35 @@ export function ExceptionsPage() {
   const material = params.get('material') ?? '';
   const blocking = params.get('blocking') ?? '';
   const reason = params.get('reason') ?? '';
-  const settlement = params.get('settlement') ?? '';
+  const search = params.get('q') ?? params.get('settlement') ?? '';
   const reasons = [...new Set(query.data.items.map((item) => item.reason_code))].sort();
   const items = query.data.items
-    .filter(
-      (item) =>
+    .filter((item) => {
+      const needle = search.trim().toLowerCase();
+      const searchableText = [
+        item.exception_id,
+        item.reason_code,
+        reasonLabel(item.reason_code),
+        item.explanation,
+        item.settlement_id ?? '',
+        ...item.source_record_ids,
+        formatSubunits(item.value_subunits),
+        item.material ? 'material' : 'non-material',
+        item.blocking ? 'blocking' : 'permitted',
+      ]
+        .join(' ')
+        .toLowerCase();
+      const compactNeedle = needle.replace(/[\s,₹]/g, '');
+      const compactText = searchableText.replace(/[\s,₹]/g, '');
+      return (
+        (!needle ||
+          searchableText.includes(needle) ||
+          compactText.includes(compactNeedle)) &&
         (!material || String(item.material) === material) &&
         (!blocking || String(item.blocking) === blocking) &&
-        (!reason || item.reason_code === reason) &&
-        (!settlement || item.settlement_id?.includes(settlement)),
-    )
+        (!reason || item.reason_code === reason)
+      );
+    })
     .sort(
       (a, b) =>
         Number(b.material) - Number(a.material) ||
@@ -51,21 +72,37 @@ export function ExceptionsPage() {
           <p className="mb-2 text-[11px] font-bold uppercase tracking-[0.16em] text-teal">
             Control queue / {query.data.total} total
           </p>
-          <h1 className="font-serif text-4xl sm:text-5xl">Exceptions</h1>
+          <h1 className="font-sans font-light tracking-tight text-4xl sm:text-5xl">
+            Exceptions
+          </h1>
           <p className="mt-3 max-w-3xl text-sm leading-6 text-muted">
             Every surfaced exception is reachable here. The queue ranks material,
             blocking, absolute value, reason code, then exception ID.
           </p>
         </div>
         <div className="flex items-center gap-2 border border-coral/30 bg-coral/5 px-3 py-2 text-sm text-coral">
-          <CircleAlert size={18} aria-hidden="true" />
           <strong>
             {items.filter((item) => item.material).length} material visible
           </strong>
         </div>
       </div>
       <div className="flex flex-col gap-3 border border-line bg-panel p-4 lg:flex-row lg:items-end">
-        <Filter size={17} className="mb-3 text-teal lg:mb-0" aria-hidden="true" />
+        <label className="min-w-0 flex-1 text-xs font-bold uppercase tracking-[0.1em] text-muted">
+          <span className="sr-only">Search exceptions</span>
+          <span className="relative block">
+            <Search
+              className="absolute left-3 top-1/2 -translate-y-1/2 text-muted"
+              size={17}
+              aria-hidden="true"
+            />
+            <input
+              className="h-11 w-full rounded-sm border border-line bg-paper py-2.5 pl-10 pr-3 text-sm font-normal normal-case tracking-normal text-ink"
+              value={search}
+              onChange={(event) => setFilter('q', event.target.value)}
+              placeholder="Search exception, settlement or reason"
+            />
+          </span>
+        </label>
         <FilterSelect
           label="Material"
           value={material}
@@ -95,15 +132,6 @@ export function ExceptionsPage() {
             ...reasons.map((code) => [code, reasonLabel(code)] as const),
           ]}
         />
-        <label className="text-xs font-bold uppercase tracking-[0.1em] text-muted">
-          Settlement
-          <input
-            className="mt-2 block rounded-sm border border-line bg-paper px-3 py-2.5 text-sm font-normal normal-case tracking-normal text-ink"
-            value={settlement}
-            onChange={(event) => setFilter('settlement', event.target.value)}
-            placeholder="set_…"
-          />
-        </label>
       </div>
       {items.length === 0 ? (
         <EmptyState title="No exceptions match these filters">
@@ -123,7 +151,7 @@ export function ExceptionsPage() {
               <div className="min-w-0">
                 <div className="flex flex-wrap items-center gap-2">
                   <span
-                    className={`rounded-full border px-2 py-1 text-xs font-bold ${item.blocking ? 'border-coral/30 bg-coral/10 text-coral' : 'border-amber/30 bg-amber/10 text-amber'}`}
+                    className={`rounded-sm border px-2 py-1 text-xs font-bold ${item.blocking ? 'border-coral/30 bg-coral/10 text-coral' : 'border-amber/30 bg-amber/10 text-amber'}`}
                   >
                     {item.material ? 'Material' : 'Non-material'} ·{' '}
                     {item.blocking ? 'Blocking' : 'Permitted'}
@@ -132,7 +160,7 @@ export function ExceptionsPage() {
                     {item.reason_code}
                   </span>
                 </div>
-                <h2 className="mt-3 font-serif text-2xl">
+                <h2 className="mt-3 font-sans font-light tracking-tight text-2xl">
                   {reasonLabel(item.reason_code)}
                 </h2>
                 <p className="mt-2 text-sm leading-6 text-muted">{item.explanation}</p>
@@ -147,7 +175,7 @@ export function ExceptionsPage() {
                     Settlement{' '}
                     <Link
                       className="font-mono text-teal hover:underline"
-                      to={`/batches/${batchId}/settlements/${encodeURIComponent(item.settlement_id ?? '')}`}
+                      to={`/batches/${batchRef}/settlements/${encodeURIComponent(item.settlement_id ?? '')}`}
                     >
                       {item.settlement_id ?? 'Batch-level'}
                     </Link>
@@ -174,7 +202,7 @@ export function ExceptionsPage() {
                 {item.settlement_id && (
                   <Link
                     className="inline-flex items-center justify-center gap-2 rounded-sm border border-line px-3 py-2 text-sm font-bold text-teal hover:border-teal"
-                    to={`/batches/${batchId}/settlements/${encodeURIComponent(item.settlement_id)}`}
+                    to={`/batches/${batchRef}/settlements/${encodeURIComponent(item.settlement_id)}`}
                   >
                     Settlement <ArrowRight size={15} />
                   </Link>
@@ -200,10 +228,10 @@ function FilterSelect({
   options: readonly (readonly [string, string])[];
 }) {
   return (
-    <label className="text-xs font-bold uppercase tracking-[0.1em] text-muted">
-      {label}
+    <label className="relative block w-44">
+      <span className="sr-only">{label}</span>
       <select
-        className="mt-2 block rounded-sm border border-line bg-paper px-3 py-2.5 text-sm font-normal normal-case tracking-normal text-ink"
+        className="block h-11 w-full appearance-none rounded-sm border border-line bg-paper px-3 pr-10 text-sm font-normal text-ink"
         value={value}
         onChange={(event) => onChange(event.target.value)}
       >
@@ -213,6 +241,11 @@ function FilterSelect({
           </option>
         ))}
       </select>
+      <ChevronDown
+        className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-muted"
+        size={16}
+        aria-hidden="true"
+      />
     </label>
   );
 }

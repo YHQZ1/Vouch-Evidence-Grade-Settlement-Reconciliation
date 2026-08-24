@@ -15,12 +15,14 @@ export function AuditDrawer({
   trigger: React.ReactNode;
 }) {
   const [open, setOpen] = useState(false);
+  const [closing, setClosing] = useState(false);
   const [events, setEvents] = useState<AuditEvent[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const dialogRef = useRef<HTMLElement>(null);
   const requestControllerRef = useRef<AbortController | null>(null);
+  const closeTimerRef = useRef<number | null>(null);
   const titleId = `audit-title-${useId().replaceAll(':', '')}`;
   const descriptionId = `audit-description-${useId().replaceAll(':', '')}`;
 
@@ -107,13 +109,29 @@ export function AuditDrawer({
       window.cancelAnimationFrame(frame);
       document.removeEventListener('keydown', onKey);
     };
+    // close intentionally uses the latest closing state without reopening the trap.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
 
   function close() {
+    if (closing) return;
     requestControllerRef.current?.abort();
-    setOpen(false);
-    window.setTimeout(() => triggerRef.current?.focus(), 0);
+    setClosing(true);
+    closeTimerRef.current = window.setTimeout(() => {
+      setOpen(false);
+      setClosing(false);
+      closeTimerRef.current = null;
+      triggerRef.current?.focus();
+    }, 240);
   }
+
+  useEffect(() => {
+    return () => {
+      if (closeTimerRef.current !== null) {
+        window.clearTimeout(closeTimerRef.current);
+      }
+    };
+  }, []);
 
   return (
     <>
@@ -121,7 +139,14 @@ export function AuditDrawer({
         ref={triggerRef}
         type="button"
         className="inline-flex items-center gap-2 rounded-sm border border-line bg-panel px-3 py-2 text-sm font-bold text-teal hover:border-teal"
-        onClick={() => setOpen(true)}
+        onClick={() => {
+          if (closeTimerRef.current !== null) {
+            window.clearTimeout(closeTimerRef.current);
+            closeTimerRef.current = null;
+          }
+          setClosing(false);
+          setOpen(true);
+        }}
       >
         {trigger}
       </button>
@@ -135,7 +160,7 @@ export function AuditDrawer({
         >
           <section
             ref={dialogRef}
-            className="flex h-full w-full max-w-2xl flex-col overflow-hidden bg-panel shadow-2xl"
+            className={`audit-drawer flex h-full w-full max-w-2xl flex-col overflow-hidden bg-panel ${closing ? 'audit-drawer-closing' : ''}`}
             role="dialog"
             aria-modal="true"
             aria-labelledby={titleId}
@@ -147,7 +172,10 @@ export function AuditDrawer({
                 <p className="mb-2 text-[11px] font-bold uppercase tracking-[0.16em] text-teal">
                   Append-only decision trail
                 </p>
-                <h2 id={titleId} className="font-serif text-3xl">
+                <h2
+                  id={titleId}
+                  className="font-sans font-light tracking-tight text-3xl"
+                >
                   Audit explanation
                 </h2>
                 <p
@@ -209,6 +237,15 @@ export function AuditDrawer({
 
 function AuditEventRow({ event }: { event: AuditEvent }) {
   const [expanded, setExpanded] = useState(false);
+  const [renderDetails, setRenderDetails] = useState(false);
+  const closeTimerRef = useRef<number | null>(null);
+  useEffect(() => {
+    return () => {
+      if (closeTimerRef.current !== null) {
+        window.clearTimeout(closeTimerRef.current);
+      }
+    };
+  }, []);
   const status =
     event.candidate_accepted === true
       ? 'verified'
@@ -220,7 +257,22 @@ function AuditEventRow({ event }: { event: AuditEvent }) {
       <button
         className="flex w-full items-center gap-3 p-4 text-left hover:bg-white"
         type="button"
-        onClick={() => setExpanded((value) => !value)}
+        onClick={() => {
+          if (expanded) {
+            setExpanded(false);
+            closeTimerRef.current = window.setTimeout(() => {
+              setRenderDetails(false);
+              closeTimerRef.current = null;
+            }, 340);
+            return;
+          }
+          if (closeTimerRef.current !== null) {
+            window.clearTimeout(closeTimerRef.current);
+            closeTimerRef.current = null;
+          }
+          setRenderDetails(true);
+          window.requestAnimationFrame(() => setExpanded(true));
+        }}
         aria-expanded={expanded}
       >
         <span className="font-mono text-xs text-muted">#{event.sequence_number}</span>
@@ -239,77 +291,85 @@ function AuditEventRow({ event }: { event: AuditEvent }) {
           <ChevronDown size={17} aria-hidden="true" />
         )}
       </button>
-      {expanded && (
-        <div className="space-y-5 border-t border-line p-4">
-          <div className="flex flex-wrap items-center gap-2 text-sm">
-            <span>
-              {event.prior_state ?? '—'} → {event.resulting_state ?? '—'}
-            </span>
-            {status && <EvidenceBadge status={status} />}
-          </div>
-          <ReasonCodes codes={event.reason_codes} />
-          <dl className="grid gap-3 sm:grid-cols-2">
-            <Meta label="Audit ID">
-              <CopyValue value={event.audit_id} label="Copy audit ID" />
-            </Meta>
-            <Meta label="Decision type">
-              <span className="font-mono text-xs">{event.decision_type}</span>
-            </Meta>
-            <Meta label="Rule">
-              <span className="font-mono text-xs">
-                {event.rule_id} / {event.rule_version}
+      {renderDetails && (
+        <div
+          className={`audit-event-details ${expanded ? 'audit-event-details-open' : ''}`}
+          aria-hidden={!expanded}
+          inert={!expanded}
+        >
+          <div className="audit-event-details-inner space-y-5 border-t border-line p-4">
+            <div className="flex flex-wrap items-center gap-2 text-sm">
+              <span>
+                {event.prior_state ?? '—'} → {event.resulting_state ?? '—'}
               </span>
-            </Meta>
-            <Meta label="Policy / schema">
-              <span className="font-mono text-xs">
-                {event.policy_version} / {event.schema_version}
-              </span>
-            </Meta>
-            <Meta label="Evaluation clock">
-              <span className="font-mono text-xs">{event.evaluation_clock}</span>
-            </Meta>
-            <Meta label="Candidate score">
-              <span className="font-mono text-xs">{event.candidate_score ?? '—'}</span>
-            </Meta>
-          </dl>
-          <div>
-            <h3 className="mb-2 text-xs font-bold uppercase tracking-[0.12em] text-muted">
-              Decision-cited source IDs
-            </h3>
-            <CopyList values={event.cited_source_record_ids} />
-          </div>
-          <div>
-            <h3 className="mb-2 text-xs font-bold uppercase tracking-[0.12em] text-muted">
-              Input fingerprints
-            </h3>
-            <CopyList
-              values={event.input_fingerprints}
-              label="Copy input fingerprint"
-            />
-          </div>
-          <div>
-            <h3 className="mb-2 text-xs font-bold uppercase tracking-[0.12em] text-muted">
-              Calculated values
-            </h3>
-            <CalculatedEventValues values={event.calculated_values} />
-          </div>
-          {event.candidate_signals.length > 0 && (
+              {status && <EvidenceBadge status={status} />}
+            </div>
+            <ReasonCodes codes={event.reason_codes} />
+            <dl className="grid gap-3 sm:grid-cols-2">
+              <Meta label="Audit ID">
+                <CopyValue value={event.audit_id} label="Copy audit ID" />
+              </Meta>
+              <Meta label="Decision type">
+                <span className="font-mono text-xs">{event.decision_type}</span>
+              </Meta>
+              <Meta label="Rule">
+                <span className="font-mono text-xs">
+                  {event.rule_id} / {event.rule_version}
+                </span>
+              </Meta>
+              <Meta label="Policy / schema">
+                <span className="font-mono text-xs">
+                  {event.policy_version} / {event.schema_version}
+                </span>
+              </Meta>
+              <Meta label="Evaluation clock">
+                <span className="font-mono text-xs">{event.evaluation_clock}</span>
+              </Meta>
+              <Meta label="Candidate score">
+                <span className="font-mono text-xs">
+                  {event.candidate_score ?? '—'}
+                </span>
+              </Meta>
+            </dl>
             <div>
               <h3 className="mb-2 text-xs font-bold uppercase tracking-[0.12em] text-muted">
-                Candidate signals
+                Decision-cited source IDs
               </h3>
-              <div className="flex flex-wrap gap-2">
-                {event.candidate_signals.map((signal) => (
-                  <span
-                    key={signal.name}
-                    className={`rounded border px-2 py-1 text-xs ${signal.satisfied ? 'border-sage/30 bg-sage/10 text-sage' : 'border-coral/30 bg-coral/10 text-coral'}`}
-                  >
-                    {signal.name}: {signal.value} · weight {signal.weight}
-                  </span>
-                ))}
-              </div>
+              <CopyList values={event.cited_source_record_ids} />
             </div>
-          )}
+            <div>
+              <h3 className="mb-2 text-xs font-bold uppercase tracking-[0.12em] text-muted">
+                Input fingerprints
+              </h3>
+              <CopyList
+                values={event.input_fingerprints}
+                label="Copy input fingerprint"
+              />
+            </div>
+            <div>
+              <h3 className="mb-2 text-xs font-bold uppercase tracking-[0.12em] text-muted">
+                Calculated values
+              </h3>
+              <CalculatedEventValues values={event.calculated_values} />
+            </div>
+            {event.candidate_signals.length > 0 && (
+              <div>
+                <h3 className="mb-2 text-xs font-bold uppercase tracking-[0.12em] text-muted">
+                  Candidate signals
+                </h3>
+                <div className="flex flex-wrap gap-2">
+                  {event.candidate_signals.map((signal) => (
+                    <span
+                      key={signal.name}
+                      className={`rounded border px-2 py-1 text-xs ${signal.satisfied ? 'border-sage/30 bg-sage/10 text-sage' : 'border-coral/30 bg-coral/10 text-coral'}`}
+                    >
+                      {signal.name}: {signal.value} · weight {signal.weight}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       )}
     </article>

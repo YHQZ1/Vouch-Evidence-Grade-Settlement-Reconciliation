@@ -1,20 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700&display=swap');
 @import 'tailwindcss';
 
 @theme {
-  --font-sans:
-    ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --font-serif: Georgia, 'Times New Roman', serif;
-  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-  --color-ink: #14212b;
-  --color-muted: #56636c;
-  --color-paper: #f7f5ef;
-  --color-panel: #fffdfa;
-  --color-line: #dedbd2;
-  --color-teal: #0b6b68;
-  --color-teal-dark: #084f4d;
-  --color-coral: #9c2f21;
-  --color-amber: #855006;
-  --color-sage: #3b634f;
+  --font-sans: 'Raleway', ui-sans-serif, system-ui, sans-serif;
+  --font-serif: 'Raleway', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, monospace;
+  --color-ink: #0c2451;
+  --color-muted: #53657a;
+  --color-paper: #ffffff;
+  --color-panel: #ffffff;
+  --color-line: #d5dfeb;
+  --color-teal: #0b63b3;
+  --color-electric: #3395ff;
+  --color-teal-dark: #0c2451;
+  --color-coral: #92525d;
+  --color-amber: #6b5426;
+  --color-sage: #367267;
 }
 
 @layer base {
@@ -33,6 +34,22 @@
     min-width: 320px;
     background: var(--color-paper);
     font-family: var(--font-sans);
+    font-variant-numeric: lining-nums tabular-nums;
+    font-feature-settings:
+      'lnum' 1,
+      'tnum' 1;
+  }
+  .font-mono,
+  [data-numeric='true'],
+  .financial-number {
+    font-variant-numeric: lining-nums tabular-nums;
+    font-feature-settings:
+      'lnum' 1,
+      'tnum' 1;
+    letter-spacing: -0.01em;
+  }
+  .financial-number {
+    font-family: var(--font-mono);
   }
   button,
   input,
@@ -41,8 +58,15 @@
   }
   button:disabled {
     opacity: 1;
-    color: var(--color-ink);
+    color: var(--color-muted);
     background-color: var(--color-paper);
+    cursor: not-allowed;
+  }
+  button,
+  a,
+  label,
+  select {
+    cursor: pointer;
   }
   button,
   a,
@@ -52,15 +76,75 @@
   }
   button:focus-visible,
   a:focus-visible,
+  summary:focus-visible,
+  [role='button']:focus-visible,
+  [tabindex]:not([tabindex='-1']):focus-visible {
+    outline: 1px solid var(--color-teal);
+    outline-offset: -1px;
+  }
   input:focus-visible,
-  select:focus-visible {
-    outline: 3px solid #e39b36;
-    outline-offset: 3px;
+  select:focus-visible,
+  textarea:focus-visible {
+    outline: 1px solid var(--color-teal);
+    outline-offset: -1px;
   }
   ::selection {
     color: white;
-    background: var(--color-teal);
+    background: var(--color-teal-dark);
   }
+}
+
+.audit-drawer {
+  animation: audit-drawer-in 240ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  will-change: transform;
+}
+
+.audit-drawer-closing {
+  animation: audit-drawer-out 240ms cubic-bezier(0.4, 0, 1, 1) both;
+}
+
+.audit-event-details {
+  max-height: 0;
+  min-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  pointer-events: none;
+  transition:
+    max-height 340ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 160ms ease-out;
+}
+
+.audit-event-details-open {
+  max-height: 1200px;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.audit-event-details-inner {
+  min-height: 0;
+  overflow: hidden;
+}
+
+@keyframes audit-drawer-in {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes audit-drawer-out {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+
+.lucide {
+  stroke-width: 1.7;
 }
 
 @media (prefers-reduced-motion: reduce) {

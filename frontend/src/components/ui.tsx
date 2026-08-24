@@ -1,12 +1,4 @@
-import {
-  AlertTriangle,
-  Check,
-  CircleAlert,
-  Copy,
-  Info,
-  LoaderCircle,
-  ShieldCheck,
-} from 'lucide-react';
+import { AlertTriangle, Check, Copy, Info, LoaderCircle } from 'lucide-react';
 import { useState } from 'react';
 import type { CalculatedValue, Readiness, ResolutionState } from '../types/api';
 import { formatCalculatedValue, shorten } from '../lib/format';
@@ -14,7 +6,7 @@ import { READINESS_LABELS, reasonLabel, STATE_LABELS } from '../lib/labels';
 
 const BUTTON_CLASSES = {
   primary:
-    'inline-flex items-center justify-center gap-2 rounded-sm bg-teal px-4 py-2.5 text-sm font-bold text-white shadow-sm transition hover:bg-teal-dark disabled:cursor-not-allowed disabled:bg-teal-dark disabled:text-white',
+    'inline-flex items-center justify-center gap-2 rounded-sm bg-teal px-4 py-2.5 text-sm font-bold text-white transition hover:bg-teal-dark disabled:cursor-not-allowed disabled:bg-teal-dark disabled:text-white',
   secondary:
     'inline-flex items-center justify-center gap-2 rounded-sm border border-line bg-panel px-4 py-2.5 text-sm font-bold text-ink transition hover:border-teal hover:text-teal disabled:cursor-not-allowed disabled:bg-paper disabled:text-muted',
   quiet:
@@ -24,25 +16,41 @@ const BUTTON_CLASSES = {
 } as const;
 
 const READINESS_CLASSES: Record<Readiness, string> = {
-  BLOCKED: 'border-coral/30 bg-coral/10 text-coral',
-  READY: 'border-sage/30 bg-sage/10 text-sage',
-  READY_WITH_EXCEPTIONS: 'border-amber/30 bg-amber/10 text-amber',
+  BLOCKED: 'border-coral text-coral',
+  READY: 'border-sage text-sage',
+  READY_WITH_EXCEPTIONS: 'border-amber text-amber',
 };
 
 const STATE_CLASSES: Record<ResolutionState, string> = {
-  auto_cleared: 'border-sage/30 bg-sage/10 text-sage',
-  cleared_with_explanation: 'border-teal/30 bg-teal/10 text-teal',
-  pending_within_sla: 'border-amber/30 bg-amber/10 text-amber',
-  needs_review: 'border-amber/30 bg-amber/10 text-amber',
-  critical_exception: 'border-coral/30 bg-coral/10 text-coral',
-  excluded: 'border-line bg-paper text-muted',
+  auto_cleared: 'text-sage',
+  cleared_with_explanation: 'text-teal',
+  pending_within_sla: 'text-amber',
+  needs_review: 'text-amber',
+  critical_exception: 'text-coral',
+  excluded: 'text-muted',
 };
 
 const EVIDENCE_CLASSES = {
-  verified: 'border-sage/30 bg-sage/10 text-sage',
-  proposed: 'border-amber/30 bg-amber/10 text-amber',
-  rejected: 'border-coral/30 bg-coral/10 text-coral',
+  verified: 'text-sage',
+  proposed: 'text-amber',
+  rejected: 'text-coral',
 } as const;
+
+export function VouchMark({ className = 'h-8 w-8' }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 32 32"
+      fill="none"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path d="M4 4h9l15 15-6 6L4 7v9H4V4Z" fill="currentColor" />
+      <path d="M13 4h6l9 9-4 4-11-11V4Z" fill="var(--color-electric)" />
+      <path d="M4 16h7l7 7-4 4-10-10V16Z" fill="var(--color-electric)" />
+    </svg>
+  );
+}
 
 export function Button({
   children,
@@ -157,24 +165,23 @@ export function ReadinessBanner({
   readiness: Readiness;
   counts?: string;
 }) {
-  const Icon =
-    readiness === 'BLOCKED'
-      ? CircleAlert
-      : readiness === 'READY'
-        ? ShieldCheck
-        : AlertTriangle;
   return (
     <div
-      className={`flex items-start gap-3 border p-4 ${READINESS_CLASSES[readiness]}`}
+      className={`border-l-2 py-1 pl-4 ${READINESS_CLASSES[readiness]}`}
       role="status"
     >
-      <Icon size={26} aria-hidden="true" />
       <div>
-        <p className="mb-1 text-[11px] font-bold uppercase tracking-[0.16em]">
-          Close readiness
+        <strong className="block text-xl font-medium">
+          {READINESS_LABELS[readiness]}
+        </strong>
+        {counts && <span className="mt-1 block text-sm">{counts}</span>}
+        <p className="mt-2 max-w-xs text-xs leading-5 text-muted">
+          {readiness === 'BLOCKED'
+            ? 'Source, timing, or evidence controls still require resolution before this batch can close.'
+            : readiness === 'READY'
+              ? 'All required evidence agrees and no blocking control is open.'
+              : 'No blocking control is open, but permitted exceptions remain documented.'}
         </p>
-        <strong className="block text-lg">{READINESS_LABELS[readiness]}</strong>
-        {counts && <span className="text-sm">{counts}</span>}
       </div>
     </div>
   );
@@ -182,10 +189,7 @@ export function ReadinessBanner({
 
 export function StateBadge({ state }: { state: ResolutionState }) {
   return (
-    <span
-      className={`inline-flex items-center gap-1.5 rounded-full border px-2 py-1 text-xs font-bold ${STATE_CLASSES[state]}`}
-    >
-      <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-current" />
+    <span className={`text-sm font-medium ${STATE_CLASSES[state]}`}>
       {STATE_LABELS[state]} <span className="sr-only">({state})</span>
     </span>
   );
@@ -197,14 +201,7 @@ export function EvidenceBadge({
   status: 'verified' | 'proposed' | 'rejected';
 }) {
   return (
-    <span
-      className={`inline-flex items-center gap-1 rounded-full border px-2 py-1 text-xs font-bold ${EVIDENCE_CLASSES[status]}`}
-    >
-      {status === 'verified' ? (
-        <ShieldCheck size={13} aria-hidden="true" />
-      ) : (
-        <Info size={13} aria-hidden="true" />
-      )}
+    <span className={`text-xs font-bold capitalize ${EVIDENCE_CLASSES[status]}`}>
       {status}
     </span>
   );
@@ -250,7 +247,7 @@ export function EmptyState({
     <div className="flex items-start gap-3 border border-line bg-panel p-6">
       <Info size={22} className="mt-0.5 shrink-0 text-teal" aria-hidden="true" />
       <div>
-        <h3 className="font-serif text-xl">{title}</h3>
+        <h3 className="font-sans font-light tracking-tight text-xl">{title}</h3>
         <p className="mt-1 text-sm leading-6 text-muted">{children}</p>
       </div>
     </div>
@@ -269,7 +266,9 @@ export function ErrorState({ error, onRetry }: { error: Error; onRetry?: () => v
         aria-hidden="true"
       />
       <div>
-        <h3 className="font-serif text-xl text-coral">Evidence unavailable</h3>
+        <h3 className="font-sans font-light tracking-tight text-xl text-coral">
+          Evidence unavailable
+        </h3>
         <p className="mt-1 text-sm leading-6 text-ink">{error.message}</p>
         {onRetry && (
           <Button className="mt-4" variant="secondary" onClick={onRetry}>

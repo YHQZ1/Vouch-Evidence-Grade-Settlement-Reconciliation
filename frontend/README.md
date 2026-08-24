@@ -48,8 +48,9 @@ intentional backend contract change, review both generated artifacts, then run
 continues to own reconciliation and verification.
 
 The visual system intentionally uses an OS-provided sans-serif and monospace
-fallback stack. No remote font CDN or untracked font asset is required, so the
-interface remains deterministic and offline-safe.
+Raleway is used for the interface hierarchy and IBM Plex Mono is used for
+amounts, identifiers, and other numeric evidence. Both have system fallbacks;
+the Google Fonts import is a progressive enhancement for the hosted demo.
 
 ## Routes and architecture
 
