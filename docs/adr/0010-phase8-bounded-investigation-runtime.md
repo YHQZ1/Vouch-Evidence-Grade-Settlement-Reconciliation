@@ -1,7 +1,11 @@
 # ADR 0010: Bounded investigation is an append-only verifier projection
 
-**Status:** Accepted  
+**Status:** Accepted
 **Date:** 2026-08-24
+
+Superseded only for the model endpoint transport boundary by
+[ADR 0011](0011-docker-host-ollama-boundary.md). The append-only verifier
+authority and all other investigation decisions are retained by ADR 0011.
 
 ## Context
 

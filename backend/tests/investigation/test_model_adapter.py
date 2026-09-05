@@ -18,10 +18,38 @@ from app.infrastructure.investigation_model import OllamaInvestigationModel
         "http://192.0.2.1:11434",
     ],
 )
-def test_ollama_endpoint_requires_credential_free_loopback_ip_literal(endpoint):
+def test_ollama_endpoint_rejects_nonlocal_or_unsafe_urls(endpoint):
     with pytest.raises(ValueError):
         OllamaInvestigationModel(
             endpoint=endpoint,
+            model="test-model",
+            connect_timeout_ms=10,
+            read_timeout_ms=10,
+            max_response_bytes=1024,
+            max_request_bytes=1024,
+            max_tokens=8,
+        )
+
+
+def test_ollama_endpoint_accepts_docker_host_gateway_alias():
+    model = OllamaInvestigationModel(
+        endpoint="http://host.docker.internal:11434",
+        model="test-model",
+        connect_timeout_ms=10,
+        read_timeout_ms=10,
+        max_response_bytes=1024,
+        max_request_bytes=1024,
+        max_tokens=8,
+        allow_docker_host_gateway=True,
+    )
+
+    assert model.configured_model_identifier == "test-model"
+
+
+def test_ollama_endpoint_rejects_docker_alias_without_explicit_capability():
+    with pytest.raises(ValueError, match="Docker host-gateway alias is disabled"):
+        OllamaInvestigationModel(
+            endpoint="http://host.docker.internal:11434",
             model="test-model",
             connect_timeout_ms=10,
             read_timeout_ms=10,

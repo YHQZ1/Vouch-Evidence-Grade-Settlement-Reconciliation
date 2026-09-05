@@ -115,11 +115,15 @@ for the local demonstration only; restart loses all batches. The API performs no
 money movement or accounting writes, and no credentials or external services
 are configured.
 
-Phase 8 local model configuration is opt-in: `VOUCH_AI_ENABLED=false` is the
-default. Enabling it requires `VOUCH_AI_PROVIDER=ollama`, an explicit
-`VOUCH_AI_MODEL`, and a credential-free loopback HTTP endpoint. There is no cloud
-fallback. The optional endpoint is expected at `http://127.0.0.1:11434`; no
-Ollama installation or model download is part of the repository.
+Phase 8 application settings are opt-in: `VOUCH_AI_ENABLED=false` is the
+default outside Compose. The checked-in Compose setup enables the local adapter.
+Enabling it requires `VOUCH_AI_PROVIDER=ollama`, an explicit
+`VOUCH_AI_MODEL`, and a credential-free local HTTP endpoint. Direct runs accept a
+loopback IP literal; Docker Compose uses only the allowlisted
+`host.docker.internal` host-gateway alias when the separate
+`VOUCH_AI_ALLOW_DOCKER_HOST_GATEWAY` capability is enabled. Arbitrary hostnames
+and remote IPs are rejected. Proxies and redirects are disabled, and there is no cloud fallback.
+Ollama installation and model download remain host prerequisites.
 
 Optional local demo command, when an Ollama-compatible endpoint is already
 running, is:

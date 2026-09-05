@@ -202,10 +202,12 @@ and cited candidate, aggregate members, linked ledger, settlement-posting, and
 timing evidence. Effective review is projected across the full batch before
 close readiness is recomputed.
 
-The optional Ollama adapter accepts only credential-free HTTP endpoints whose
-host is a loopback IP literal validated with `ipaddress`; hostnames, paths,
-queries, fragments, malformed ports, proxies, and redirects are rejected. The
-initial prompt body is checked against the request byte limit before connection.
+The optional Ollama adapter accepts credential-free HTTP endpoints whose host is
+either a loopback IP literal validated with `ipaddress` or the exact
+`host.docker.internal` alias used by Docker Compose, and only when the
+separate host-gateway capability flag is enabled. Every other hostname and
+non-loopback IP, plus paths, queries, fragments, malformed ports, proxies, and
+redirects, is rejected. The initial prompt body is checked against the request byte limit before connection.
 Evaluation reports keep AI applicability separate from zero false clears:
 disabled or scripted-only artifacts produce `not_applicable`, while a real local
 model invocation is required before the gate can pass or fail. Imported agent
@@ -337,7 +339,8 @@ synchronous and always receives the batch's explicit evaluation clock.
 
 Phase 8 still runs locally as a FastAPI application with separate in-memory
 batch and investigation repositories. Investigation history is lost on restart
-by design. The optional Ollama-compatible endpoint is loopback-only and there is
-no cloud fallback. No networked queue, cache, graph database, or external model
-is required. A future SQLite adapter remains compatible with the repository
+by design. The optional Ollama-compatible endpoint is local-only: direct runs use
+loopback, and Docker Compose uses the exact host-gateway alias. There is no cloud
+fallback. No networked queue, cache, graph database, or external model is
+required. A future SQLite adapter remains compatible with the repository
 boundaries recorded in ADR 0004 and ADR 0008.

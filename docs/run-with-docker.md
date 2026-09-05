@@ -1,13 +1,16 @@
 # Run Vouch with Docker Compose
 
 This guide runs the Vouch React review interface and FastAPI service as two
-containers. Nginx serves the built frontend and proxies the browser's same-origin
-`/api`, `/healthz`, and `/openapi.json` requests to the backend container.
+containers, with Ollama running locally on the host. Nginx serves the built
+frontend and proxies the browser's same-origin `/api`, `/healthz`, and
+`/openapi.json` requests to the backend container. The backend reaches Ollama
+through Docker's explicit host-gateway alias; model traffic stays local.
 
 ## Prerequisites
 
 - Docker Desktop (or Docker Engine) with the Compose v2 plugin
-- Ports `5173` and `8000` available on the host
+- [Ollama](https://ollama.com/download) installed on the host
+- Ports `5173`, `8000`, and `11434` available on the host
 
 Check the installation:
 
@@ -16,9 +19,65 @@ docker --version
 docker compose version
 ```
 
+## Prepare Ollama
+
+Ollama binds to loopback by default, so configure it once to accept connections
+from Docker. Use the flow that matches how Ollama runs on your machine.
+
+### macOS application
+
+```bash
+launchctl setenv OLLAMA_HOST "0.0.0.0:11434"
+```
+
+Quit and reopen the Ollama application, then pull the model:
+
+```bash
+ollama pull llama3.2:3b
+```
+
+### Manually started server
+
+Start the configured server first:
+
+```bash
+OLLAMA_HOST=0.0.0.0:11434 ollama serve
+```
+
+Keep that terminal running. In another terminal, pull the model:
+
+```bash
+ollama pull llama3.2:3b
+```
+
+### Linux systemd service
+
+Run `sudo systemctl edit ollama.service`, add the following override, then reload
+and restart the service:
+
+```ini
+[Service]
+Environment="OLLAMA_HOST=0.0.0.0:11434"
+```
+
+```bash
+sudo systemctl daemon-reload
+sudo systemctl restart ollama
+ollama pull llama3.2:3b
+```
+
+These host-binding steps follow the
+[official Ollama FAQ](https://docs.ollama.com/faq).
+The bind is intended only for a trusted local development machine; do not expose
+port `11434` on a public network. Confirm Ollama and the model are available:
+
+```bash
+curl http://127.0.0.1:11434/api/tags
+```
+
 ## Start the application
 
-From the repository root:
+In a second terminal, from the repository root:
 
 ```bash
 docker compose up --build
@@ -29,7 +88,8 @@ available at [http://localhost:8000/healthz](http://localhost:8000/healthz).
 
 The first build downloads the pinned backend and frontend dependencies. Later
 starts reuse the image layers unless a dependency, source file, or Dockerfile
-changes.
+changes. Compose enables the bounded Ollama investigation adapter by default;
+normal reconciliation remains deterministic and does not invoke the model.
 
 ## Run in the background
 
@@ -74,6 +134,12 @@ root `.env` file (do not commit secrets):
 | `VOUCH_LOG_LEVEL` | `INFO` | Backend log level |
 | `VOUCH_MAX_UPLOAD_BYTES` | `10485760` | Maximum bytes per source upload |
 | `VOUCH_MAX_PAGE_SIZE` | `100` | Maximum API page size |
+| `VOUCH_AI_ENABLED` | `true` | Enable optional investigations in Compose |
+| `VOUCH_AI_PROVIDER` | `ollama` | Local model provider |
+| `VOUCH_AI_MODEL` | `llama3.2:3b` | Installed Ollama model tag |
+| `VOUCH_AI_ENDPOINT` | `http://host.docker.internal:11434` | Docker-to-host Ollama URL |
+| `VOUCH_AI_ALLOW_DOCKER_HOST_GATEWAY` | `true` | Authorize only the Docker host alias |
+| `VOUCH_AI_MAX_TOTAL_TIME_MS` | `60000` | Absolute investigation deadline |
 
 For example:
 
@@ -81,7 +147,20 @@ For example:
 VOUCH_WEB_PORT=8080 VOUCH_API_PORT=8100 docker compose up --build
 ```
 
-Then open [http://localhost:8080](http://localhost:8080).
+Then open [http://localhost:8080](http://localhost:8080). To run without
+model-assisted investigations, set `VOUCH_AI_ENABLED=false`; deterministic
+reconciliation and review continue to work.
+
+## Verify the container can reach Ollama
+
+```bash
+docker compose exec backend python -c "from urllib.request import urlopen; print(urlopen('http://host.docker.internal:11434/api/tags', timeout=3).status)"
+```
+
+A `200` response confirms connectivity. If it fails, verify that Ollama is running,
+the model is pulled, and Ollama is listening on `0.0.0.0:11434`. The backend
+records an explicit provider-unavailable outcome rather than changing any
+settlement when Ollama cannot be reached.
 
 ## What the containers contain
 
@@ -91,6 +170,8 @@ Then open [http://localhost:8080](http://localhost:8080).
 - `frontend`: a Node build stage followed by Nginx serving the static Vite
   bundle. The browser uses same-origin paths; the internal Compose hostname
   `backend` is never placed in a browser URL.
+- Ollama and its model stay on the host; Compose does not bake a multi-gigabyte
+  model into either Vouch image.
 
 This is a reproducible local/demo boundary, not a production deployment. Before
 using real financial data, add durable persistence, authentication,

@@ -104,8 +104,10 @@ Model confidence does not satisfy any of these requirements.
 
 The public project contains synthetic data only. Local uploads are ignored by
 version control and are not sent to a remote model by default. The model adapter
-must make its destination explicit, and a non-local provider cannot become the
-default without a new accepted ADR.
+must make its destination explicit. Direct runs accept only a loopback IP;
+Docker Compose explicitly enables the exact `host.docker.internal` alias; direct
+runs leave that capability disabled.
+A remote provider cannot become the default without a new accepted ADR.
 
 ## Safe degradation
 

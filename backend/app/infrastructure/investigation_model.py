@@ -22,6 +22,7 @@ from app.application.investigation_model import (
     ModelTimeoutError,
     ModelUnavailableError,
 )
+from app.core.config import DOCKER_HOST_GATEWAY
 from app.domain.investigation import InvestigationScope, ModelAction
 
 PROMPT_VERSION = "phase8.prompt.v1"
@@ -100,6 +101,7 @@ class OllamaInvestigationModel:
         max_response_bytes: int,
         max_request_bytes: int,
         max_tokens: int,
+        allow_docker_host_gateway: bool = False,
     ) -> None:
         parsed = urlparse(endpoint)
         if (
@@ -115,17 +117,29 @@ class OllamaInvestigationModel:
                 "Ollama endpoint must be a credential-free HTTP URL without path, "
                 "query, or fragment"
             )
+        hostname = parsed.hostname or ""
         try:
             port = parsed.port
             if port is not None and port <= 0:
                 raise ValueError("Ollama endpoint port must be positive")
-            address = ipaddress.ip_address(parsed.hostname or "")
         except (TypeError, ValueError) as error:
-            raise ValueError(
-                "Ollama endpoint must use a loopback IP literal"
-            ) from error
-        if not address.is_loopback:
-            raise ValueError("Ollama endpoint must use a loopback IP literal")
+            raise ValueError("Ollama endpoint port must be valid") from error
+        if hostname == DOCKER_HOST_GATEWAY:
+            if not allow_docker_host_gateway:
+                raise ValueError("Docker host-gateway alias is disabled")
+        else:
+            try:
+                address = ipaddress.ip_address(hostname)
+            except ValueError as error:
+                raise ValueError(
+                    "Ollama endpoint must use a loopback IP literal or the Docker "
+                    "host-gateway alias"
+                ) from error
+            if not address.is_loopback:
+                raise ValueError(
+                    "Ollama endpoint must use a loopback IP literal or the Docker "
+                    "host-gateway alias"
+                )
         if not model.strip():
             raise ValueError("Ollama model name is required")
         self._endpoint = f"{parsed.scheme}://{parsed.netloc}"
@@ -263,6 +277,7 @@ def create_investigation_model(settings: Any):
         max_response_bytes=settings.ai_max_response_bytes,
         max_request_bytes=settings.ai_max_payload_bytes,
         max_tokens=settings.ai_max_tokens,
+        allow_docker_host_gateway=settings.ai_allow_docker_host_gateway,
     )
 
 

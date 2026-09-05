@@ -7,6 +7,8 @@ from urllib.parse import urlparse
 from pydantic import Field, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
+DOCKER_HOST_GATEWAY = "host.docker.internal"
+
 
 class Settings(BaseSettings):
     """Runtime settings with safe local-development defaults."""
@@ -28,6 +30,7 @@ class Settings(BaseSettings):
     ai_provider: Literal["disabled", "ollama"] = "disabled"
     ai_model: str | None = None
     ai_endpoint: str = "http://127.0.0.1:11434"
+    ai_allow_docker_host_gateway: bool = False
     ai_connect_timeout_ms: int = Field(default=500, gt=0, le=10_000)
     ai_read_timeout_ms: int = Field(default=3_000, gt=0, le=60_000)
     ai_max_response_bytes: int = Field(default=256 * 1024, gt=0, le=4 * 1024 * 1024)
@@ -60,13 +63,27 @@ class Settings(BaseSettings):
                 "ai_endpoint must be a credential-free HTTP URL without path, "
                 "query, or fragment"
             )
+        hostname = parsed.hostname or ""
         try:
-            address = ipaddress.ip_address(parsed.hostname or "")
             port = parsed.port
             if port is not None and port <= 0:
                 raise ValueError("ai_endpoint port must be positive")
         except (TypeError, ValueError) as error:
-            raise ValueError("ai_endpoint must use a loopback IP literal") from error
-        if not address.is_loopback:
-            raise ValueError("ai_endpoint must use a loopback IP literal")
+            raise ValueError("ai_endpoint port must be valid") from error
+        if hostname == DOCKER_HOST_GATEWAY:
+            if not self.ai_allow_docker_host_gateway:
+                raise ValueError("Docker host-gateway alias is disabled")
+        else:
+            try:
+                address = ipaddress.ip_address(hostname)
+            except ValueError as error:
+                raise ValueError(
+                    "ai_endpoint must use a loopback IP literal or the Docker "
+                    "host-gateway alias"
+                ) from error
+            if not address.is_loopback:
+                raise ValueError(
+                    "ai_endpoint must use a loopback IP literal or the Docker "
+                    "host-gateway alias"
+                )
         return self

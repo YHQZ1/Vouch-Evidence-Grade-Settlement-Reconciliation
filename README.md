@@ -117,9 +117,13 @@ until it is reproduced by the evaluation harness.
 
 ## Run with Docker Compose
 
-The fastest way to run the complete frontend and backend locally is Docker Compose:
+The fastest way to run the complete frontend and backend locally is Docker Compose.
+The Compose setup enables bounded Ollama investigations and expects Ollama on
+the host with `llama3.2:3b` installed. First configure Ollama for Docker host
+access using the [Docker run guide](docs/run-with-docker.md), then run:
 
 ```bash
+ollama pull llama3.2:3b
 docker compose up --build
 ```
 

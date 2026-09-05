@@ -47,6 +47,28 @@ def test_invalid_environment_setting_fails_safely(monkeypatch) -> None:
         Settings()
 
 
+def test_settings_allow_docker_host_gateway_for_ollama() -> None:
+    settings = Settings(
+        ai_enabled=True,
+        ai_provider="ollama",
+        ai_model="llama3.2:3b",
+        ai_endpoint="http://host.docker.internal:11434",
+        ai_allow_docker_host_gateway=True,
+    )
+
+    assert settings.ai_endpoint == "http://host.docker.internal:11434"
+
+
+def test_settings_reject_docker_host_gateway_without_explicit_capability() -> None:
+    with pytest.raises(ValidationError, match="Docker host-gateway alias is disabled"):
+        Settings(
+            ai_enabled=True,
+            ai_provider="ollama",
+            ai_model="llama3.2:3b",
+            ai_endpoint="http://host.docker.internal:11434",
+        )
+
+
 def test_logging_uses_application_namespace_and_selected_level() -> None:
     logger = configure_logging("DEBUG")
 
